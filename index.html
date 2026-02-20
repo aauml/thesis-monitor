@@ -94,7 +94,12 @@
     background: #fff; color: #374151;
     font-family: inherit; cursor: pointer;
   }
-  .btn-clear {
+  .btn-search {
+    padding: 6px 14px; font-size: 13px; font-weight: 500;
+    border: 1px solid #1E40AF; border-radius: 4px;
+    background: #1E40AF; color: #fff; font-family: inherit;
+  }
+  .btn-search:hover { background: #1e3a8a; border-color: #1e3a8a; }
     font-size: 12px; color: #9CA3AF;
     background: none; border: none; padding: 0;
   }
@@ -219,7 +224,8 @@
 
   <!-- Filters -->
   <div class="filters" id="filters">
-    <input type="text" id="searchInput" placeholder="Search title, scholar, topic…" oninput="onSearch()" />
+    <input type="text" id="searchInput" placeholder="Search title, scholar, topic…" onkeydown="if(event.key==='Enter')submitSearch()" />
+    <button class="btn-search" onclick="submitSearch()">Search</button>
     <button class="btn-imp" id="btn-ALTA"  onclick="toggleImp('ALTA')">Alta</button>
     <button class="btn-imp" id="btn-MEDIA" onclick="toggleImp('MEDIA')">Media</button>
     <button class="btn-imp" id="btn-BAJA"  onclick="toggleImp('BAJA')">Baja</button>
@@ -258,7 +264,6 @@ let state = {
   importance: "", capa: "", action_tag: "", language: "", sort: "date-desc", search: "",
   rows: [], loading: false, lastFetch: null,
 };
-let searchTimer = null;
 let expandedIds = new Set();
 
 // ── JSONP ────────────────────────────────────────────────────
@@ -323,14 +328,16 @@ function applyFilters() {
                    : document.getElementById("btn-MEDIA").classList.contains("active-MEDIA") ? "MEDIA"
                    : document.getElementById("btn-BAJA").classList.contains("active-BAJA") ? "BAJA" : "";
   state.sort       = document.getElementById("selSort").value;
-  state.search     = document.getElementById("searchInput").value.trim();
+  // search is set independently by submitSearch — don't overwrite it here
   updateClearBtn();
   fetchPage();
 }
 
-function onSearch() {
-  clearTimeout(searchTimer);
-  searchTimer = setTimeout(applyFilters, 450);
+function submitSearch() {
+  state.search = document.getElementById("searchInput").value.trim();
+  state.page = 1;
+  updateClearBtn();
+  fetchPage();
 }
 
 function toggleImp(imp) {
@@ -343,7 +350,7 @@ function toggleImp(imp) {
 
 function clearFilters() {
   document.getElementById("searchInput").value = "";
-  document.getElementById("selSort").value    = "date-desc";
+  document.getElementById("selSort").value = "date-desc";
   ["ALTA","MEDIA","BAJA"].forEach(i => document.getElementById("btn-" + i).className = "btn-imp");
   state.importance = ""; state.capa = ""; state.action_tag = "";
   state.language = ""; state.sort = "date-desc"; state.search = "";
