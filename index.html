@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thesis Monitor — EU AI Act ↔ NIST AI RMF</title>
+<title>Thesis Sources — EU AI Act ↔ NIST AI RMF</title>
 <style>
-  /* ── Reset & base ── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -17,14 +16,12 @@
   a:hover { text-decoration: underline; }
   button { font-family: inherit; cursor: pointer; }
 
-  /* ── Layout ── */
   .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
 
   /* ── Header ── */
   header {
     border-bottom: 2px solid #111;
     padding: 32px 0 20px;
-    margin-bottom: 0;
   }
   .header-top {
     display: flex;
@@ -57,10 +54,30 @@
   .last-fetch { font-size: 11px; color: #9CA3AF; }
   .btn-refresh {
     font-size: 12px; font-weight: 600;
-    color: #1E40AF; background: none; border: none;
-    padding: 0;
+    color: #1E40AF; background: none; border: none; padding: 0;
   }
   .btn-refresh:disabled { color: #9CA3AF; cursor: default; }
+
+  /* ── View tabs ── */
+  .view-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid #E5E7EB;
+    margin-top: 20px;
+  }
+  .view-tab {
+    padding: 10px 20px;
+    font-size: 13px; font-weight: 500;
+    background: none; border: none;
+    color: #6B7280;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .view-tab.active {
+    color: #111;
+    border-bottom-color: #111;
+  }
+  .view-tab:hover:not(.active) { color: #374151; }
 
   /* ── Filters ── */
   .filters {
@@ -74,20 +91,38 @@
     flex: 1; min-width: 180px;
     padding: 7px 11px; font-size: 13px;
     border: 1px solid #E5E7EB; border-radius: 4px;
-    background: #fff; outline: none;
-    font-family: inherit;
+    background: #fff; outline: none; font-family: inherit;
   }
   .filters input[type=text]:focus { border-color: #93C5FD; }
+  .filter-row {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-top: 8px;
+  }
   .btn-imp {
     padding: 5px 11px; font-size: 11px; font-weight: 600;
     letter-spacing: 0.04em; text-transform: uppercase;
     border: 1px solid #E5E7EB; border-radius: 4px;
     background: #fff; color: #6B7280;
-    transition: all 0.1s;
   }
   .btn-imp.active-ALTA  { background: #DC2626; border-color: #DC2626; color: #fff; }
   .btn-imp.active-MEDIA { background: #D97706; border-color: #D97706; color: #fff; }
   .btn-imp.active-BAJA  { background: #9CA3AF; border-color: #9CA3AF; color: #fff; }
+
+  /* Tier filter buttons */
+  .btn-tier {
+    padding: 5px 11px; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.04em;
+    border: 1px solid #E5E7EB; border-radius: 4px;
+    background: #fff; color: #6B7280;
+  }
+  .btn-tier.active-t1 { background: #1E3A8A; border-color: #1E3A8A; color: #fff; }
+  .btn-tier.active-t2 { background: #065F46; border-color: #065F46; color: #fff; }
+  .btn-tier.active-t3 { background: #78350F; border-color: #78350F; color: #fff; }
+
   select {
     padding: 6px 8px; font-size: 12px;
     border: 1px solid #E5E7EB; border-radius: 4px;
@@ -97,13 +132,62 @@
   .btn-search {
     padding: 6px 14px; font-size: 13px; font-weight: 500;
     border: 1px solid #1E40AF; border-radius: 4px;
-    background: #1E40AF; color: #fff; font-family: inherit;
+    background: #1E40AF; color: #fff;
   }
-  .btn-search:hover { background: #1e3a8a; border-color: #1e3a8a; }
+  .btn-clear {
     font-size: 12px; color: #9CA3AF;
     background: none; border: none; padding: 0;
   }
-  .filter-count { font-size: 12px; color: #9CA3AF; padding: 4px 0 0; }
+  .filter-count { font-size: 12px; color: #9CA3AF; padding: 6px 0 0; }
+
+  /* ── Export bar ── */
+  .export-bar {
+    padding: 10px 0 0;
+    display: flex; gap: 10px; align-items: center;
+  }
+  .btn-export {
+    font-size: 11px; color: #6B7280; background: none;
+    border: 1px solid #E5E7EB; border-radius: 4px;
+    padding: 4px 10px;
+  }
+  .btn-export:hover { border-color: #93C5FD; color: #1E40AF; }
+
+  /* ── Run group (newsfeed) ── */
+  .run-group { margin-top: 32px; }
+  .run-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #111;
+    margin-bottom: 0;
+  }
+  .run-date {
+    font-family: Georgia, serif;
+    font-size: 20px;
+    font-weight: 400;
+  }
+  .run-id-label {
+    font-size: 11px;
+    color: #9CA3AF;
+    font-family: monospace;
+  }
+  .run-summary {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+    font-size: 12px;
+  }
+  .run-count {
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 11px;
+  }
+  .run-count-alta  { background: #FEE2E2; color: #991B1B; }
+  .run-count-media { background: #FEF3C7; color: #92400E; }
+  .run-count-baja  { background: #F3F4F6; color: #6B7280; }
+  .run-count-total { background: #EFF6FF; color: #1E40AF; }
 
   /* ── Cards ── */
   main { padding: 0 0 80px; }
@@ -112,7 +196,7 @@
     padding: 22px 0;
     cursor: pointer;
   }
-  article:hover { background: #FAFAFA; margin: 0 -8px; padding-left: 8px; padding-right: 8px; }
+  article:hover { background: #F9FAFB; margin: 0 -8px; padding-left: 8px; padding-right: 8px; }
   .card-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
   .badge {
     display: inline-block;
@@ -130,6 +214,18 @@
   .badge-Analitica,
   .badge-Analítica { background: #F0FDF4; color: #166534; border-color: #BBF7D0 !important; }
   .badge-Evaluativa { background: #FAF5FF; color: #6B21A8; border-color: #E9D5FF !important; }
+
+  /* Tier badges */
+  .badge-tier {
+    padding: 1px 7px; border-radius: 3px;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    border: 1px solid transparent;
+  }
+  .badge-tier-1 { background: #EFF6FF; color: #1E3A8A; border-color: #BFDBFE; } /* institutional */
+  .badge-tier-2 { background: #F0FDF4; color: #065F46; border-color: #BBF7D0; } /* expert */
+  .badge-tier-3 { background: #FFFBEB; color: #78350F; border-color: #FDE68A; } /* general */
+
   .action-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.05em; }
   .action-REFERENCE { color: #1E40AF; }
   .action-CONTEXT   { color: #6B7280; }
@@ -177,7 +273,6 @@
   .btn-page:hover:not(:disabled) { border-color: #93C5FD; }
   .btn-page.current { background: #1E40AF; border-color: #1E40AF; color: #fff; font-weight: 600; cursor: default; }
   .btn-page:disabled { color: #D1D5DB; background: #F9FAFB; cursor: default; }
-  .btn-page-nav { padding: 7px 16px; }
   .ellipsis { font-size: 13px; color: #9CA3AF; padding: 0 4px; }
 
   /* ── States ── */
@@ -185,26 +280,12 @@
   .error-box {
     margin-top: 24px; padding: 14px 16px;
     background: #FEF2F2; border: 1px solid #FECACA;
-    border-radius: 6px; font-size: 13px; color: #991B1B;
-    line-height: 1.6;
+    border-radius: 6px; font-size: 13px; color: #991B1B; line-height: 1.6;
   }
   .error-box strong { display: block; margin-bottom: 4px; }
-
-  /* ── Export ── */
-  .export-bar {
-    padding: 10px 0 0;
-    display: flex; gap: 10px; align-items: center;
-  }
-  .btn-export {
-    font-size: 11px; color: #6B7280; background: none;
-    border: 1px solid #E5E7EB; border-radius: 4px;
-    padding: 4px 10px; font-family: inherit;
-  }
-  .btn-export:hover { border-color: #93C5FD; color: #1E40AF; }
 </style>
 </head>
 <body>
-
 <div class="container">
 
   <!-- Header -->
@@ -217,246 +298,369 @@
       </div>
     </div>
     <p class="header-sub">EU AI Act ↔ NIST AI RMF Interoperability</p>
-    <div class="header-stats" id="headerStats">
-      <span>Loading…</span>
-    </div>
+    <div class="header-stats" id="headerStats"><span>Loading…</span></div>
   </header>
+
+  <!-- View tabs -->
+  <div class="view-tabs">
+    <button class="view-tab active" id="tab-newsfeed" onclick="switchView('newsfeed')">📰 Newsfeed</button>
+    <button class="view-tab" id="tab-archive"  onclick="switchView('archive')">🗂 Archive</button>
+    <button class="view-tab" id="tab-published" onclick="switchView('published')">📅 By Publish Date</button>
+  </div>
 
   <!-- Filters -->
   <div class="filters" id="filters">
-    <input type="text" id="searchInput" placeholder="Search title, scholar, topic…" onkeydown="if(event.key==='Enter')submitSearch()" />
+    <input type="text" id="searchInput" placeholder="Search title, scholar, topic…"
+           onkeydown="if(event.key==='Enter')submitSearch()" />
     <button class="btn-search" onclick="submitSearch()">Search</button>
-    <button class="btn-imp" id="btn-ALTA"  onclick="toggleImp('ALTA')">Alta</button>
-    <button class="btn-imp" id="btn-MEDIA" onclick="toggleImp('MEDIA')">Media</button>
-    <button class="btn-imp" id="btn-BAJA"  onclick="toggleImp('BAJA')">Baja</button>
-    <select id="selSort" onchange="applyFilters()">
-      <option value="date-desc">Newest first</option>
-      <option value="date-asc">Oldest first</option>
-      <option value="importance">By importance</option>
-    </select>
-    <button class="btn-clear" id="btnClear" onclick="clearFilters()" style="display:none">Clear</button>
+    <button class="btn-clear" id="btnClear" onclick="clearFilters()" style="display:none">✕ Clear</button>
+
+    <div class="filter-row">
+      <!-- Importance -->
+      <button class="btn-imp" id="btn-ALTA"  onclick="toggleImp('ALTA')">Alta</button>
+      <button class="btn-imp" id="btn-MEDIA" onclick="toggleImp('MEDIA')">Media</button>
+      <button class="btn-imp" id="btn-BAJA"  onclick="toggleImp('BAJA')">Baja</button>
+
+      <span style="font-size:11px;color:#D1D5DB;padding:0 2px">│</span>
+
+      <!-- Tier -->
+      <button class="btn-tier" id="btn-t1" onclick="toggleTier('1')" title="Institutional — official sources, government, courts">T1 Institutional</button>
+      <button class="btn-tier" id="btn-t2" onclick="toggleTier('2')" title="Expert — scholars, think tanks, established commentary">T2 Expert</button>
+      <button class="btn-tier" id="btn-t3" onclick="toggleTier('3')" title="General — broad searches, news, mixed quality">T3 General</button>
+
+      <span style="font-size:11px;color:#D1D5DB;padding:0 2px">│</span>
+
+      <!-- Sort (only visible in archive and by-publish views) -->
+      <select id="selSort" onchange="applyFilters()" style="display:none">
+        <option value="date-desc">Found: newest first</option>
+        <option value="date-asc">Found: oldest first</option>
+        <option value="date-published-desc">Published: newest first</option>
+        <option value="date-published-asc">Published: oldest first</option>
+        <option value="importance">By importance</option>
+      </select>
+    </div>
   </div>
-  <div class="container"><p class="filter-count" id="filterCount"></p></div>
+  <p class="filter-count" id="filterCount"></p>
 
   <!-- Export -->
   <div class="export-bar">
     <button class="btn-export" onclick="exportMarkdown()">⬇ Copy as Markdown</button>
   </div>
 
-  <!-- Main content -->
-  <main id="main">
-    <div class="state-msg">Loading…</div>
-  </main>
-
-  <!-- Pagination -->
+  <!-- Main -->
+  <main id="main"><div class="state-msg">Loading…</div></main>
   <div class="pagination" id="pagination"></div>
 
-</div><!-- /container -->
+</div>
 
 <script>
-// ── Config ──────────────────────────────────────────────────
+// ── Config ───────────────────────────────────────────────────
 const API_URL = "https://script.google.com/macros/s/AKfycbzk2vhu-qcKFBPqEImKGEZKSitpVZv1IQQEv5ZzG7pNfo-iPUWfvSoLWWnkoc8d8PQQ/exec";
-const LIMIT   = 50;
+const PAGE_LIMIT     = 50;   // items per page in archive/published views
+const NEWSFEED_LIMIT = 5;    // scan runs per page in newsfeed
 
-// ── State ───────────────────────────────────────────────────
+// ── State ────────────────────────────────────────────────────
 let state = {
-  page: 1, total: 0, total_pages: 1, has_next: false, has_prev: false,
-  importance: "", capa: "", action_tag: "", language: "", sort: "date-desc", search: "",
-  rows: [], loading: false, lastFetch: null,
+  view: "newsfeed",   // newsfeed | archive | published
+  page: 1,
+  importance: "", tier: "", search: "",
+  rows: [], groups: [],
+  total: 0, total_pages: 1, has_next: false, has_prev: false,
+  loading: false, lastFetch: null,
 };
 let expandedIds = new Set();
 
-// ── JSONP ────────────────────────────────────────────────────
+// ── View switching ───────────────────────────────────────────
+function switchView(view) {
+  state.view = view;
+  state.page = 1;
+  expandedIds.clear();
+
+  // Update tab styles
+  ["newsfeed","archive","published"].forEach(v => {
+    document.getElementById("tab-" + v).classList.toggle("active", v === view);
+  });
+
+  // Show sort dropdown only in archive and published views
+  const sortEl = document.getElementById("selSort");
+  if (view === "newsfeed") {
+    sortEl.style.display = "none";
+  } else {
+    sortEl.style.display = "";
+    // Default sort per view
+    if (view === "published") sortEl.value = "date-published-desc";
+    else sortEl.value = "date-desc";
+  }
+
+  fetchData();
+}
+
+// ── Build API URL ────────────────────────────────────────────
+function buildUrl() {
+  const isNewsfeed = state.view === "newsfeed";
+  const action = isNewsfeed ? "getNewsfeed" : "getPage";
+  const limit  = isNewsfeed ? NEWSFEED_LIMIT : PAGE_LIMIT;
+
+  let url = API_URL + "?action=" + action
+    + "&page=" + state.page
+    + "&limit=" + limit;
+
+  if (state.importance) url += "&importance=" + encodeURIComponent(state.importance);
+  if (state.tier)       url += "&tier=" + encodeURIComponent(state.tier);
+  if (state.search)     url += "&search=" + encodeURIComponent(state.search);
+
+  if (!isNewsfeed) {
+    const sort = document.getElementById("selSort").value;
+    url += "&sort=" + encodeURIComponent(sort);
+  }
+
+  return url;
+}
+
+// ── JSONP fetch ──────────────────────────────────────────────
 function jsonp(url) {
   return new Promise((resolve, reject) => {
     const cbName = "_cb_" + Math.random().toString(36).slice(2);
-    const timer = setTimeout(() => { delete window[cbName]; reject(new Error("Request timed out")); }, 25000);
-    window[cbName] = (data) => { clearTimeout(timer); delete window[cbName]; resolve(data); };
+    const timer = setTimeout(() => {
+      delete window[cbName];
+      reject(new Error("Request timed out after 25s"));
+    }, 25000);
+    window[cbName] = data => { clearTimeout(timer); delete window[cbName]; resolve(data); };
     const s = document.createElement("script");
-    s.src = url + (url.includes("?") ? "&" : "?") + "callback=" + cbName;
-    s.onerror = () => { clearTimeout(timer); delete window[cbName]; reject(new Error("Network error — check your internet connection")); };
+    s.src = url + "&callback=" + cbName;
+    s.onerror = () => { clearTimeout(timer); delete window[cbName]; reject(new Error("Network error")); };
     document.head.appendChild(s);
   });
 }
 
-function buildUrl() {
-  let url = API_URL + "?action=getPage";
-  const p = {
-    page: state.page, limit: LIMIT, sort: state.sort,
-    importance: state.importance, capa: state.capa,
-    action_tag: state.action_tag, language: state.language,
-    search: state.search,
-  };
-  for (const [k, v] of Object.entries(p)) {
-    if (v !== "" && v != null) url += "&" + encodeURIComponent(k) + "=" + encodeURIComponent(v);
-  }
-  return url;
-}
-
 // ── Fetch ────────────────────────────────────────────────────
-async function fetchPage() {
+async function fetchData() {
   if (state.loading) return;
   state.loading = true;
-  expandedIds.clear();
   setRefreshBtn(true);
   renderMain('<div class="state-msg">Loading…</div>');
-  renderPagination();
+  document.getElementById("pagination").innerHTML = "";
 
   try {
     const data = await jsonp(buildUrl());
     if (data.error) throw new Error(data.error);
-    state.rows        = data.rows || [];
+
     state.total       = data.total;
     state.total_pages = data.total_pages;
     state.has_next    = data.has_next;
     state.has_prev    = data.has_prev;
-    state.page        = data.page;
+    state.page        = data.page || state.page;
     state.lastFetch   = new Date();
-    renderAll();
-  } catch (e) {
-    renderMain(`<div class="error-box"><strong>Could not load data.</strong>${e.message}</div>`);
+
+    if (state.view === "newsfeed") {
+      state.groups = data.groups || [];
+    } else {
+      state.rows = data.rows || [];
+    }
+
+    // Update global stats if provided
+    if (data.stats) {
+      renderHeader(data.stats);
+    } else {
+      renderHeader(null);
+    }
+
+    renderMainContent();
+    renderPagination();
+  } catch(e) {
+    renderMain(`<div class="error-box"><strong>Could not load data.</strong> ${e.message}</div>`);
   }
 
   state.loading = false;
   setRefreshBtn(false);
+  if (state.lastFetch) {
+    document.getElementById("lastFetch").textContent =
+      state.lastFetch.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  }
 }
+
+function refresh() { fetchData(); }
 
 // ── Filter actions ───────────────────────────────────────────
 function applyFilters() {
-  state.page       = 1;
-  state.importance = document.getElementById("btn-ALTA").classList.contains("active-ALTA") ? "ALTA"
-                   : document.getElementById("btn-MEDIA").classList.contains("active-MEDIA") ? "MEDIA"
-                   : document.getElementById("btn-BAJA").classList.contains("active-BAJA") ? "BAJA" : "";
-  state.sort       = document.getElementById("selSort").value;
-  // search is set independently by submitSearch — don't overwrite it here
+  state.page = 1;
   updateClearBtn();
-  fetchPage();
+  fetchData();
 }
 
 function submitSearch() {
   state.search = document.getElementById("searchInput").value.trim();
   state.page = 1;
   updateClearBtn();
-  fetchPage();
+  fetchData();
 }
 
 function toggleImp(imp) {
   ["ALTA","MEDIA","BAJA"].forEach(i => {
     const btn = document.getElementById("btn-" + i);
-    btn.className = "btn-imp" + (i === imp && !btn.classList.contains("active-" + i) ? " active-" + i : "");
+    const wasActive = btn.classList.contains("active-" + i);
+    btn.className = "btn-imp" + (i === imp && !wasActive ? " active-" + i : "");
   });
+  state.importance = document.getElementById("btn-ALTA").classList.contains("active-ALTA")   ? "ALTA"
+                   : document.getElementById("btn-MEDIA").classList.contains("active-MEDIA") ? "MEDIA"
+                   : document.getElementById("btn-BAJA").classList.contains("active-BAJA")   ? "BAJA" : "";
+  applyFilters();
+}
+
+function toggleTier(t) {
+  ["1","2","3"].forEach(n => {
+    const btn = document.getElementById("btn-t" + n);
+    const wasActive = btn.classList.contains("active-t" + n);
+    btn.className = "btn-tier" + (n === t && !wasActive ? " active-t" + n : "");
+  });
+  state.tier = document.getElementById("btn-t1").classList.contains("active-t1") ? "1"
+             : document.getElementById("btn-t2").classList.contains("active-t2") ? "2"
+             : document.getElementById("btn-t3").classList.contains("active-t3") ? "3" : "";
   applyFilters();
 }
 
 function clearFilters() {
   document.getElementById("searchInput").value = "";
-  document.getElementById("selSort").value = "date-desc";
+  document.getElementById("selSort").value = state.view === "published" ? "date-published-desc" : "date-desc";
   ["ALTA","MEDIA","BAJA"].forEach(i => document.getElementById("btn-" + i).className = "btn-imp");
-  state.importance = ""; state.capa = ""; state.action_tag = "";
-  state.language = ""; state.sort = "date-desc"; state.search = "";
+  ["1","2","3"].forEach(n => document.getElementById("btn-t" + n).className = "btn-tier");
+  state.importance = ""; state.tier = ""; state.search = "";
   state.page = 1;
   updateClearBtn();
-  fetchPage();
+  fetchData();
 }
 
 function updateClearBtn() {
-  const has = state.importance || state.search;
+  const has = state.importance || state.tier || state.search;
   document.getElementById("btnClear").style.display = has ? "inline" : "none";
 }
 
-function refresh() { fetchPage(); }
-
-function goPage(p) { state.page = p; fetchPage(); }
+function goPage(p) { state.page = p; fetchData(); }
 
 // ── Render ───────────────────────────────────────────────────
-function renderAll() {
-  renderHeader();
-  renderMain(renderCards());
-  renderPagination();
-}
-
-function renderHeader() {
-  const el = document.getElementById("headerStats");
-  const isFiltered = state.importance || state.capa || state.action_tag || state.language || state.search;
-  el.innerHTML = `
-    <span><strong>${state.total}</strong> ${isFiltered ? "matching" : "total"}</span>
-    <span>page <strong>${state.page}</strong> of <strong>${state.total_pages}</strong></span>
-    <span>${LIMIT} per page</span>
-  `;
-  if (state.lastFetch) {
-    document.getElementById("lastFetch").textContent =
-      state.lastFetch.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+function renderMainContent() {
+  if (state.view === "newsfeed") {
+    renderNewsfeed();
+  } else {
+    renderFlat();
   }
-  const count = document.getElementById("filterCount");
-  count.textContent = isFiltered && state.total_pages > 1
-    ? `Showing ${((state.page-1)*LIMIT)+1}–${Math.min(state.page*LIMIT, state.total)} of ${state.total}` : "";
 }
 
-function impBadge(imp) {
-  const labels = { ALTA: "Alta", MEDIA: "Media", BAJA: "Baja" };
-  return `<span class="badge badge-imp-${imp}">${labels[imp] || imp}</span>`;
+function renderHeader(stats) {
+  const el = document.getElementById("headerStats");
+  const isFiltered = state.importance || state.tier || state.search;
+  if (stats) {
+    el.innerHTML = `
+      <span><strong>${stats.total_all}</strong> total items</span>
+      <span><span style="color:#DC2626;font-weight:600">${stats.alta}</span> Alta</span>
+      <span><span style="color:#D97706;font-weight:600">${stats.media}</span> Media</span>
+      <span><span style="color:#9CA3AF;font-weight:600">${stats.baja}</span> Baja</span>
+      ${isFiltered ? `<span>· <strong>${state.total}</strong> matching filter</span>` : ""}
+    `;
+  } else {
+    el.innerHTML = `<span><strong>${state.total}</strong> ${isFiltered ? "matching" : "total"} items</span>`;
+  }
+
+  const count = document.getElementById("filterCount");
+  count.textContent = state.total_pages > 1
+    ? `Page ${state.page} of ${state.total_pages} · ${state.total} items`
+    : (isFiltered && state.total ? `${state.total} items matching` : "");
+}
+
+// ── Newsfeed render ──────────────────────────────────────────
+function renderNewsfeed() {
+  if (!state.groups || !state.groups.length) {
+    renderMain('<div class="state-msg">No scan runs found. Run <code>news</code> to start monitoring.</div>');
+    return;
+  }
+
+  const html = state.groups.map(group => {
+    const dateLabel = formatRunDate(group.date);
+    const runLabel  = group.run_id && group.run_id !== group.date ? group.run_id : "";
+
+    const cards = group.rows.map((item, idx) => renderCard(item, group.run_id + "-" + idx)).join("");
+
+    return `
+      <div class="run-group">
+        <div class="run-header">
+          <span class="run-date">${dateLabel}</span>
+          ${runLabel ? `<span class="run-id-label">${runLabel}</span>` : ""}
+          <div class="run-summary">
+            ${group.alta  ? `<span class="run-count run-count-alta">${group.alta} Alta</span>` : ""}
+            ${group.media ? `<span class="run-count run-count-media">${group.media} Media</span>` : ""}
+            ${group.baja  ? `<span class="run-count run-count-baja">${group.baja} Baja</span>` : ""}
+            <span class="run-count run-count-total">${group.total} total</span>
+          </div>
+        </div>
+        ${cards}
+      </div>`;
+  }).join("");
+
+  renderMain(html);
+}
+
+// ── Flat render (archive / by publish date) ──────────────────
+function renderFlat() {
+  if (!state.rows.length) {
+    renderMain('<div class="state-msg">No results match your filters.</div>');
+    return;
+  }
+  renderMain(state.rows.map((item, idx) => renderCard(item, "card-" + state.page + "-" + idx)).join(""));
+}
+
+// ── Card ─────────────────────────────────────────────────────
+function renderCard(item, id) {
+  const imp = item.importance || "BAJA";
+  const act = item.action_tag || "CONTEXT";
+  const ACTION_SYM = { REFERENCE: "◆", CONTEXT: "○", "FOLLOW-UP": "→", URGENT: "!" };
+  const sym = ACTION_SYM[act] || "○";
+  const tier = String(item.tier || "");
+  const TIER_LABELS = { "1": "Institutional", "2": "Expert", "3": "General" };
+
+  const paras = (item.thesis_relevance || "").split(/\n\n+/).filter(p => p.trim());
+  const isOpen = expandedIds.has(id);
+
+  const byline = [
+    item.source,
+    item.date_published ? "· " + formatDate(item.date_published) : "",
+    item.scholar ? `· <span class="scholar">${item.scholar}</span>` : "",
+    item.language && item.language !== "en" ? `· <span class="lang">${item.language}</span>` : "",
+  ].filter(Boolean).join(" ");
+
+  const bodyParas = paras.map((p, i) => {
+    const cls = i === paras.length - 1 ? " thesis" : "";
+    return `<p class="${cls}">${p}</p>`;
+  }).join("");
+
+  const link = item.url
+    ? `<a class="read-link" href="${item.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Read source →</a>`
+    : "";
+
+  return `
+    <article onclick="toggleCard('${id}')">
+      <div class="card-meta">
+        <span class="badge badge-imp-${imp}">${{ALTA:"Alta",MEDIA:"Media",BAJA:"Baja"}[imp]||imp}</span>
+        ${capaBadges(item.capa)}
+        ${tier ? `<span class="badge-tier badge-tier-${tier}">${TIER_LABELS[tier]||"T"+tier}</span>` : ""}
+        <span class="action-tag action-${act}">${sym} ${act}</span>
+        ${item.content_type ? `<span class="content-type">${item.content_type}</span>` : ""}
+      </div>
+      <h2 class="card-title">${item.title || "(no title)"}</h2>
+      <div class="card-byline">${byline}</div>
+      <div class="card-body${isOpen ? " open" : ""}" id="${id}">
+        ${bodyParas}
+        ${link}
+      </div>
+    </article>`;
 }
 
 function capaBadges(capa) {
   return (capa || "").split(",").map(c => {
     c = c.trim();
     if (!c) return "";
-    const cls = c.replace(/[áéíóú]/g, m => ({á:"a",é:"e",í:"i",ó:"o",ú:"u"}[m]));
+    const cls = c.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     return `<span class="badge badge-small badge-${cls}">${c}</span>`;
   }).join(" ");
-}
-
-const ACTION_SYM = { REFERENCE: "◆", CONTEXT: "○", "FOLLOW-UP": "→", URGENT: "!" };
-
-function formatDate(d) {
-  if (!d) return "";
-  const dt = new Date(d);
-  if (isNaN(dt)) return String(d);
-  return dt.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
-}
-
-function renderCards() {
-  if (!state.rows.length) return '<div class="state-msg">No results match your filters.</div>';
-  return state.rows.map((item, idx) => {
-    const id    = "card-" + state.page + "-" + idx;
-    const imp   = item.importance || "BAJA";
-    const act   = item.action_tag || "CONTEXT";
-    const sym   = ACTION_SYM[act] || "○";
-    const paras = (item.thesis_relevance || "").split(/\n\n|\n/).filter(p => p.trim());
-    const isOpen = expandedIds.has(id);
-
-    const byline = [
-      item.source,
-      item.date_published ? "· " + formatDate(item.date_published) : "",
-      item.scholar ? `· <span class="scholar">${item.scholar}</span>` : "",
-      item.language && item.language !== "en" ? `· <span class="lang">${item.language}</span>` : "",
-    ].filter(Boolean).join(" ");
-
-    const bodyParas = paras.map((p, i) => {
-      const cls = i === paras.length - 1 ? " thesis" : "";
-      return `<p class="${cls}">${p}</p>`;
-    }).join("");
-
-    const link = item.url
-      ? `<a class="read-link" href="${item.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Read source →</a>`
-      : "";
-
-    return `
-      <article onclick="toggleCard('${id}')">
-        <div class="card-meta">
-          ${impBadge(imp)}
-          ${capaBadges(item.capa)}
-          <span class="action-tag action-${act}">${sym} ${act}</span>
-          ${item.content_type ? `<span class="content-type">${item.content_type}</span>` : ""}
-        </div>
-        <h2 class="card-title">${item.title || "(no title)"}</h2>
-        <div class="card-byline">${byline}</div>
-        <div class="card-body${isOpen ? " open" : ""}" id="${id}">
-          ${bodyParas}
-          ${link}
-        </div>
-      </article>`;
-  }).join("");
 }
 
 function toggleCard(id) {
@@ -470,6 +674,7 @@ function renderMain(html) {
   document.getElementById("main").innerHTML = html;
 }
 
+// ── Pagination ───────────────────────────────────────────────
 function renderPagination() {
   const el = document.getElementById("pagination");
   if (state.total_pages <= 1) { el.innerHTML = ""; return; }
@@ -479,17 +684,14 @@ function renderPagination() {
     if (i === 1 || i === state.total_pages || Math.abs(i - state.page) <= 2) pages.push(i);
   }
 
-  let html = `<button class="btn-page btn-page-nav" ${!state.has_prev ? "disabled" : ""} onclick="goPage(${state.page-1})">← Prev</button>`;
-
+  let html = `<button class="btn-page" ${!state.has_prev?"disabled":""} onclick="goPage(${state.page-1})">← Prev</button>`;
   let last = 0;
   for (const p of pages) {
     if (last && p - last > 1) html += `<span class="ellipsis">…</span>`;
-    const cur = p === state.page ? " current" : "";
-    html += `<button class="btn-page${cur}" onclick="goPage(${p})">${p}</button>`;
+    html += `<button class="btn-page${p===state.page?" current":""}" onclick="goPage(${p})">${p}</button>`;
     last = p;
   }
-
-  html += `<button class="btn-page btn-page-nav" ${!state.has_next ? "disabled" : ""} onclick="goPage(${state.page+1})">Next →</button>`;
+  html += `<button class="btn-page" ${!state.has_next?"disabled":""} onclick="goPage(${state.page+1})">Next →</button>`;
   el.innerHTML = html;
 }
 
@@ -499,29 +701,58 @@ function setRefreshBtn(loading) {
   btn.disabled = loading;
 }
 
+// ── Date helpers ─────────────────────────────────────────────
+function formatDate(d) {
+  if (!d) return "";
+  const dt = new Date(d);
+  if (isNaN(dt)) return String(d);
+  return dt.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+}
+
+function formatRunDate(d) {
+  if (!d || d === "unknown") return "Unknown date";
+  const dt = new Date(d);
+  if (isNaN(dt)) return d;
+  return dt.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+}
+
 // ── Export ───────────────────────────────────────────────────
 function exportMarkdown() {
-  if (!state.rows.length) { alert("Nothing to export."); return; }
-  const lines = [`# Thesis Monitor Export`, `_${state.total} items — page ${state.page} of ${state.total_pages}_`, ``];
-  for (const item of state.rows) {
+  const items = state.view === "newsfeed"
+    ? (state.groups || []).flatMap(g => g.rows)
+    : (state.rows || []);
+  if (!items.length) { alert("Nothing to export."); return; }
+
+  const lines = ["# Thesis Monitor Export", `_${new Date().toLocaleDateString()}_`, ""];
+  for (const item of items) {
     lines.push(`## ${item.title || "(no title)"}`);
-    lines.push(`**${item.importance}** · ${item.source} · ${formatDate(item.date_published)}`);
-    if (item.scholar) lines.push(`Scholar: ${item.scholar}`);
-    if (item.capa) lines.push(`Capa: ${item.capa}`);
+    lines.push(`**${item.importance}** · ${item.source || ""} · ${formatDate(item.date_published)}`);
+    if (item.scholar)    lines.push(`Scholar: ${item.scholar}`);
+    if (item.capa)       lines.push(`Capa: ${item.capa}`);
     if (item.action_tag) lines.push(`Action: ${item.action_tag}`);
-    lines.push(``);
+    if (item.tier)       lines.push(`Tier: ${item.tier}`);
+    lines.push("");
     if (item.thesis_relevance) lines.push(item.thesis_relevance);
-    if (item.url) lines.push(`\n[Source](${item.url})`);
-    lines.push(`\n---\n`);
+    if (item.url)        lines.push(`\n[Source](${item.url})`);
+    lines.push("\n---\n");
   }
+
   const text = lines.join("\n");
   navigator.clipboard.writeText(text)
     .then(() => alert("Copied to clipboard ✓"))
-    .catch(() => { const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta); alert("Copied ✓"); });
+    .catch(() => {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      alert("Copied ✓");
+    });
 }
 
 // ── Init ─────────────────────────────────────────────────────
-fetchPage();
+fetchData(); // starts in newsfeed view by default
 </script>
 </body>
 </html>
