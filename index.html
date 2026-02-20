@@ -223,24 +223,6 @@
     <button class="btn-imp" id="btn-ALTA"  onclick="toggleImp('ALTA')">Alta</button>
     <button class="btn-imp" id="btn-MEDIA" onclick="toggleImp('MEDIA')">Media</button>
     <button class="btn-imp" id="btn-BAJA"  onclick="toggleImp('BAJA')">Baja</button>
-    <select id="selCapa"        onchange="applyFilters()">
-      <option value="">All capas</option>
-      <option value="Teorica">Teórica</option>
-      <option value="Analitica">Analítica</option>
-      <option value="Evaluativa">Evaluativa</option>
-    </select>
-    <select id="selAction" onchange="applyFilters()">
-      <option value="">All actions</option>
-      <option value="REFERENCE">Reference</option>
-      <option value="URGENT">Urgent</option>
-      <option value="FOLLOW-UP">Follow-up</option>
-      <option value="CONTEXT">Context</option>
-    </select>
-    <select id="selLang" onchange="applyFilters()">
-      <option value="">All langs</option>
-      <option value="en">EN</option>
-      <option value="es">ES</option>
-    </select>
     <select id="selSort" onchange="applyFilters()">
       <option value="date-desc">Newest first</option>
       <option value="date-asc">Oldest first</option>
@@ -340,9 +322,6 @@ function applyFilters() {
   state.importance = document.getElementById("btn-ALTA").classList.contains("active-ALTA") ? "ALTA"
                    : document.getElementById("btn-MEDIA").classList.contains("active-MEDIA") ? "MEDIA"
                    : document.getElementById("btn-BAJA").classList.contains("active-BAJA") ? "BAJA" : "";
-  state.capa       = document.getElementById("selCapa").value;
-  state.action_tag = document.getElementById("selAction").value;
-  state.language   = document.getElementById("selLang").value;
   state.sort       = document.getElementById("selSort").value;
   state.search     = document.getElementById("searchInput").value.trim();
   updateClearBtn();
@@ -364,9 +343,6 @@ function toggleImp(imp) {
 
 function clearFilters() {
   document.getElementById("searchInput").value = "";
-  document.getElementById("selCapa").value    = "";
-  document.getElementById("selAction").value  = "";
-  document.getElementById("selLang").value    = "";
   document.getElementById("selSort").value    = "date-desc";
   ["ALTA","MEDIA","BAJA"].forEach(i => document.getElementById("btn-" + i).className = "btn-imp");
   state.importance = ""; state.capa = ""; state.action_tag = "";
@@ -377,7 +353,7 @@ function clearFilters() {
 }
 
 function updateClearBtn() {
-  const has = state.importance || state.capa || state.action_tag || state.language || state.search;
+  const has = state.importance || state.search;
   document.getElementById("btnClear").style.display = has ? "inline" : "none";
 }
 
