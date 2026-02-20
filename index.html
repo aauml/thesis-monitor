@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thesis Sources — EU AI Act ↔ NIST AI RMF</title>
+<title>Thesis Monitor — EU AI Act ↔ NIST AI RMF</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -15,175 +15,77 @@
   a { color: #1E40AF; text-decoration: none; }
   a:hover { text-decoration: underline; }
   button { font-family: inherit; cursor: pointer; }
-
   .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
 
   /* ── Header ── */
-  header {
-    border-bottom: 2px solid #111;
-    padding: 32px 0 20px;
-  }
+  header { border-bottom: 2px solid #111; padding: 32px 0 20px; }
   .header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    display: flex; justify-content: space-between; align-items: baseline;
     margin-bottom: 4px;
   }
-  h1 {
-    font-family: Georgia, serif;
-    font-size: 34px;
-    font-weight: 300;
-    letter-spacing: -0.5px;
-  }
-  .header-sub {
-    font-family: Georgia, serif;
-    font-size: 14px;
-    color: #6B7280;
-    font-style: italic;
-    margin-bottom: 16px;
-  }
-  .header-stats {
-    display: flex;
-    gap: 20px;
-    font-size: 13px;
-    color: #6B7280;
-    flex-wrap: wrap;
-  }
+  h1 { font-family: Georgia, serif; font-size: 34px; font-weight: 300; letter-spacing: -0.5px; }
+  .header-sub { font-family: Georgia, serif; font-size: 14px; color: #6B7280; font-style: italic; margin-bottom: 16px; }
+  .header-stats { display: flex; gap: 20px; font-size: 13px; color: #6B7280; flex-wrap: wrap; }
   .header-stats strong { color: #111; }
   .refresh-area { display: flex; gap: 14px; align-items: baseline; }
   .last-fetch { font-size: 11px; color: #9CA3AF; }
-  .btn-refresh {
-    font-size: 12px; font-weight: 600;
-    color: #1E40AF; background: none; border: none; padding: 0;
-  }
+  .btn-refresh { font-size: 12px; font-weight: 600; color: #1E40AF; background: none; border: none; padding: 0; }
   .btn-refresh:disabled { color: #9CA3AF; cursor: default; }
 
   /* ── View tabs ── */
-  .view-tabs {
-    display: flex;
-    gap: 0;
-    border-bottom: 1px solid #E5E7EB;
-    margin-top: 20px;
-  }
+  .view-tabs { display: flex; border-bottom: 1px solid #E5E7EB; margin-top: 20px; }
   .view-tab {
-    padding: 10px 20px;
-    font-size: 13px; font-weight: 500;
-    background: none; border: none;
-    color: #6B7280;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
+    padding: 10px 20px; font-size: 13px; font-weight: 500;
+    background: none; border: none; color: #6B7280;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
   }
-  .view-tab.active {
-    color: #111;
-    border-bottom-color: #111;
-  }
+  .view-tab.active { color: #111; border-bottom-color: #111; }
   .view-tab:hover:not(.active) { color: #374151; }
 
-  /* ── Filters ── */
-  .filters {
+  /* ── Search bar ── */
+  .search-bar {
     padding: 14px 0 0;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    align-items: center;
+    display: flex; gap: 8px; align-items: center;
   }
-  .filters input[type=text] {
+  .search-bar input[type=text] {
     flex: 1; min-width: 180px;
     padding: 7px 11px; font-size: 13px;
     border: 1px solid #E5E7EB; border-radius: 4px;
     background: #fff; outline: none; font-family: inherit;
   }
-  .filters input[type=text]:focus { border-color: #93C5FD; }
-  .filter-row {
-    width: 100%;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    align-items: center;
-    padding-top: 8px;
+  .search-bar input[type=text]:focus { border-color: #93C5FD; }
+  .btn-search {
+    padding: 6px 14px; font-size: 13px; font-weight: 500;
+    border: 1px solid #1E40AF; border-radius: 4px;
+    background: #1E40AF; color: #fff;
   }
-  .btn-imp {
-    padding: 5px 11px; font-size: 11px; font-weight: 600;
-    letter-spacing: 0.04em; text-transform: uppercase;
-    border: 1px solid #E5E7EB; border-radius: 4px;
-    background: #fff; color: #6B7280;
-  }
-  .btn-imp.active-ALTA  { background: #DC2626; border-color: #DC2626; color: #fff; }
-  .btn-imp.active-MEDIA { background: #D97706; border-color: #D97706; color: #fff; }
-  .btn-imp.active-BAJA  { background: #9CA3AF; border-color: #9CA3AF; color: #fff; }
-
-  /* Tier filter buttons */
-  .btn-tier {
-    padding: 5px 11px; font-size: 11px; font-weight: 600;
-    letter-spacing: 0.04em;
-    border: 1px solid #E5E7EB; border-radius: 4px;
-    background: #fff; color: #6B7280;
-  }
-  .btn-tier.active-t1 { background: #1E3A8A; border-color: #1E3A8A; color: #fff; }
-  .btn-tier.active-t2 { background: #065F46; border-color: #065F46; color: #fff; }
-  .btn-tier.active-t3 { background: #78350F; border-color: #78350F; color: #fff; }
-
+  .btn-clear { font-size: 12px; color: #9CA3AF; background: none; border: none; padding: 0; }
   select {
     padding: 6px 8px; font-size: 12px;
     border: 1px solid #E5E7EB; border-radius: 4px;
     background: #fff; color: #374151;
     font-family: inherit; cursor: pointer;
   }
-  .btn-search {
-    padding: 6px 14px; font-size: 13px; font-weight: 500;
-    border: 1px solid #1E40AF; border-radius: 4px;
-    background: #1E40AF; color: #fff;
-  }
-  .btn-clear {
-    font-size: 12px; color: #9CA3AF;
-    background: none; border: none; padding: 0;
-  }
   .filter-count { font-size: 12px; color: #9CA3AF; padding: 6px 0 0; }
 
   /* ── Export bar ── */
-  .export-bar {
-    padding: 10px 0 0;
-    display: flex; gap: 10px; align-items: center;
-  }
+  .export-bar { padding: 10px 0 0; display: flex; gap: 10px; align-items: center; }
   .btn-export {
     font-size: 11px; color: #6B7280; background: none;
-    border: 1px solid #E5E7EB; border-radius: 4px;
-    padding: 4px 10px;
+    border: 1px solid #E5E7EB; border-radius: 4px; padding: 4px 10px;
   }
   .btn-export:hover { border-color: #93C5FD; color: #1E40AF; }
 
   /* ── Run group (newsfeed) ── */
   .run-group { margin-top: 32px; }
   .run-header {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #111;
-    margin-bottom: 0;
+    display: flex; align-items: baseline; gap: 12px;
+    padding-bottom: 10px; border-bottom: 2px solid #111;
   }
-  .run-date {
-    font-family: Georgia, serif;
-    font-size: 20px;
-    font-weight: 400;
-  }
-  .run-id-label {
-    font-size: 11px;
-    color: #9CA3AF;
-    font-family: monospace;
-  }
-  .run-summary {
-    margin-left: auto;
-    display: flex;
-    gap: 8px;
-    font-size: 12px;
-  }
-  .run-count {
-    padding: 2px 8px;
-    border-radius: 3px;
-    font-weight: 600;
-    font-size: 11px;
-  }
+  .run-date { font-family: Georgia, serif; font-size: 20px; font-weight: 400; }
+  .run-id-label { font-size: 11px; color: #9CA3AF; font-family: monospace; }
+  .run-summary { margin-left: auto; display: flex; gap: 8px; }
+  .run-count { padding: 2px 8px; border-radius: 3px; font-weight: 600; font-size: 11px; }
   .run-count-alta  { background: #FEE2E2; color: #991B1B; }
   .run-count-media { background: #FEF3C7; color: #92400E; }
   .run-count-baja  { background: #F3F4F6; color: #6B7280; }
@@ -193,77 +95,92 @@
   main { padding: 0 0 80px; }
   article {
     border-bottom: 1px solid #E5E7EB;
-    padding: 22px 0;
+    padding: 20px 0;
     cursor: pointer;
   }
   article:hover { background: #F9FAFB; margin: 0 -8px; padding-left: 8px; padding-right: 8px; }
-  .card-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
-  .badge {
+
+  /* Importance badge — standalone first line */
+  .card-imp {
     display: inline-block;
     padding: 2px 10px; border-radius: 3px;
-    font-size: 11px; font-weight: 600;
-    letter-spacing: 0.04em; text-transform: uppercase;
-    line-height: 1.6;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    line-height: 1.6; margin-bottom: 7px;
   }
-  .badge-small { padding: 1px 6px; font-size: 10px; border: 1px solid transparent; }
-  .badge-imp-ALTA  { background: #DC2626; color: #fff; }
-  .badge-imp-MEDIA { background: #D97706; color: #fff; }
-  .badge-imp-BAJA  { background: #9CA3AF; color: #fff; }
-  .badge-Teorica,
-  .badge-Teórica   { background: #EFF6FF; color: #1E40AF; border-color: #BFDBFE !important; }
-  .badge-Analitica,
-  .badge-Analítica { background: #F0FDF4; color: #166534; border-color: #BBF7D0 !important; }
-  .badge-Evaluativa { background: #FAF5FF; color: #6B21A8; border-color: #E9D5FF !important; }
+  .imp-ALTA  { background: #DC2626; color: #fff; }
+  .imp-MEDIA { background: #D97706; color: #fff; }
+  .imp-BAJA  { background: #9CA3AF; color: #fff; }
 
-  /* Tier badges */
-  .badge-tier {
-    padding: 1px 7px; border-radius: 3px;
-    font-size: 10px; font-weight: 700;
-    letter-spacing: 0.05em; text-transform: uppercase;
-    border: 1px solid transparent;
-  }
-  .badge-tier-1 { background: #EFF6FF; color: #1E3A8A; border-color: #BFDBFE; } /* institutional */
-  .badge-tier-2 { background: #F0FDF4; color: #065F46; border-color: #BBF7D0; } /* expert */
-  .badge-tier-3 { background: #FFFBEB; color: #78350F; border-color: #FDE68A; } /* general */
-
-  .action-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.05em; }
-  .action-REFERENCE { color: #1E40AF; }
-  .action-CONTEXT   { color: #6B7280; }
-  .action-FOLLOW-UP { color: #D97706; }
-  .action-URGENT    { color: #DC2626; }
-  .content-type { font-size: 11px; color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.05em; }
+  /* Title */
   .card-title {
     font-family: Georgia, serif;
     font-size: 19px; font-weight: 400; line-height: 1.35;
-    margin: 0 0 5px; color: #111;
+    margin: 0 0 6px; color: #111;
   }
+
+  /* Source / date / scholar line */
   .card-byline {
-    display: flex; gap: 10px; align-items: center;
-    font-size: 13px; color: #9CA3AF; flex-wrap: wrap;
+    font-size: 13px; color: #9CA3AF;
+    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    margin-bottom: 5px;
   }
   .card-byline .scholar { color: #6B7280; font-weight: 500; }
   .card-byline .lang { text-transform: uppercase; font-weight: 600; font-size: 11px; }
+
+  /* ── Metadata line: capa · action · type · tier ── */
+  /* Single line, all lowercase, separated by thin dots, muted colors */
+  .card-meta-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    font-size: 11px;
+    line-height: 1.8;
+    margin-top: 2px;
+  }
+  .meta-sep {
+    color: #D1D5DB;
+    padding: 0 5px;
+    user-select: none;
+  }
+
+  /* Capa tokens — colored text, no background */
+  .meta-capa-teorica   { color: #1E40AF; font-weight: 500; }
+  .meta-capa-analitica { color: #166534; font-weight: 500; }
+  .meta-capa-evaluativa{ color: #6B21A8; font-weight: 500; }
+
+  /* Action tag */
+  .meta-action { font-weight: 600; letter-spacing: 0.03em; }
+  .meta-action-REFERENCE { color: #1E40AF; }
+  .meta-action-CONTEXT   { color: #9CA3AF; }
+  .meta-action-FOLLOW-UP { color: #D97706; }
+  .meta-action-URGENT    { color: #DC2626; }
+
+  /* Content type */
+  .meta-type { color: #9CA3AF; letter-spacing: 0.04em; }
+
+  /* Tier */
+  .meta-tier { font-weight: 600; }
+  .meta-tier-1 { color: #1E3A8A; }  /* T1 institutional */
+  .meta-tier-2 { color: #065F46; }  /* T2 expert */
+  .meta-tier-3 { color: #92400E; }  /* T3 general */
+
+  /* Expanded body */
   .card-body {
-    margin-top: 14px;
-    padding-left: 14px;
+    margin-top: 14px; padding-left: 14px;
     border-left: 2px solid #E5E7EB;
     display: none;
   }
   .card-body.open { display: block; }
-  .card-body p {
-    font-size: 14px; line-height: 1.7;
-    margin: 0 0 10px; color: #4B5563;
-  }
+  .card-body p { font-size: 14px; line-height: 1.7; margin: 0 0 10px; color: #4B5563; }
   .card-body p.thesis { color: #111; font-weight: 500; }
   .card-body .read-link { font-size: 13px; font-weight: 500; }
 
   /* ── Pagination ── */
   .pagination {
-    display: flex; gap: 8px;
-    justify-content: center;
-    padding: 32px 0 0;
-    align-items: center;
-    flex-wrap: wrap;
+    display: flex; gap: 8px; justify-content: center;
+    padding: 32px 0 0; align-items: center; flex-wrap: wrap;
   }
   .btn-page {
     padding: 7px 12px; font-size: 13px;
@@ -303,42 +220,24 @@
 
   <!-- View tabs -->
   <div class="view-tabs">
-    <button class="view-tab active" id="tab-newsfeed" onclick="switchView('newsfeed')">📰 Newsfeed</button>
-    <button class="view-tab" id="tab-archive"  onclick="switchView('archive')">🗂 Archive</button>
-    <button class="view-tab" id="tab-published" onclick="switchView('published')">📅 By Publish Date</button>
+    <button class="view-tab active" id="tab-newsfeed"  onclick="switchView('newsfeed')">📰 Newsfeed</button>
+    <button class="view-tab"        id="tab-archive"   onclick="switchView('archive')">🗂 Archive</button>
+    <button class="view-tab"        id="tab-published" onclick="switchView('published')">📅 By Publish Date</button>
   </div>
 
-  <!-- Filters -->
-  <div class="filters" id="filters">
+  <!-- Search bar (search + sort only, no filter buttons) -->
+  <div class="search-bar">
     <input type="text" id="searchInput" placeholder="Search title, scholar, topic…"
            onkeydown="if(event.key==='Enter')submitSearch()" />
     <button class="btn-search" onclick="submitSearch()">Search</button>
-    <button class="btn-clear" id="btnClear" onclick="clearFilters()" style="display:none">✕ Clear</button>
-
-    <div class="filter-row">
-      <!-- Importance -->
-      <button class="btn-imp" id="btn-ALTA"  onclick="toggleImp('ALTA')">Alta</button>
-      <button class="btn-imp" id="btn-MEDIA" onclick="toggleImp('MEDIA')">Media</button>
-      <button class="btn-imp" id="btn-BAJA"  onclick="toggleImp('BAJA')">Baja</button>
-
-      <span style="font-size:11px;color:#D1D5DB;padding:0 2px">│</span>
-
-      <!-- Tier -->
-      <button class="btn-tier" id="btn-t1" onclick="toggleTier('1')" title="Institutional — official sources, government, courts">T1 Institutional</button>
-      <button class="btn-tier" id="btn-t2" onclick="toggleTier('2')" title="Expert — scholars, think tanks, established commentary">T2 Expert</button>
-      <button class="btn-tier" id="btn-t3" onclick="toggleTier('3')" title="General — broad searches, news, mixed quality">T3 General</button>
-
-      <span style="font-size:11px;color:#D1D5DB;padding:0 2px">│</span>
-
-      <!-- Sort (only visible in archive and by-publish views) -->
-      <select id="selSort" onchange="applyFilters()" style="display:none">
-        <option value="date-desc">Found: newest first</option>
-        <option value="date-asc">Found: oldest first</option>
-        <option value="date-published-desc">Published: newest first</option>
-        <option value="date-published-asc">Published: oldest first</option>
-        <option value="importance">By importance</option>
-      </select>
-    </div>
+    <button class="btn-clear" id="btnClear" onclick="clearSearch()" style="display:none">✕ Clear</button>
+    <select id="selSort" onchange="applySort()" style="display:none">
+      <option value="date-desc">Found: newest first</option>
+      <option value="date-asc">Found: oldest first</option>
+      <option value="date-published-desc">Published: newest first</option>
+      <option value="date-published-asc">Published: oldest first</option>
+      <option value="importance">By importance</option>
+    </select>
   </div>
   <p class="filter-count" id="filterCount"></p>
 
@@ -355,15 +254,14 @@
 
 <script>
 // ── Config ───────────────────────────────────────────────────
-const API_URL = "https://script.google.com/macros/s/AKfycbzk2vhu-qcKFBPqEImKGEZKSitpVZv1IQQEv5ZzG7pNfo-iPUWfvSoLWWnkoc8d8PQQ/exec";
-const PAGE_LIMIT     = 50;   // items per page in archive/published views
-const NEWSFEED_LIMIT = 5;    // scan runs per page in newsfeed
+const API_URL        = "https://script.google.com/macros/s/AKfycbzk2vhu-qcKFBPqEImKGEZKSitpVZv1IQQEv5ZzG7pNfo-iPUWfvSoLWWnkoc8d8PQQ/exec";
+const PAGE_LIMIT     = 50;
+const NEWSFEED_LIMIT = 5;
 
 // ── State ────────────────────────────────────────────────────
 let state = {
-  view: "newsfeed",   // newsfeed | archive | published
-  page: 1,
-  importance: "", tier: "", search: "",
+  view: "newsfeed",
+  page: 1, search: "",
   rows: [], groups: [],
   total: 0, total_pages: 1, has_next: false, has_prev: false,
   loading: false, lastFetch: null,
@@ -376,26 +274,22 @@ function switchView(view) {
   state.page = 1;
   expandedIds.clear();
 
-  // Update tab styles
-  ["newsfeed","archive","published"].forEach(v => {
-    document.getElementById("tab-" + v).classList.toggle("active", v === view);
-  });
+  ["newsfeed","archive","published"].forEach(v =>
+    document.getElementById("tab-" + v).classList.toggle("active", v === view)
+  );
 
-  // Show sort dropdown only in archive and published views
   const sortEl = document.getElementById("selSort");
   if (view === "newsfeed") {
     sortEl.style.display = "none";
   } else {
     sortEl.style.display = "";
-    // Default sort per view
-    if (view === "published") sortEl.value = "date-published-desc";
-    else sortEl.value = "date-desc";
+    sortEl.value = view === "published" ? "date-published-desc" : "date-desc";
   }
 
   fetchData();
 }
 
-// ── Build API URL ────────────────────────────────────────────
+// ── Build URL ────────────────────────────────────────────────
 function buildUrl() {
   const isNewsfeed = state.view === "newsfeed";
   const action = isNewsfeed ? "getNewsfeed" : "getPage";
@@ -405,26 +299,20 @@ function buildUrl() {
     + "&page=" + state.page
     + "&limit=" + limit;
 
-  if (state.importance) url += "&importance=" + encodeURIComponent(state.importance);
-  if (state.tier)       url += "&tier=" + encodeURIComponent(state.tier);
-  if (state.search)     url += "&search=" + encodeURIComponent(state.search);
+  if (state.search) url += "&search=" + encodeURIComponent(state.search);
 
   if (!isNewsfeed) {
-    const sort = document.getElementById("selSort").value;
-    url += "&sort=" + encodeURIComponent(sort);
+    url += "&sort=" + encodeURIComponent(document.getElementById("selSort").value);
   }
 
   return url;
 }
 
-// ── JSONP fetch ──────────────────────────────────────────────
+// ── JSONP ────────────────────────────────────────────────────
 function jsonp(url) {
   return new Promise((resolve, reject) => {
     const cbName = "_cb_" + Math.random().toString(36).slice(2);
-    const timer = setTimeout(() => {
-      delete window[cbName];
-      reject(new Error("Request timed out after 25s"));
-    }, 25000);
+    const timer = setTimeout(() => { delete window[cbName]; reject(new Error("Request timed out")); }, 25000);
     window[cbName] = data => { clearTimeout(timer); delete window[cbName]; resolve(data); };
     const s = document.createElement("script");
     s.src = url + "&callback=" + cbName;
@@ -452,19 +340,10 @@ async function fetchData() {
     state.page        = data.page || state.page;
     state.lastFetch   = new Date();
 
-    if (state.view === "newsfeed") {
-      state.groups = data.groups || [];
-    } else {
-      state.rows = data.rows || [];
-    }
+    if (state.view === "newsfeed") state.groups = data.groups || [];
+    else                           state.rows   = data.rows   || [];
 
-    // Update global stats if provided
-    if (data.stats) {
-      renderHeader(data.stats);
-    } else {
-      renderHeader(null);
-    }
-
+    renderHeader(data.stats || null);
     renderMainContent();
     renderPagination();
   } catch(e) {
@@ -473,164 +352,151 @@ async function fetchData() {
 
   state.loading = false;
   setRefreshBtn(false);
-  if (state.lastFetch) {
+  if (state.lastFetch)
     document.getElementById("lastFetch").textContent =
       state.lastFetch.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  }
 }
 
 function refresh() { fetchData(); }
 
-// ── Filter actions ───────────────────────────────────────────
-function applyFilters() {
-  state.page = 1;
-  updateClearBtn();
-  fetchData();
-}
-
 function submitSearch() {
   state.search = document.getElementById("searchInput").value.trim();
   state.page = 1;
-  updateClearBtn();
+  document.getElementById("btnClear").style.display = state.search ? "inline" : "none";
   fetchData();
 }
 
-function toggleImp(imp) {
-  ["ALTA","MEDIA","BAJA"].forEach(i => {
-    const btn = document.getElementById("btn-" + i);
-    const wasActive = btn.classList.contains("active-" + i);
-    btn.className = "btn-imp" + (i === imp && !wasActive ? " active-" + i : "");
-  });
-  state.importance = document.getElementById("btn-ALTA").classList.contains("active-ALTA")   ? "ALTA"
-                   : document.getElementById("btn-MEDIA").classList.contains("active-MEDIA") ? "MEDIA"
-                   : document.getElementById("btn-BAJA").classList.contains("active-BAJA")   ? "BAJA" : "";
-  applyFilters();
-}
-
-function toggleTier(t) {
-  ["1","2","3"].forEach(n => {
-    const btn = document.getElementById("btn-t" + n);
-    const wasActive = btn.classList.contains("active-t" + n);
-    btn.className = "btn-tier" + (n === t && !wasActive ? " active-t" + n : "");
-  });
-  state.tier = document.getElementById("btn-t1").classList.contains("active-t1") ? "1"
-             : document.getElementById("btn-t2").classList.contains("active-t2") ? "2"
-             : document.getElementById("btn-t3").classList.contains("active-t3") ? "3" : "";
-  applyFilters();
-}
-
-function clearFilters() {
+function clearSearch() {
   document.getElementById("searchInput").value = "";
-  document.getElementById("selSort").value = state.view === "published" ? "date-published-desc" : "date-desc";
-  ["ALTA","MEDIA","BAJA"].forEach(i => document.getElementById("btn-" + i).className = "btn-imp");
-  ["1","2","3"].forEach(n => document.getElementById("btn-t" + n).className = "btn-tier");
-  state.importance = ""; state.tier = ""; state.search = "";
+  state.search = "";
   state.page = 1;
-  updateClearBtn();
+  document.getElementById("btnClear").style.display = "none";
   fetchData();
 }
 
-function updateClearBtn() {
-  const has = state.importance || state.tier || state.search;
-  document.getElementById("btnClear").style.display = has ? "inline" : "none";
+function applySort() {
+  state.page = 1;
+  fetchData();
 }
 
 function goPage(p) { state.page = p; fetchData(); }
 
 // ── Render ───────────────────────────────────────────────────
 function renderMainContent() {
-  if (state.view === "newsfeed") {
-    renderNewsfeed();
-  } else {
-    renderFlat();
-  }
+  state.view === "newsfeed" ? renderNewsfeed() : renderFlat();
 }
 
 function renderHeader(stats) {
   const el = document.getElementById("headerStats");
-  const isFiltered = state.importance || state.tier || state.search;
   if (stats) {
     el.innerHTML = `
-      <span><strong>${stats.total_all}</strong> total items</span>
-      <span><span style="color:#DC2626;font-weight:600">${stats.alta}</span> Alta</span>
-      <span><span style="color:#D97706;font-weight:600">${stats.media}</span> Media</span>
-      <span><span style="color:#9CA3AF;font-weight:600">${stats.baja}</span> Baja</span>
-      ${isFiltered ? `<span>· <strong>${state.total}</strong> matching filter</span>` : ""}
+      <span><strong>${stats.total_all}</strong> total</span>
+      <span style="color:#DC2626;font-weight:600">${stats.alta}</span> Alta ·
+      <span style="color:#D97706;font-weight:600">${stats.media}</span> Media ·
+      <span style="color:#9CA3AF;font-weight:600">${stats.baja}</span> Baja
+      ${state.search ? `<span>· <strong>${state.total}</strong> matching</span>` : ""}
     `;
   } else {
-    el.innerHTML = `<span><strong>${state.total}</strong> ${isFiltered ? "matching" : "total"} items</span>`;
+    el.innerHTML = `<span><strong>${state.total}</strong> ${state.search ? "matching" : "total"} items</span>`;
   }
 
-  const count = document.getElementById("filterCount");
-  count.textContent = state.total_pages > 1
-    ? `Page ${state.page} of ${state.total_pages} · ${state.total} items`
-    : (isFiltered && state.total ? `${state.total} items matching` : "");
+  document.getElementById("filterCount").textContent = state.total_pages > 1
+    ? `Page ${state.page} of ${state.total_pages} · ${state.total} items` : "";
 }
 
-// ── Newsfeed render ──────────────────────────────────────────
+// ── Newsfeed ─────────────────────────────────────────────────
 function renderNewsfeed() {
   if (!state.groups || !state.groups.length) {
-    renderMain('<div class="state-msg">No scan runs found. Run <code>news</code> to start monitoring.</div>');
+    renderMain('<div class="state-msg">No scan runs found. Run <code>news</code> to populate.</div>');
     return;
   }
-
-  const html = state.groups.map(group => {
-    const dateLabel = formatRunDate(group.date);
-    const runLabel  = group.run_id && group.run_id !== group.date ? group.run_id : "";
-
-    const cards = group.rows.map((item, idx) => renderCard(item, group.run_id + "-" + idx)).join("");
-
+  renderMain(state.groups.map(group => {
+    const runLabel = group.run_id && group.run_id !== group.date ? group.run_id : "";
     return `
       <div class="run-group">
         <div class="run-header">
-          <span class="run-date">${dateLabel}</span>
+          <span class="run-date">${formatRunDate(group.date)}</span>
           ${runLabel ? `<span class="run-id-label">${runLabel}</span>` : ""}
           <div class="run-summary">
-            ${group.alta  ? `<span class="run-count run-count-alta">${group.alta} Alta</span>` : ""}
+            ${group.alta  ? `<span class="run-count run-count-alta">${group.alta} Alta</span>`   : ""}
             ${group.media ? `<span class="run-count run-count-media">${group.media} Media</span>` : ""}
-            ${group.baja  ? `<span class="run-count run-count-baja">${group.baja} Baja</span>` : ""}
-            <span class="run-count run-count-total">${group.total} total</span>
+            ${group.baja  ? `<span class="run-count run-count-baja">${group.baja} Baja</span>`   : ""}
+            <span class="run-count run-count-total">${group.total}</span>
           </div>
         </div>
-        ${cards}
+        ${group.rows.map((item, i) => renderCard(item, group.run_id + "-" + i)).join("")}
       </div>`;
-  }).join("");
-
-  renderMain(html);
+  }).join(""));
 }
 
-// ── Flat render (archive / by publish date) ──────────────────
+// ── Flat ─────────────────────────────────────────────────────
 function renderFlat() {
   if (!state.rows.length) {
-    renderMain('<div class="state-msg">No results match your filters.</div>');
+    renderMain('<div class="state-msg">No results.</div>');
     return;
   }
-  renderMain(state.rows.map((item, idx) => renderCard(item, "card-" + state.page + "-" + idx)).join(""));
+  renderMain(state.rows.map((item, i) => renderCard(item, "c-" + state.page + "-" + i)).join(""));
 }
 
 // ── Card ─────────────────────────────────────────────────────
 function renderCard(item, id) {
-  const imp = item.importance || "BAJA";
-  const act = item.action_tag || "CONTEXT";
-  const ACTION_SYM = { REFERENCE: "◆", CONTEXT: "○", "FOLLOW-UP": "→", URGENT: "!" };
-  const sym = ACTION_SYM[act] || "○";
-  const tier = String(item.tier || "");
-  const TIER_LABELS = { "1": "Institutional", "2": "Expert", "3": "General" };
-
-  const paras = (item.thesis_relevance || "").split(/\n\n+/).filter(p => p.trim());
+  const imp    = item.importance || "BAJA";
+  const act    = item.action_tag || "CONTEXT";
+  const tier   = String(item.tier || "");
   const isOpen = expandedIds.has(id);
 
-  const byline = [
-    item.source,
-    item.date_published ? "· " + formatDate(item.date_published) : "",
-    item.scholar ? `· <span class="scholar">${item.scholar}</span>` : "",
-    item.language && item.language !== "en" ? `· <span class="lang">${item.language}</span>` : "",
-  ].filter(Boolean).join(" ");
+  // ── Byline: source · date · scholar · lang ──
+  const bylineParts = [
+    item.source || "",
+    item.date_published ? formatDate(item.date_published) : "",
+    item.scholar ? `<span class="scholar">${item.scholar}</span>` : "",
+    item.language && item.language !== "en" ? `<span class="lang">${item.language}</span>` : "",
+  ].filter(Boolean);
+  const byline = bylineParts.join('<span class="meta-sep">·</span>');
 
-  const bodyParas = paras.map((p, i) => {
-    const cls = i === paras.length - 1 ? " thesis" : "";
-    return `<p class="${cls}">${p}</p>`;
-  }).join("");
+  // ── Metadata line: capas · action · content type · tier ──
+  const metaParts = [];
+
+  // Capas — colored text tokens
+  (item.capa || "").split(",").forEach(c => {
+    c = c.trim().toLowerCase();
+    if (!c) return;
+    const cls = c.includes("teór") || c.includes("teor") ? "meta-capa-teorica"
+              : c.includes("analí") || c.includes("anali") ? "meta-capa-analitica"
+              : c.includes("eval") ? "meta-capa-evaluativa" : "meta-capa-teorica";
+    // Display abbreviated label
+    const label = c.includes("teór") || c.includes("teor") ? "Teórica"
+                : c.includes("analí") || c.includes("anali") ? "Analítica"
+                : c.includes("eval") ? "Evaluativa" : c;
+    metaParts.push(`<span class="${cls}">${label}</span>`);
+  });
+
+  // Action tag
+  const actCls = `meta-action meta-action-${act}`;
+  const ACT_LABELS = { REFERENCE: "Reference", CONTEXT: "Context", "FOLLOW-UP": "Follow-up", URGENT: "Urgent" };
+  metaParts.push(`<span class="${actCls}">${ACT_LABELS[act] || act}</span>`);
+
+  // Content type
+  if (item.content_type) {
+    metaParts.push(`<span class="meta-type">${item.content_type}</span>`);
+  }
+
+  // Tier
+  if (tier) {
+    const TIER_LABELS = { "1": "T1", "2": "T2", "3": "T3" };
+    metaParts.push(`<span class="meta-tier meta-tier-${tier}">${TIER_LABELS[tier] || "T"+tier}</span>`);
+  }
+
+  // Join with thin separator dots
+  const metaLine = metaParts.map((p, i) =>
+    i === 0 ? p : `<span class="meta-sep">·</span>${p}`
+  ).join("");
+
+  // ── Body paragraphs ──
+  const paras = (item.thesis_relevance || "").split(/\n\n+/).filter(p => p.trim());
+  const bodyParas = paras.map((p, i) =>
+    `<p${i === paras.length - 1 ? ' class="thesis"' : ""}>${p}</p>`
+  ).join("");
 
   const link = item.url
     ? `<a class="read-link" href="${item.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Read source →</a>`
@@ -638,15 +504,10 @@ function renderCard(item, id) {
 
   return `
     <article onclick="toggleCard('${id}')">
-      <div class="card-meta">
-        <span class="badge badge-imp-${imp}">${{ALTA:"Alta",MEDIA:"Media",BAJA:"Baja"}[imp]||imp}</span>
-        ${capaBadges(item.capa)}
-        ${tier ? `<span class="badge-tier badge-tier-${tier}">${TIER_LABELS[tier]||"T"+tier}</span>` : ""}
-        <span class="action-tag action-${act}">${sym} ${act}</span>
-        ${item.content_type ? `<span class="content-type">${item.content_type}</span>` : ""}
-      </div>
+      <span class="card-imp imp-${imp}">${{ALTA:"Alta",MEDIA:"Media",BAJA:"Baja"}[imp]||imp}</span>
       <h2 class="card-title">${item.title || "(no title)"}</h2>
       <div class="card-byline">${byline}</div>
+      <div class="card-meta-line">${metaLine}</div>
       <div class="card-body${isOpen ? " open" : ""}" id="${id}">
         ${bodyParas}
         ${link}
@@ -654,25 +515,14 @@ function renderCard(item, id) {
     </article>`;
 }
 
-function capaBadges(capa) {
-  return (capa || "").split(",").map(c => {
-    c = c.trim();
-    if (!c) return "";
-    const cls = c.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    return `<span class="badge badge-small badge-${cls}">${c}</span>`;
-  }).join(" ");
-}
-
 function toggleCard(id) {
   const el = document.getElementById(id);
   if (!el) return;
   if (expandedIds.has(id)) { expandedIds.delete(id); el.classList.remove("open"); }
-  else                     { expandedIds.add(id);    el.classList.add("open"); }
+  else                     { expandedIds.add(id);    el.classList.add("open");    }
 }
 
-function renderMain(html) {
-  document.getElementById("main").innerHTML = html;
-}
+function renderMain(html) { document.getElementById("main").innerHTML = html; }
 
 // ── Pagination ───────────────────────────────────────────────
 function renderPagination() {
@@ -701,7 +551,7 @@ function setRefreshBtn(loading) {
   btn.disabled = loading;
 }
 
-// ── Date helpers ─────────────────────────────────────────────
+// ── Dates ────────────────────────────────────────────────────
 function formatDate(d) {
   if (!d) return "";
   const dt = new Date(d);
@@ -730,7 +580,8 @@ function exportMarkdown() {
     if (item.scholar)    lines.push(`Scholar: ${item.scholar}`);
     if (item.capa)       lines.push(`Capa: ${item.capa}`);
     if (item.action_tag) lines.push(`Action: ${item.action_tag}`);
-    if (item.tier)       lines.push(`Tier: ${item.tier}`);
+    if (item.content_type) lines.push(`Type: ${item.content_type}`);
+    if (item.tier)       lines.push(`Tier: T${item.tier}`);
     lines.push("");
     if (item.thesis_relevance) lines.push(item.thesis_relevance);
     if (item.url)        lines.push(`\n[Source](${item.url})`);
@@ -739,20 +590,17 @@ function exportMarkdown() {
 
   const text = lines.join("\n");
   navigator.clipboard.writeText(text)
-    .then(() => alert("Copied to clipboard ✓"))
+    .then(() => alert("Copied ✓"))
     .catch(() => {
       const ta = document.createElement("textarea");
-      ta.value = text;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      document.body.removeChild(ta);
-      alert("Copied ✓");
+      ta.value = text; document.body.appendChild(ta);
+      ta.select(); document.execCommand("copy");
+      document.body.removeChild(ta); alert("Copied ✓");
     });
 }
 
-// ── Init ─────────────────────────────────────────────────────
-fetchData(); // starts in newsfeed view by default
+// ── Init ────────────────────────────────────────────────────
+fetchData();
 </script>
 </body>
 </html>
