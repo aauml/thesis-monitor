@@ -13,6 +13,7 @@
       --text-muted: #8a8a8a;
       --accent: #1a3a5c;
       --accent-soft: #e8eef4;
+      --accent-mid: #4a7aac;
       --border: #d4d4d4;
       --bg: #fdfdfd;
       --serif: 'Source Serif 4', Georgia, serif;
@@ -21,88 +22,177 @@
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: var(--sans); font-size: 15px; line-height: 1.7; color: var(--text); background: var(--bg); -webkit-font-smoothing: antialiased; }
-    .container { max-width: 780px; margin: 0 auto; padding: 3rem 2rem 5rem; }
-    header { margin-bottom: 3rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--accent); }
-    header h1 { font-family: var(--serif); font-size: 2rem; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; margin-bottom: 0.25rem; }
-    header .subtitle { font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
-    section { margin-bottom: 2.5rem; }
-    h2 { font-family: var(--serif); font-size: 1.4rem; font-weight: 700; color: var(--accent); margin-bottom: 1.25rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
-    h3 { font-family: var(--sans); font-size: 0.85rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+    .container { max-width: 760px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+
+    /* ── Header ── */
+    header { margin-bottom: 2.5rem; padding-bottom: 1.25rem; border-bottom: 2px solid var(--accent); }
+    .header-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.6rem; }
+    header h1 { font-family: var(--serif); font-size: 1.85rem; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; }
+    header .meta { font-size: 0.82rem; color: var(--text-muted); font-style: italic; margin-bottom: 0.9rem; }
+    .thesis-title { font-family: var(--serif); font-size: 0.95rem; color: var(--text-light); line-height: 1.5; border-left: 3px solid var(--accent-mid); padding-left: 0.85rem; font-style: italic; }
+    .thesis-title strong { font-style: normal; color: var(--text); font-weight: 600; display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem; color: var(--text-muted); }
+
+    /* ── Map button ── */
+    .map-btn {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      font-size: 0.8rem; font-weight: 600; font-family: var(--sans);
+      color: var(--accent); background: var(--accent-soft);
+      border: 1px solid #b8cfe0; border-radius: 5px;
+      padding: 0.35rem 0.75rem; cursor: pointer;
+      white-space: nowrap; flex-shrink: 0;
+      transition: background 0.15s, border-color 0.15s;
+      text-decoration: none;
+    }
+    .map-btn:hover { background: #d8e8f4; border-color: var(--accent-mid); }
+    .map-btn svg { width: 13px; height: 13px; }
+
+    /* ── Sections ── */
+    section { margin-bottom: 2.25rem; }
+    h2 { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--border); }
+    h3 { font-family: var(--sans); font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 1.35rem; margin-bottom: 0.4rem; }
     h3:first-child { margin-top: 0; }
-    p { margin-bottom: 0.75rem; color: var(--text); }
-    .reading { margin-bottom: 1.1rem; }
-    .author { font-weight: 700; }
-    .badge { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.1rem 0.5rem; border-radius: 3px; margin-left: 0.5rem; vertical-align: middle; }
+    p { margin-bottom: 0.65rem; color: var(--text); }
+
+    /* ── Notes style ── */
+    .note { font-size: 0.93rem; color: var(--text); line-height: 1.65; margin-bottom: 0.55rem; }
+    .reading-entry { margin-bottom: 1rem; padding-left: 0.9rem; border-left: 2px solid var(--border); }
+    .reading-entry .reading-title { font-weight: 700; font-size: 0.88rem; color: var(--accent); margin-bottom: 0.2rem; }
+    .reading-entry .note { font-size: 0.88rem; color: var(--text-light); }
+    .badge { display: inline-block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.08rem 0.45rem; border-radius: 3px; margin-left: 0.4rem; vertical-align: middle; }
     .badge-progress { background: #e6f4ea; color: #2d7a3f; }
     .badge-pending { background: #fff3e0; color: #a05c00; }
 
-    /* ── Shared collapsible style ── */
-    details { margin-bottom: 0.6rem; }
-    details summary { cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 0.75rem; padding: 0.55rem 0.75rem; border-left: 3px solid #d4d4d4; border-radius: 0 4px 4px 0; transition: background 0.15s; user-select: none; }
-    details summary:hover { background: var(--accent-soft); }
-    details[open] > summary { border-left-color: var(--accent); background: var(--accent-soft); border-radius: 0 4px 0 0; }
-    details summary::-webkit-details-marker { display: none; }
-    .toggle-icon { margin-left: auto; font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
-    .collapsible-body { border-left: 3px solid var(--accent); background: #fafcff; border-radius: 0 0 4px 0; }
+    /* ── Collapsible section wrapper (for Decisiones) ── */
+    details.section-collapse { margin-bottom: 2.25rem; }
+    details.section-collapse > summary {
+      cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between;
+      padding-bottom: 0.35rem; border-bottom: 1px solid var(--border);
+      user-select: none;
+    }
+    details.section-collapse > summary::-webkit-details-marker { display: none; }
+    details.section-collapse > summary h2 { margin: 0; padding: 0; border: none; }
+    .section-toggle { font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.3rem; }
+    .section-toggle span { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    details.section-collapse[open] .chevron { transform: rotate(90deg); }
+    .chevron { transition: transform 0.2s; display: inline-block; font-size: 0.75rem; }
+    .section-body { padding-top: 0.85rem; }
 
     /* ── Decision entries ── */
-    .summary-date { font-weight: 700; color: var(--accent); font-size: 0.88rem; white-space: nowrap; min-width: 6.5rem; }
-    .summary-preview { color: var(--text-light); font-size: 0.85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
-    details[open] .summary-preview { display: none; }
-    .decision-body { padding: 0.8rem 1rem; }
-    .decision-body p { margin-bottom: 0; font-size: 0.92rem; }
-    .decisions-controls { display: flex; gap: 0.75rem; margin-bottom: 1rem; }
-    .btn-text { font-size: 0.78rem; color: var(--accent); background: none; border: 1px solid var(--border); border-radius: 4px; padding: 0.2rem 0.6rem; cursor: pointer; font-family: var(--sans); }
-    .btn-text:hover { background: var(--accent-soft); }
-
-    /* ── Map section ── */
-    .map-section-summary { font-family: var(--serif); font-size: 1.4rem; font-weight: 700; color: var(--accent); border: none; border-bottom: 1px solid var(--border); padding: 0 0 0.4rem 0; margin-bottom: 0; border-left: none !important; background: none !important; border-radius: 0 !important; }
-    .map-section-summary:hover { background: none !important; }
-    details.map-section { margin-bottom: 2.5rem; }
-    details.map-section[open] > summary { background: none !important; border-left: none !important; border-bottom: 1px solid var(--border); border-radius: 0 !important; }
-    details.map-section > summary .toggle-icon { font-size: 0.9rem; color: var(--accent); }
-    .map-intro { font-size: 0.85rem; color: var(--text-muted); margin: 0.75rem 0 1rem; }
-
-    /* ── Map layers ── */
-    .layer { margin-bottom: 0.6rem; }
-    .layer > summary { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-light); padding: 0.45rem 0.75rem; }
-    .layer-body { padding: 0.5rem 0.25rem 0.75rem; }
-    .layer-body pre {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      line-height: 1.55;
-      color: var(--text);
-      white-space: pre-wrap;
-      word-break: break-word;
-      background: #f7f9fc;
-      border-radius: 4px;
-      padding: 0.85rem 1rem;
-      border: 1px solid #e2e8f0;
+    details.dec { margin-bottom: 0.5rem; }
+    details.dec > summary {
+      cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 0.65rem;
+      padding: 0.45rem 0.65rem; border-left: 2px solid #d0d0d0;
+      border-radius: 0 3px 3px 0; transition: background 0.12s; font-size: 0.88rem;
     }
-    .epist { background: #fffbe6; border: 1px solid #f0d080; border-radius: 4px; padding: 0.65rem 1rem; font-size: 0.82rem; color: #6b5000; margin-bottom: 1rem; font-style: italic; }
-    .epist strong { font-style: normal; color: #4a3500; }
+    details.dec > summary::-webkit-details-marker { display: none; }
+    details.dec > summary:hover { background: var(--accent-soft); }
+    details.dec[open] > summary { border-left-color: var(--accent); background: var(--accent-soft); border-radius: 0 3px 0 0; }
+    .dec-date { font-weight: 700; color: var(--accent); font-size: 0.82rem; white-space: nowrap; min-width: 6rem; }
+    .dec-preview { color: var(--text-light); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; font-size: 0.84rem; }
+    details.dec[open] .dec-preview { display: none; }
+    .dec-toggle { margin-left: auto; font-size: 0.7rem; color: var(--text-muted); flex-shrink: 0; }
+    .dec-body { border-left: 2px solid var(--accent); background: #fafcff; border-radius: 0 0 3px 0; padding: 0.65rem 0.9rem; font-size: 0.88rem; color: var(--text-light); line-height: 1.6; }
+
+    /* ── Controls ── */
+    .dec-controls { display: flex; gap: 0.6rem; margin-bottom: 0.75rem; }
+    .btn-sm { font-size: 0.73rem; color: var(--accent); background: none; border: 1px solid var(--border); border-radius: 4px; padding: 0.18rem 0.55rem; cursor: pointer; font-family: var(--sans); }
+    .btn-sm:hover { background: var(--accent-soft); }
 
     /* ── Tasks ── */
-    .task-group { margin-bottom: 1.25rem; }
-    .task-group p { margin-bottom: 0.4rem; padding-left: 0.75rem; position: relative; }
-    .task-group p::before { content: "\2013"; position: absolute; left: 0; color: var(--text-muted); }
-    .normative p { margin-bottom: 1rem; }
-    footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-muted); text-align: center; }
+    .task-group { margin-bottom: 1rem; }
+    .task-group .note { padding-left: 0.8rem; position: relative; }
+    .task-group .note::before { content: "–"; position: absolute; left: 0; color: var(--text-muted); }
+
+    /* ── Footer ── */
+    footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.78rem; color: var(--text-muted); text-align: center; }
+
+    /* ════════════════════════════════════════
+       MAP MODAL
+    ════════════════════════════════════════ */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(10, 20, 35, 0.6); backdrop-filter: blur(2px);
+      align-items: flex-start; justify-content: center; padding: 2rem 1rem;
+      overflow-y: auto;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--bg); border-radius: 8px; width: 100%; max-width: 820px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25); margin: auto;
+      display: flex; flex-direction: column;
+    }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 1.5rem; border-bottom: 2px solid var(--accent);
+      position: sticky; top: 0; background: var(--bg); border-radius: 8px 8px 0 0; z-index: 1;
+    }
+    .modal-header h2 { font-family: var(--serif); font-size: 1.2rem; color: var(--accent); margin: 0; border: none; padding: 0; }
+    .modal-close { background: none; border: none; font-size: 1.4rem; color: var(--text-muted); cursor: pointer; line-height: 1; padding: 0 0.25rem; }
+    .modal-close:hover { color: var(--text); }
+    .modal-body { padding: 1.25rem 1.5rem 1.75rem; overflow-y: auto; }
+    .epist-box {
+      background: #fffbe6; border: 1px solid #e8d060; border-radius: 5px;
+      padding: 0.6rem 1rem; font-size: 0.82rem; color: #5a4500;
+      font-style: italic; margin-bottom: 1.1rem; line-height: 1.55;
+    }
+    .epist-box strong { font-style: normal; }
+    .modal-controls { display: flex; gap: 0.6rem; margin-bottom: 0.9rem; flex-wrap: wrap; }
+
+    /* Map layers */
+    details.layer { margin-bottom: 0.5rem; }
+    details.layer > summary {
+      cursor: pointer; list-style: none; display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.5rem 0.75rem; background: var(--accent-soft);
+      border-radius: 5px; font-size: 0.8rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent);
+      transition: background 0.12s; user-select: none;
+    }
+    details.layer > summary::-webkit-details-marker { display: none; }
+    details.layer[open] > summary { border-radius: 5px 5px 0 0; background: #d4e4f4; }
+    details.layer > summary:hover { background: #d4e4f4; }
+    .layer-icon { font-size: 1rem; }
+    .layer-toggle { margin-left: auto; font-size: 0.7rem; color: var(--accent-mid); }
+    .layer-body {
+      border: 1px solid #c8dae8; border-top: none;
+      border-radius: 0 0 5px 5px; background: #f6f9fd;
+    }
+    .layer-body pre {
+      font-family: var(--mono); font-size: 0.72rem; line-height: 1.6;
+      color: #2a3a4a; white-space: pre-wrap; word-break: break-word;
+      padding: 0.9rem 1rem; margin: 0;
+    }
 
     @media (max-width: 600px) {
-      .container { padding: 2rem 1.25rem 3rem; }
-      header h1 { font-size: 1.6rem; }
-      h2 { font-size: 1.2rem; }
-      .summary-preview { display: none; }
+      .container { padding: 2rem 1.1rem 3rem; }
+      header h1 { font-size: 1.5rem; }
+      .header-top { flex-direction: column; align-items: flex-start; }
+      .dec-preview { display: none; }
+      .modal-overlay { padding: 0; }
+      .modal { border-radius: 0; min-height: 100vh; }
+      .modal-header { border-radius: 0; }
     }
   </style>
 </head>
 <body>
 <div class="container">
 
+  <!-- ── Header ── -->
   <header>
-    <h1>Log de Tesis Doctoral</h1>
-    <div class="subtitle">Arturo — Universidad de Salamanca · Director: Dr. Federico Bueno de Mata · Documento vivo, actualizado por sesión de trabajo.</div>
+    <div class="header-top">
+      <h1>Log de Tesis Doctoral</h1>
+      <button class="map-btn" onclick="openMap()">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="1" y="3" width="14" height="10" rx="1.5"/>
+          <path d="M5.5 3v10M10.5 3v10M1 8h14" stroke-linecap="round"/>
+        </svg>
+        Mapa conceptual
+      </button>
+    </div>
+    <div class="meta">Arturo — Universidad de Salamanca · Director: Dr. Federico Bueno de Mata · Documento vivo.</div>
+    <div class="thesis-title">
+      <strong>Título provisional</strong>
+      El Reglamento Europeo de Inteligencia Artificial (RIA) y el NIST AI RMF: Comparación de requisitos para sistemas de alto riesgo en el Departamento de Justicia de Estados Unidos
+    </div>
   </header>
 
   <!-- ══════════════════════════════════════
@@ -112,335 +202,143 @@
     <h2>Resumen</h2>
 
     <h3>Fase</h3>
-    <p>Año 0 (2026) — Inscripción y preparación. Estoy en la etapa de orientación teórica: antes de comenzar el trabajo formal de investigación en 2027, dedico este período a leer los textos fundacionales de cada pilar del marco teórico para poder hablar del tema con propiedad cuando llegue el momento. No es lectura de tesis todavía — es entender el campo y familiarizarme con los debates centrales en gobernanza de IA, regulación comparada, derecho procesal y contestabilidad algorítmica.</p>
+    <p class="note">Año 0 (2026) — Inscripción y preparación. Etapa de orientación teórica: antes de comenzar el trabajo formal de investigación, dedicar este período a leer los textos fundacionales de cada pilar del marco teórico para empaparme del tema. No es lectura de tesis todavía — es entender el campo y familiarizarme con los debates centrales en gobernanza de IA, regulación comparada, derecho procesal y contestabilidad algorítmica.</p>
 
-    <h3>Lecturas en curso</h3>
-    <div class="reading">
-      <p><span class="author">Kaminski, M. E. (2023).</span> «Regulating the Risks of AI» <span class="badge badge-progress">en progreso</span><br>
-      Estoy leyendo este texto para entender cómo la literatura académica enmarca la tensión entre regulación vinculante (modelo UE) y estándares técnicos voluntarios (modelo EE.UU.) — el debate de fondo de mi tesis. Producto esperado: ficha breve en Obsidian con mi comprensión propia, sin formato académico todavía.</p>
+    <h3>Lecturas</h3>
+
+    <div class="reading-entry">
+      <div class="reading-title">Kaminski (2023) — «Regulating the Risks of AI» <span class="badge badge-progress">en progreso</span></div>
+      <p class="note">Leer para entender cómo la literatura académica enmarca la tensión entre regulación vinculante (modelo UE) y estándares técnicos voluntarios (modelo EE.UU.) — el debate de fondo de la tesis. Producto esperado: ficha breve en Obsidian con mi comprensión propia, sin formato académico todavía.</p>
     </div>
-    <div class="reading">
-      <p><span class="author">Bradford, A. (2020).</span> «The Brussels Effect», caps. 1–3 <span class="badge badge-pending">pendiente</span><br>
-      Lo leeré después de Kaminski. Me interesa entender el mecanismo por el que la regulación europea termina aplicándose más allá de sus fronteras — algo directamente relevante para preguntarme si el AI Act podría tener efecto sobre agencias federales de EE.UU. Producto esperado: ficha en Obsidian.</p>
+
+    <div class="reading-entry">
+      <div class="reading-title">Bradford (2020) — «The Brussels Effect», caps. 1–3 <span class="badge badge-pending">pendiente</span></div>
+      <p class="note">Leer después de Kaminski. Entender el mecanismo por el que la regulación europea termina aplicándose más allá de sus fronteras — directamente relevante para preguntarme si el AI Act podría tener efecto sobre agencias federales de EE.UU. Producto esperado: ficha en Obsidian.</p>
     </div>
-    <div class="reading">
-      <p><span class="author">Textos de referencia (consulta puntual).</span> Engler (2023), Veale y Borgesius (2021), Veale et al. (2023). No los voy a leer linealmente ahora — los tengo disponibles para consultar puntualmente cuando aparezcan preguntas específicas durante la orientación.</p>
+
+    <div class="reading-entry">
+      <div class="reading-title">Consulta puntual: Engler (2023), Veale &amp; Borgesius (2021), Veale et al. (2023)</div>
+      <p class="note">No leer linealmente ahora — disponibles para consultar cuando aparezcan preguntas específicas durante la orientación.</p>
     </div>
 
     <h3>Caso de estudio</h3>
-    <p>Pendiente de confirmación con el Dr. Bueno de Mata. <strong>PATTERN</strong> (Bureau of Prisons, First Step Act) es el candidato primario — obtuvo puntuación máxima en los criterios de selección y tiene documentación pública sustancial. Hay una inclinación alternativa hacia <strong>STRmix</strong> (FBI Laboratory, genotipado probabilístico de ADN) por la tensión más directa entre secreto comercial y derecho de defensa. La decisión la tomaré con el director.</p>
+    <p class="note">Pendiente de confirmar con el Dr. Bueno de Mata. <strong>PATTERN</strong> (Bureau of Prisons / First Step Act) es el candidato primario — puntuación máxima en criterios de selección y buena documentación pública. Hay inclinación hacia <strong>STRmix</strong> (FBI Laboratory, genotipado probabilístico de ADN) por la tensión más directa entre secreto comercial y derecho de defensa. La decisión la tomo con el director.</p>
 
-    <h3>Recursos disponibles</h3>
-    <p>Tengo una biblioteca digital con <strong>551 archivos</strong> organizados en 9 carpetas temáticas. De esas fuentes, 140 están clasificadas como prioridad alta. Para consultas cruzadas utilizo una base de conocimiento con <strong>977 entradas</strong> — artículos académicos, libros, informes gubernamentales, textos normativos y literatura gris — consultable por capa teórica, tema e importancia.</p>
-    <p>Infraestructura de trabajo: Zotero con Better BibTeX (bibliografía), Obsidian (notas y escritura), Google Drive (PDFs). La citation key de Better BibTeX actúa como conector entre los tres sistemas.</p>
+    <h3>Recursos</h3>
+    <p class="note">Biblioteca digital con <strong>551 archivos</strong> en 9 carpetas temáticas — 140 en prioridad alta. Base de conocimiento con <strong>977 entradas</strong> (artículos, libros, informes, textos normativos, literatura gris), consultable por capa teórica, tema e importancia.</p>
+    <p class="note">Infraestructura: Zotero + Better BibTeX para bibliografía, Obsidian para notas, Google Drive para PDFs. La citation key de BibTeX actúa como conector entre los tres sistemas.</p>
 
-    <h3>Marco normativo actualizado</h3>
-    <div class="normative">
-      <p>Hay cambios posteriores al plan de investigación que tengo integrados. La EO 14110 fue revocada en enero de 2025 y sustituida por la EO 14179, con un enfoque menos prescriptivo. El memorándum OMB M-24-10 fue rescindido y reemplazado por M-25-21 (abril 2025) con requisitos significativamente reducidos. El Convenio Marco CETS 225 entró en vigor en noviembre de 2025 — primer tratado internacional vinculante en materia de IA. El Reglamento de Ejecución 2025/454 reguló el Panel Científico del AI Act. Estos cambios afectan el capítulo de contexto normativo, pero no modifican la pregunta de investigación.</p>
-      <p>Hallazgo relevante: ninguno de los sistemas evaluados del Departamento de Justicia tiene publicado un AI Impact Assessment pese a los requisitos OMB. Lo trato como hallazgo empírico dentro del análisis de cumplimiento documentable, no como limitación metodológica.</p>
-    </div>
+    <h3>Marco normativo — cambios post-plan</h3>
+    <p class="note">EO 14110 revocada (ene 2025) → sustituida por EO 14179, enfoque menos prescriptivo. OMB M-24-10 rescindida → M-25-21 (abr 2025), requisitos significativamente reducidos. Convenio CETS 225 en vigor nov 2025 — primer tratado internacional vinculante sobre IA. Reglamento de Ejecución 2025/454 regula el Panel Científico del AI Act. Estos cambios afectan el capítulo de contexto normativo pero no la pregunta de investigación.</p>
+    <p class="note">Hallazgo: ningún sistema evaluado del DOJ tiene AI Impact Assessment publicado pese a los requisitos OMB — lo trato como hallazgo empírico, no como limitación metodológica.</p>
   </section>
 
   <!-- ══════════════════════════════════════
-       MAPA CONCEPTUAL (colapsable)
+       REGISTRO DE DECISIONES (sección colapsable)
   ═══════════════════════════════════════ -->
-  <details class="map-section">
-    <summary class="map-section-summary">
-      Mapa conceptual de la tesis
-      <span class="toggle-icon">▸</span>
+  <details class="section-collapse" id="sec-decisiones">
+    <summary>
+      <h2>Registro de decisiones</h2>
+      <div class="section-toggle"><span class="chevron">▶</span></div>
     </summary>
-
-    <p class="map-intro">Referencia de orientación. Abre la capa que necesitas; el resto permanece contraído.</p>
-
-    <div class="epist">
-      <strong>Supuesto epistemológico transversal:</strong> «Cumplimiento documentable ≠ cumplimiento real.» Esta tesis mide evidencia pública disponible, no implementación efectiva. Aplica a todas las capas como limitación constitutiva, no como debilidad.
-    </div>
-
-    <!-- Capa metodológica -->
-    <details class="layer collapsible-body" style="margin-bottom:0.6rem;">
-      <summary>Capa metodológica <span class="toggle-icon">▸</span></summary>
-      <div class="layer-body">
-        <pre>├── Metodología de derecho comparado
-│   ├── Equivalencia funcional como método
-│   │   └── Zweigert & Kötz (1998); Siems (2018); Reimann & Zimmermann (2019)
-│   ├── Investigación jurídica contextualizada
-│   │   └── Taekema & van der Burg (2021); Van Hoecke (2011)
-│   └── Análisis comparado de políticas
-│       └── Peters & Fontaine (2020); Ragin (2014); Mahoney & Rueschemeyer (2003)
-├── Estudio de caso instrumental
-│   ├── Diseño → Yin (2018); Gerring (2017); Stake (1995)
-│   ├── Análisis documental → Bowen (2009); Tight (2019)
-│   └── Codificación cualitativa → Saldaña (2021); Krippendorff (2018); Miles et al. (2014)
-├── Fuentes públicas — tipología y límites
-│   ├── Documentos primarios: textos normativos, guidance, OIG reports,
-│   │   AI use case inventories, PIAs, congressional testimony
-│   ├── Documentos secundarios: crosswalks, scholarly analysis,
-│   │   think tank reports, audit frameworks
-│   └── Límite: acceso FOIA, disponibilidad pública, no confidencial
-└── Precedente metodológico de crosswalk
-    └── West et al. (2025) CCPL; GLACIS crosswalk guide</pre>
+    <div class="section-body">
+      <div class="dec-controls">
+        <button class="btn-sm" onclick="toggleAllDec(true)">Expandir todo</button>
+        <button class="btn-sm" onclick="toggleAllDec(false)">Contraer todo</button>
       </div>
-    </details>
 
-    <!-- Capa teórica -->
-    <details class="layer collapsible-body" style="margin-bottom:0.6rem;">
-      <summary>Capa teórica — cuatro pilares <span class="toggle-icon">▸</span></summary>
-      <div class="layer-body">
-        <pre>├── 1. Gobernanza de IA comparada
-│   ├── Enfoque normativo vinculante (modelo UE / RIA)
-│   │   └── Bradford (2020) Brussels Effect; Bradford (2023) Digital Empires
-│   ├── Enfoque basado en estándares voluntarios (modelo EE.UU. / NIST)
-│   │   └── Mulligan & Bamberger (2019); Swaminathan & Danks (2024)
-│   ├── Convergencia transatlántica y divergencia política
-│   │   └── Fahey (2013, 2016); Chinen (2023); Siegmann & Anderljung (2022)
-│   └── Efecto Bruselas en IA
-│       └── Bradford (2020); Veale et al. (2023)
-├── 2. Teoría regulatoria
-│   ├── Regulación responsiva
-│   │   └── Ayres & Braithwaite (1992); Black & Baldwin (2010); Black (1997)
-│   ├── Equivalencia funcional como concepto jurídico
-│   │   └── Zweigert & Kötz (1998); Smits (2012)
-│   └── Estado de derecho y decisión automatizada
-│       └── Yeung (2018); Suksi (2023); Schaferling (2022)
-├── 3. Derecho procesal y prueba electrónica
-│   ├── Admisibilidad de evidencia algorítmica
-│   │   └── Faigman et al. (2019); Giannelli et al. (2012);
-│   │       Mueller et al. (2018); Roth (2017)
-│   ├── Secreto comercial vs. due process
-│   │   └── Wexler (2018); Chan (2024); Citron (2008)
-│   └── Prueba científica y estándares forenses
-│       └── Gascon (2010); Taruffo (1992); Nieva Fenoll (2010); Damaska (1986)
-└── 4. Contestabilidad algorítmica
-    ├── Derecho a impugnar decisiones automatizadas
-    │   └── Kaminski & Urban (2021); Lyons et al. (2021); Landau et al. (2024)
-    ├── Explicabilidad y transparencia procesal
-    │   └── Henin & Le Métayer (2021); Wachter et al. (2017); Selbst & Powles (2017)
-    └── Acceso epistémico previo a la impugnación
-        "No puedes impugnar lo que no sabes que existe"
-        └── Wexler (2018, 2024); Judson et al. (2024); Citron (2008); Chan (2024)</pre>
-      </div>
-    </details>
+      <details class="dec">
+        <summary><span class="dec-date">2026-03-03</span><span class="dec-preview">PM Log rediseñado: notas personales, mapa como modal, sección decisiones colapsable…</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">PM Log rediseñado. Cambios principales: tono de notas personales (primera persona, registro informal), mapa conceptual convertido en modal accesible desde botón en el header, sección de decisiones colapsable como bloque completo, sección principal renombrada a Resumen, eliminación del nivel de tareas semanales. El documento mantiene estructura flexible — las secciones pueden modificarse según necesidades.</div>
+      </details>
 
-    <!-- Capa analítica -->
-    <details class="layer collapsible-body" style="margin-bottom:0.6rem;">
-      <summary>Capa analítica — matriz RIA ↔ NIST AI RMF <span class="toggle-icon">▸</span></summary>
-      <div class="layer-body">
-        <pre>├── Art. 9 ↔ MAP / MEASURE   [Gestión de riesgos]
-│   ├── Obligación RIA: sistema de gestión de riesgos documentado,
-│   │   iterativo, integrado con ciclo de vida del sistema
-│   ├── Función NIST: MAP (contexto y riesgos), MEASURE (métricas)
-│   ├── Fuentes esperadas: PIAs, audit reports, OIG reports,
-│   │   risk management frameworks agenciales
-│   └── Tensión: RIA exige documentación formal; NIST recomienda proceso
-│
-├── Art. 10 ↔ MAP / GOVERN   [Gobernanza de datos]
-│   ├── Obligación RIA: datos de entrenamiento y validación documentados,
-│   │   sesgos identificados, calidad verificable
-│   ├── Función NIST: MAP (contexto de datos), GOVERN (políticas de datos)
-│   ├── Fuentes esperadas: data governance policies, PIAs,
-│   │   model cards, dataset documentation
-│   └── Tensión: RIA exige trazabilidad; NIST no prescribe granularidad
-│
-├── Art. 11 ↔ GOVERN   [Documentación técnica]
-│   ├── Obligación RIA: documentación técnica completa pre-despliegue,
-│   │   accesible a autoridades de supervisión
-│   ├── Función NIST: GOVERN (gobernanza organizacional, políticas)
-│   ├── Fuentes esperadas: technical documentation, AI use case inventories,
-│   │   congressional testimony, agency AI strategies
-│   └── Tensión: RIA exige formato y contenido mínimo; NIST es principista
-│
-├── Art. 12 ↔ MEASURE   [Registro de actividades / logs]
-│   ├── Obligación RIA: logging automático, trazable, conservado
-│   ├── Función NIST: MEASURE (monitoreo, métricas operativas)
-│   ├── Fuentes esperadas: audit log policies, OIG inspection reports,
-│   │   records management directives
-│   └── Tensión: RIA especifica qué debe registrarse; NIST no prescribe
-│
-├── Art. 13 ↔ GOVERN / MAP   [Transparencia]
-│   ├── Obligación RIA: transparencia hacia usuarios y sujetos,
-│   │   información comprensible sobre capacidades y limitaciones
-│   ├── Función NIST: GOVERN (comunicación), MAP (documentación de contexto)
-│   ├── Fuentes esperadas: public-facing documentation, FOIA releases,
-│   │   congressional testimony, explainability reports
-│   └── Tensión: RIA exige transparencia hacia afectados;
-│       NIST orienta hacia operadores internos
-│
-├── Art. 14 ↔ GOVERN / MANAGE   [Supervisión humana]
-│   ├── Obligación RIA: supervisión humana efectiva, capacidad de
-│   │   intervención y desconexión, comprensión del sistema
-│   ├── Función NIST: GOVERN (responsabilidades), MANAGE (respuesta)
-│   ├── Fuentes esperadas: policy directives, human review protocols,
-│   │   training documentation, override procedures
-│   └── Tensión: RIA exige supervisión efectiva; NIST recomienda
-│       procesos sin verificabilidad externa
-│
-├── Art. 15 ↔ MEASURE / MANAGE   [Robustez, precisión, ciberseguridad]
-│   ├── Obligación RIA: niveles de precisión documentados, resiliencia
-│   │   ante ataques, validación continua
-│   ├── Función NIST: MEASURE (métricas de rendimiento), MANAGE (respuesta)
-│   ├── Fuentes esperadas: validation reports, accuracy assessments,
-│   │   cybersecurity frameworks (NIST CSF), red team reports
-│   └── Tensión: RIA exige umbrales mínimos; NIST no fija estándares
-│
-└── Arts. 16–18 ↔ GOVERN   [Obligaciones del operador]
-    ├── Obligación RIA: responsabilidades del deployer, sistema de
-    │   gestión de calidad, conservación de documentación
-    ├── Función NIST: GOVERN (roles, responsabilidades, cultura)
-    ├── Fuentes esperadas: organizational policies, accountability frameworks,
-    │   agency AI governance directives, procurement policies
-    └── Tensión: RIA asigna responsabilidad jurídica; NIST asigna
-        responsabilidad organizacional sin consecuencia legal</pre>
-      </div>
-    </details>
+      <details class="dec">
+        <summary><span class="dec-date">2026-03-02</span><span class="dec-preview">PM Log migrado a HTML estático en GitHub Pages. Google Doc y Apps Script retirados…</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">PM Log migrado a HTML estático en GitHub Pages. Google Doc y Apps Script retirados por inestabilidad en la API de Docs. El archivo vive ahora en el repositorio aauml/thesis y se actualiza por sesión de trabajo.</div>
+      </details>
 
-    <!-- Capa evaluativa -->
-    <details class="layer collapsible-body" style="margin-bottom:0.6rem;">
-      <summary>Capa evaluativa — criterios transversales <span class="toggle-icon">▸</span></summary>
-      <div class="layer-body">
-        <pre>├── Contestabilidad
-│   ¿Permite la documentación pública que un afectado identifique,
-│   comprenda e impugne la decisión algorítmica?
-│   └── Umbral mínimo: acceso epistémico + mecanismo de recurso
-│
-├── Accountability
-│   ¿Hay responsabilidades asignadas, verificables y con consecuencias
-│   documentadas públicamente?
-│   └── Umbral mínimo: persona o rol identificable + trazabilidad de decisiones
-│
-├── Equidad / No discriminación
-│   ¿Se documentan, miden y abordan los sesgos del sistema de forma
-│   verificable con fuentes públicas?
-│   └── Umbral mínimo: evaluación de impacto disparatado + medidas correctivas
-│
-└── Explicabilidad
-    ¿Puede un actor externo entender el funcionamiento del sistema
-    con información públicamente disponible?
-    └── Umbral mínimo: descripción operativa + limitaciones conocidas</pre>
-      </div>
-    </details>
+      <details class="dec">
+        <summary><span class="dec-date">2026-03-01</span><span class="dec-preview">Solicitud enviada a Anthropic para acceso académico o aumento de límites de tokens…</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">Solicitud redactada a Anthropic para acceso a programa académico o incremento de límites de tokens. Justificación: los flujos de investigación doctoral requieren continuidad y profundidad que exceden los límites estándar.</div>
+      </details>
 
-    <!-- Capa caso -->
-    <details class="layer collapsible-body" style="margin-bottom:0;">
-      <summary>Capa de caso — pendiente de confirmación <span class="toggle-icon">▸</span></summary>
-      <div class="layer-body">
-        <pre>├── Sistema de IA de alto riesgo en agencia federal EE.UU.
-│   (Departamento de Justicia)
-├── Candidatos en consideración:
-│   ├── PATTERN (BOP — riesgo de reincidencia)  ← candidato primario, 25/25
-│   ├── STRmix / probabilistic genotyping (DOJ/FBI)  ← alternativa en consideración
-│   └── NGI-IPS / FACE Services (FBI)  ← caso comparativo
-└── Criterios de selección:
-    ├── Documentación pública suficiente (OIG, FOIA, congressional record)
-    ├── Aplicación en contexto de alto riesgo verificable
-    ├── Tensión contestabilidad/accountability documentada
-    └── Mapeable contra Arts. 9–15 y 16–18 RIA ↔ NIST RMF functions</pre>
-      </div>
-    </details>
+      <details class="dec">
+        <summary><span class="dec-date">2026-02-28</span><span class="dec-preview">Título definitivo fijado. Terminología estandarizada: RIA en lugar de AI Act…</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">Título definitivo: «El Reglamento Europeo de Inteligencia Artificial (RIA) y el NIST AI RMF: Comparación de requisitos para sistemas de alto riesgo en el Departamento de Justicia de Estados Unidos». Terminología estandarizada: RIA en lugar de AI Act en todo el manuscrito.</div>
+      </details>
 
-  </details><!-- /map-section -->
+      <details class="dec">
+        <summary><span class="dec-date">2026-02-27</span><span class="dec-preview">Estrategia de lectura del Año 0: orientación, no anotación académica…</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">Estrategia de lectura del Año 0 fijada: orientación, no anotación académica. Regla: leer primero, conversar con un LLM después para probar comprensión, nunca al revés. El objetivo es entender el campo, no producir fichas de tesis.</div>
+      </details>
 
-  <!-- ══════════════════════════════════════
-       REGISTRO DE DECISIONES
-  ═══════════════════════════════════════ -->
-  <section id="decisiones">
-    <h2>Registro de decisiones</h2>
-    <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.75rem;">Decisiones significativas tomadas durante el proyecto. Las más recientes aparecen primero.</p>
-    <div class="decisions-controls">
-      <button class="btn-text" onclick="document.querySelectorAll('#decisiones details').forEach(d=>d.open=true)">Expandir todo</button>
-      <button class="btn-text" onclick="document.querySelectorAll('#decisiones details').forEach(d=>d.open=false)">Contraer todo</button>
-    </div>
+      <details class="dec">
+        <summary><span class="dec-date">2026-02-26</span><span class="dec-preview">Arts. 16–18 del RIA incorporados a la matriz. Supuesto epistemológico formalizado…</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">Artículos 16 a 18 del RIA incorporados al mapa conceptual y a la matriz de correspondencia, corrigiendo una omisión de versiones anteriores. Supuesto epistemológico central formalizado: cumplimiento documentable no equivale a cumplimiento real.</div>
+      </details>
 
-    <details>
-      <summary><span class="summary-date">2026-03-03</span><span class="summary-preview">PM Log rediseñado: notas personales, mapa colapsable, sección renombrada a Resumen…</span><span class="toggle-icon">▸</span></summary>
-      <div class="collapsible-body decision-body"><p>PM Log rediseñado para compartir con el director. Cambios: sección «Dónde estoy ahora» renombrada a «Resumen»; mapa conceptual completo incorporado como sección colapsable por capas; sección de decisiones colapsable con las más recientes primero; eliminación de tareas semanales. El documento mantiene estructura flexible — las secciones pueden modificarse según las necesidades del proyecto.</p></div>
-    </details>
+      <details class="dec">
+        <summary><span class="dec-date">2026-02-13</span><span class="dec-preview">Sistema de monitoreo de noticias sobre gobernanza de IA diseñado…</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">Sistema de monitoreo de noticias sobre gobernanza de IA diseñado con arquitectura modular. Cobertura: implementación del RIA, actualizaciones NIST, política federal de EE.UU. y publicaciones de centros de investigación especializados.</div>
+      </details>
 
-    <details>
-      <summary><span class="summary-date">2026-03-02</span><span class="summary-preview">PM Log migrado a HTML estático en GitHub Pages. Google Doc retirado…</span><span class="toggle-icon">▸</span></summary>
-      <div class="collapsible-body decision-body"><p>PM Log migrado a HTML estático en GitHub Pages. Google Doc y Apps Script retirados por inestabilidad en la API de Docs. El archivo vive ahora en el repositorio aauml/thesis y se actualiza por sesión de trabajo.</p></div>
-    </details>
+      <details class="dec">
+        <summary><span class="dec-date">2026-02-11</span><span class="dec-preview">Marco conceptual de tres capas formalizado. Estrategia de orientación de cinco semanas…</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">Marco conceptual de tres capas formalizado: teórica, analítica y evaluativa. Estrategia de orientación de cinco semanas para el Año 0, un pilar teórico por semana. Convención de nomenclatura: AutorAño-Título, sin espacio entre autor y año para alinear con citation keys de Better BibTeX.</div>
+      </details>
 
-    <details>
-      <summary><span class="summary-date">2026-03-01</span><span class="summary-preview">Solicitud enviada a Anthropic para acceso académico o aumento de límites de tokens…</span><span class="toggle-icon">▸</span></summary>
-      <div class="collapsible-body decision-body"><p>Solicitud redactada a Anthropic para acceso a programa académico o incremento de límites de tokens. Justificación: los flujos de investigación doctoral requieren continuidad y profundidad que exceden los límites estándar de uso.</p></div>
-    </details>
+      <details class="dec">
+        <summary><span class="dec-date">2026-02-10</span><span class="dec-preview">Inventarios bibliográficos completados: 551 fuentes, 140 en prioridad alta…</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">Inventarios bibliográficos anotados completados para las 9 carpetas del proyecto (551 fuentes). 140 clasificadas como prioridad ALTA. Identificadas 5 comparaciones directas RIA–NIST como antecedentes y 28 estudios de validación de STRmix.</div>
+      </details>
 
-    <details>
-      <summary><span class="summary-date">2026-02-28</span><span class="summary-preview">Título definitivo fijado. Terminología estandarizada: RIA en lugar de AI Act…</span><span class="toggle-icon">▸</span></summary>
-      <div class="collapsible-body decision-body"><p>Título definitivo: «El Reglamento Europeo de Inteligencia Artificial (RIA) y el NIST AI RMF: Comparación de requisitos para sistemas de alto riesgo en el Departamento de Justicia de Estados Unidos». Terminología estandarizada: RIA en lugar de AI Act en todo el manuscrito.</p></div>
-    </details>
+      <details class="dec">
+        <summary><span class="dec-date">2026-02-07</span><span class="dec-preview">Infraestructura integrada: Zotero, Obsidian, Google Drive…</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">Infraestructura de investigación integrada: Zotero con Better BibTeX para bibliografía, Obsidian para notas y escritura, Google Drive para PDFs. La citation key funciona como conector universal entre las tres herramientas.</div>
+      </details>
 
-    <details>
-      <summary><span class="summary-date">2026-02-27</span><span class="summary-preview">Estrategia de lectura del Año 0 fijada: orientación, no anotación académica…</span><span class="toggle-icon">▸</span></summary>
-      <div class="collapsible-body decision-body"><p>Estrategia de lectura para el Año 0 fijada: orientación, no anotación académica. Regla de trabajo: leer primero, conversar con un LLM después para probar comprensión, nunca al revés. El objetivo no es producir fichas de tesis, sino entender el campo.</p></div>
-    </details>
+      <details class="dec">
+        <summary><span class="dec-date">2026-02-05</span><span class="dec-preview">Cobertura del marco teórico estimada en 70–75%. Fuentes críticas pendientes…</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">Cobertura del marco teórico estimada en 70–75%. Fuentes críticas pendientes: Kaminski &amp; Urban (2021) «The Right to Contest AI», Selbst &amp; Powles (2017), Citron (2008).</div>
+      </details>
 
-    <details>
-      <summary><span class="summary-date">2026-02-26</span><span class="summary-preview">Arts. 16–18 del RIA incorporados a la matriz. Supuesto epistemológico formalizado…</span><span class="toggle-icon">▸</span></summary>
-      <div class="collapsible-body decision-body"><p>Artículos 16 a 18 del RIA incorporados al mapa conceptual y a la matriz de correspondencia, corrigiendo una omisión de versiones anteriores. Supuesto epistemológico central del proyecto formalizado: cumplimiento documentable no equivale a cumplimiento real.</p></div>
-    </details>
+      <details class="dec">
+        <summary><span class="dec-date">2026-02-02</span><span class="dec-preview">Hallazgo: ningún sistema DOJ tiene AI Impact Assessment publicado…</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">Hallazgo sustantivo: ninguno de los sistemas evaluados del DOJ tiene publicado un AI Impact Assessment pese a los requisitos OMB. Decisión: tratar la ausencia como hallazgo empírico dentro del análisis de cumplimiento documentable, no como limitación metodológica.</div>
+      </details>
 
-    <details>
-      <summary><span class="summary-date">2026-02-13</span><span class="summary-preview">Sistema de monitoreo de noticias sobre gobernanza de IA diseñado…</span><span class="toggle-icon">▸</span></summary>
-      <div class="collapsible-body decision-body"><p>Sistema de monitoreo de noticias sobre gobernanza de IA diseñado con arquitectura modular. Cobertura: implementación del RIA, actualizaciones NIST, política federal de EE.UU. y publicaciones de centros de investigación especializados.</p></div>
-    </details>
+      <details class="dec">
+        <summary><span class="dec-date">2026-02-01</span><span class="dec-preview">Cambios normativos post-plan integrados. Recetario multi-LLM refinado…</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">Cambios normativos posteriores al plan integrados. El plan PDF se mantiene sin modificar; las actualizaciones viven en las instrucciones del proyecto. Recetario multi-LLM refinado con datos de rendimiento: NotebookLM 13% alucinación, Gemini 88%. Herramientas esenciales: Perplexity, NotebookLM, ChatGPT, Claude. Opcionales: Gemini, Asta.</div>
+      </details>
 
-    <details>
-      <summary><span class="summary-date">2026-02-11</span><span class="summary-preview">Marco conceptual de tres capas formalizado. Estrategia de orientación de cinco semanas…</span><span class="toggle-icon">▸</span></summary>
-      <div class="collapsible-body decision-body"><p>Marco conceptual de tres capas formalizado: teórica, analítica y evaluativa. Estrategia de orientación de cinco semanas diseñada para el Año 0, un pilar teórico por semana antes de integración. Convención de nomenclatura definida: AutorAño-Título, sin espacio entre autor y año para alinear con las citation keys de Better BibTeX en Zotero.</p></div>
-    </details>
+      <details class="dec">
+        <summary><span class="dec-date">2026-01-24</span><span class="dec-preview">Brecha de investigación confirmada: no existe estudio que examine NIST vs. AI Act desde derecho procesal…</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">Brecha confirmada: no existe estudio que examine si la implementación del NIST AI RMF puede satisfacer los requisitos del AI Act desde una perspectiva de derecho procesal. Bibliografías compiladas para cuatro áreas: metodología, marco teórico, corpus jurídico y estado del arte.</div>
+      </details>
 
-    <details>
-      <summary><span class="summary-date">2026-02-10</span><span class="summary-preview">Inventarios bibliográficos completados: 551 fuentes, 140 en prioridad alta…</span><span class="toggle-icon">▸</span></summary>
-      <div class="collapsible-body decision-body"><p>Inventarios bibliográficos anotados completados para las 9 carpetas del proyecto (551 fuentes). 140 fuentes clasificadas como prioridad ALTA. Identificadas 5 comparaciones directas RIA–NIST como antecedentes de investigación y 28 estudios de validación de STRmix.</p></div>
-    </details>
+      <details class="dec">
+        <summary><span class="dec-date">2026-01-23</span><span class="dec-preview">PATTERN confirmado tras verificación documental. Guía de estilo académico consolidada…</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">PATTERN confirmado tras verificación documental exhaustiva: atribución al Bureau of Prisons, documentación pública en NIJ, GAO y OIG, conexión directa con el First Step Act. Guía de estilo consolidada: voz impersonal, evitar absolutismos, asimetría estructural deliberada, primera persona solo para decisiones metodológicas.</div>
+      </details>
 
-    <details>
-      <summary><span class="summary-date">2026-02-07</span><span class="summary-preview">Infraestructura de investigación integrada: Zotero, Obsidian, Google Drive…</span><span class="toggle-icon">▸</span></summary>
-      <div class="collapsible-body decision-body"><p>Infraestructura de investigación integrada: Zotero con Better BibTeX para bibliografía, Obsidian para notas y escritura, Google Drive para PDFs. La citation key de Better BibTeX funciona como conector universal entre las tres herramientas.</p></div>
-    </details>
+      <details class="dec">
+        <summary><span class="dec-date">2026-01-21</span><span class="dec-preview">Estructura de la tesis fijada en siete capítulos…</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">Estructura fijada en siete capítulos: Introducción, Marco teórico, El RIA (arts. 8–15), El NIST AI RMF, Análisis comparativo (matriz + protocolo), Caso de estudio DOJ, Conclusiones y anexos.</div>
+      </details>
 
-    <details>
-      <summary><span class="summary-date">2026-02-05</span><span class="summary-preview">Cobertura del marco teórico estimada en 70–75%. Fuentes críticas pendientes…</span><span class="toggle-icon">▸</span></summary>
-      <div class="collapsible-body decision-body"><p>Cobertura del marco teórico estimada en 70 a 75 por ciento. Fuentes críticas pendientes de adquisición: Kaminski y Urban (2021) «The Right to Contest AI», Selbst y Powles (2017), Citron (2008).</p></div>
-    </details>
+      <details class="dec">
+        <summary><span class="dec-date">2026-01-20</span><span class="dec-preview">PATTERN seleccionado como caso primario con 25/25. NGI-IPS y STRmix como comparativos…</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">PATTERN seleccionado con 25/25 en criterios de evaluación. NGI-IPS (FBI) descartado como primario por conexión procesal indirecta, conservado como comparativo. STRmix descartado como primario por corpus inmanejable, conservado como comparativo.</div>
+      </details>
 
-    <details>
-      <summary><span class="summary-date">2026-02-02</span><span class="summary-preview">Hallazgo: ningún sistema DOJ tiene AI Impact Assessment publicado…</span><span class="toggle-icon">▸</span></summary>
-      <div class="collapsible-body decision-body"><p>Hallazgo sustantivo: ninguno de los sistemas evaluados del Departamento de Justicia tiene publicado un AI Impact Assessment pese a los requisitos establecidos por OMB. Decisión: tratar la ausencia como hallazgo empírico dentro del análisis de cumplimiento documentable, no como limitación metodológica.</p></div>
-    </details>
+      <details class="dec">
+        <summary><span class="dec-date">2026-01-18</span><span class="dec-preview">Roles del ecosistema multi-LLM definidos…</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">Roles definidos: Perplexity para descubrimiento con citaciones verificables, NotebookLM para análisis basado en fuentes, ChatGPT para razonamiento complejo, Claude para consolidación y redacción. Gemini clasificado como opcional por alta tasa de alucinación.</div>
+      </details>
 
-    <details>
-      <summary><span class="summary-date">2026-02-01</span><span class="summary-preview">Cambios normativos post-plan integrados. Recetario multi-LLM refinado…</span><span class="toggle-icon">▸</span></summary>
-      <div class="collapsible-body decision-body"><p>Cambios normativos posteriores al plan de investigación integrados al marco del proyecto. El plan en PDF se mantiene como documento institucional sin modificar; las actualizaciones se reflejan en las instrucciones del proyecto. Recetario multi-LLM refinado con datos objetivos de rendimiento de seis plataformas. Tasas de alucinación documentadas: NotebookLM 13%, Gemini 88%. Herramientas clasificadas como esenciales (Perplexity, NotebookLM, ChatGPT, Claude) u opcionales (Gemini, Asta).</p></div>
-    </details>
-
-    <details>
-      <summary><span class="summary-date">2026-01-24</span><span class="summary-preview">Brecha de investigación confirmada: no existe estudio que examine NIST vs. AI Act desde derecho procesal…</span><span class="toggle-icon">▸</span></summary>
-      <div class="collapsible-body decision-body"><p>Brecha de investigación confirmada: no existe ningún estudio que examine si la implementación del NIST AI RMF puede satisfacer los requisitos del AI Act desde una perspectiva de derecho procesal. Bibliografías compiladas para cuatro áreas: metodología, marco teórico, corpus jurídico y estado del arte.</p></div>
-    </details>
-
-    <details>
-      <summary><span class="summary-date">2026-01-23</span><span class="summary-preview">PATTERN confirmado tras verificación documental. Guía de estilo académico consolidada…</span><span class="toggle-icon">▸</span></summary>
-      <div class="collapsible-body decision-body"><p>PATTERN confirmado tras verificación documental exhaustiva: atribución institucional clara al Bureau of Prisons, documentación pública sustancial en NIJ, GAO y OIG, conexión directa con el First Step Act, clasificación de alto riesgo verificable. Guía de estilo académico doctoral consolidada: voz impersonal, evitar absolutismos, asimetría estructural deliberada, máximo una tríada por sección, primera persona reservada para decisiones metodológicas.</p></div>
-    </details>
-
-    <details>
-      <summary><span class="summary-date">2026-01-21</span><span class="summary-preview">Estructura de la tesis fijada en siete capítulos…</span><span class="toggle-icon">▸</span></summary>
-      <div class="collapsible-body decision-body"><p>Estructura de la tesis fijada en siete capítulos: Introducción, Marco teórico, El RIA (artículos 8 a 15), El NIST AI RMF, Análisis comparativo con matriz y protocolo, Caso de estudio DOJ, Conclusiones y anexos.</p></div>
-    </details>
-
-    <details>
-      <summary><span class="summary-date">2026-01-20</span><span class="summary-preview">PATTERN seleccionado como caso primario con 25/25. NGI-IPS y STRmix como comparativos…</span><span class="toggle-icon">▸</span></summary>
-      <div class="collapsible-body decision-body"><p>PATTERN seleccionado como caso de estudio primario con 25 de 25 en criterios de evaluación. NGI-IPS (FBI) descartado como primario por conexión procesal indirecta, conservado como caso comparativo. STRmix descartado como primario por corpus inmanejable y predominancia de secreto comercial, conservado como caso comparativo.</p></div>
-    </details>
-
-    <details>
-      <summary><span class="summary-date">2026-01-18</span><span class="summary-preview">Roles del ecosistema multi-LLM definidos…</span><span class="toggle-icon">▸</span></summary>
-      <div class="collapsible-body decision-body"><p>Roles del ecosistema multi-LLM definidos. Perplexity para descubrimiento con citaciones verificables, NotebookLM para análisis estrictamente basado en fuentes, ChatGPT para razonamiento complejo y evaluación con rúbricas, Claude para consolidación final y redacción académica. Gemini clasificado como opcional por alta tasa de alucinación en pruebas.</p></div>
-    </details>
-
-  </section>
+    </div><!-- /section-body -->
+  </details><!-- /sec-decisiones -->
 
   <!-- ══════════════════════════════════════
        TAREAS PENDIENTES
@@ -450,32 +348,195 @@
 
     <h3>Marzo 2026</h3>
     <div class="task-group">
-      <p>Completar lectura de Kaminski (2023) y escribir ficha en Obsidian.</p>
-      <p>Iniciar lectura de Bradford (2020), capítulos 1 a 3.</p>
+      <p class="note">Terminar Kaminski (2023) y escribir ficha en Obsidian.</p>
+      <p class="note">Iniciar Bradford (2020), capítulos 1 a 3.</p>
     </div>
 
     <h3>Trimestre marzo–mayo 2026</h3>
     <div class="task-group">
-      <p>Completar la estrategia de orientación de cinco semanas, un pilar teórico por semana.</p>
-      <p>Decidir caso de estudio definitivo (PATTERN o STRmix) y confirmar con el Dr. Bueno de Mata.</p>
-      <p>Adquirir fuentes críticas pendientes: Kaminski y Urban (2021), Selbst y Powles (2017), Citron (2008).</p>
-      <p>Monitorear la publicación del crosswalk de NIST al AI Act final.</p>
-      <p>Obtener email institucional de la USAL y completar inscripción formal.</p>
+      <p class="note">Completar orientación de cinco semanas — un pilar teórico por semana.</p>
+      <p class="note">Decidir caso de estudio definitivo y confirmar con el Dr. Bueno de Mata.</p>
+      <p class="note">Adquirir fuentes críticas pendientes: Kaminski &amp; Urban (2021), Selbst &amp; Powles (2017), Citron (2008).</p>
+      <p class="note">Monitorear publicación del crosswalk NIST → AI Act final.</p>
+      <p class="note">Obtener email institucional USAL y completar inscripción formal.</p>
     </div>
   </section>
 
   <footer>
-    Última actualización: 3 de marzo de 2026 &nbsp;·&nbsp; Documento vivo — las secciones pueden cambiar según avance el proyecto
+    Última actualización: 3 de marzo de 2026 &nbsp;·&nbsp; Documento vivo — las secciones cambian según avance el proyecto
   </footer>
 
-</div>
+</div><!-- /container -->
+
+<!-- ════════════════════════════════════════
+     MAPA CONCEPTUAL MODAL
+════════════════════════════════════════ -->
+<div class="modal-overlay" id="mapModal" onclick="closeMapOutside(event)">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="Mapa conceptual">
+    <div class="modal-header">
+      <h2>Mapa conceptual de la tesis</h2>
+      <button class="modal-close" onclick="closeMap()" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="epist-box">
+        <strong>Supuesto epistemológico transversal:</strong> «Cumplimiento documentable ≠ cumplimiento real.» Esta tesis mide evidencia pública disponible, no implementación efectiva. Aplica a todas las capas como limitación constitutiva, no como debilidad.
+      </div>
+
+      <div class="modal-controls">
+        <button class="btn-sm" onclick="toggleAllLayers(true)">Expandir todo</button>
+        <button class="btn-sm" onclick="toggleAllLayers(false)">Contraer todo</button>
+      </div>
+
+      <details class="layer">
+        <summary><span class="layer-icon">⚙</span> Capa metodológica <span class="layer-toggle">▸</span></summary>
+        <div class="layer-body"><pre>├── Metodología de derecho comparado
+│   ├── Equivalencia funcional → Zweigert & Kötz (1998); Siems (2018)
+│   ├── Investigación jurídica contextualizada → Taekema & van der Burg (2021)
+│   └── Análisis comparado de políticas → Peters & Fontaine (2020)
+├── Estudio de caso instrumental
+│   ├── Diseño → Yin (2018); Gerring (2017); Stake (1995)
+│   ├── Análisis documental → Bowen (2009); Tight (2019)
+│   └── Codificación cualitativa → Saldaña (2021); Miles et al. (2014)
+├── Fuentes públicas
+│   ├── Primarias: textos normativos, guidance, OIG reports, PIAs, testimony
+│   ├── Secundarias: crosswalks, scholarly analysis, think tank reports
+│   └── Límite: solo acceso público, sin FOIA, sin información clasificada
+└── Precedente de crosswalk → West et al. (2025); GLACIS crosswalk guide</pre></div>
+      </details>
+
+      <details class="layer">
+        <summary><span class="layer-icon">📚</span> Capa teórica — cuatro pilares <span class="layer-toggle">▸</span></summary>
+        <div class="layer-body"><pre>├── 1. Gobernanza de IA comparada
+│   ├── Modelo vinculante UE/RIA → Bradford (2020, 2023)
+│   ├── Estándares voluntarios EE.UU./NIST → Mulligan & Bamberger (2019)
+│   ├── Convergencia/divergencia transatlántica → Fahey (2013, 2016); Chinen (2023)
+│   └── Efecto Bruselas en IA → Bradford (2020); Veale et al. (2023)
+├── 2. Teoría regulatoria
+│   ├── Regulación responsiva → Ayres & Braithwaite (1992); Black (1997)
+│   ├── Equivalencia funcional → Zweigert & Kötz (1998); Smits (2012)
+│   └── Estado de derecho y decisión automatizada → Yeung (2018); Suksi (2023)
+├── 3. Derecho procesal y prueba electrónica
+│   ├── Admisibilidad de evidencia algorítmica → Faigman et al. (2019)
+│   ├── Secreto comercial vs. due process → Wexler (2018); Chan (2024)
+│   └── Prueba científica → Taruffo (1992); Nieva Fenoll (2010)
+└── 4. Contestabilidad algorítmica
+    ├── Derecho a impugnar decisiones → Kaminski & Urban (2021)
+    ├── Explicabilidad y transparencia → Henin & Le Métayer (2021)
+    └── Acceso epistémico previo
+        "No puedes impugnar lo que no sabes que existe"
+        → Wexler (2018, 2024); Citron (2008); Chan (2024)</pre></div>
+      </details>
+
+      <details class="layer">
+        <summary><span class="layer-icon">⇄</span> Capa analítica — matriz RIA ↔ NIST AI RMF <span class="layer-toggle">▸</span></summary>
+        <div class="layer-body"><pre>├── Art. 9 ↔ MAP/MEASURE   [Gestión de riesgos]
+│   Tensión: RIA exige documentación formal; NIST recomienda proceso
+│
+├── Art. 10 ↔ MAP/GOVERN   [Gobernanza de datos]
+│   Tensión: RIA exige trazabilidad; NIST no prescribe granularidad
+│
+├── Art. 11 ↔ GOVERN   [Documentación técnica]
+│   Tensión: RIA exige formato y contenido mínimo; NIST es principista
+│
+├── Art. 12 ↔ MEASURE   [Registro de actividades / logs]
+│   Tensión: RIA especifica qué debe registrarse; NIST no prescribe
+│
+├── Art. 13 ↔ GOVERN/MAP   [Transparencia]
+│   Tensión: RIA exige transparencia hacia afectados; NIST orienta hacia operadores
+│
+├── Art. 14 ↔ GOVERN/MANAGE   [Supervisión humana]
+│   Tensión: RIA exige supervisión efectiva; NIST recomienda sin verificabilidad externa
+│
+├── Art. 15 ↔ MEASURE/MANAGE   [Robustez, precisión, ciberseguridad]
+│   Tensión: RIA exige umbrales mínimos; NIST no fija estándares
+│
+└── Arts. 16–18 ↔ GOVERN   [Obligaciones del operador]
+    Tensión: RIA asigna responsabilidad jurídica; NIST, responsabilidad organizacional</pre></div>
+      </details>
+
+      <details class="layer">
+        <summary><span class="layer-icon">✓</span> Capa evaluativa — criterios transversales <span class="layer-toggle">▸</span></summary>
+        <div class="layer-body"><pre>├── Contestabilidad
+│   ¿Permite la documentación que un afectado identifique, comprenda
+│   e impugne la decisión? Umbral: acceso epistémico + mecanismo de recurso
+│
+├── Accountability
+│   ¿Hay responsabilidades asignadas, verificables, con consecuencias?
+│   Umbral: persona/rol identificable + trazabilidad de decisiones
+│
+├── Equidad / No discriminación
+│   ¿Se documentan y miden sesgos de forma verificable?
+│   Umbral: evaluación de impacto disparatado + medidas correctivas
+│
+└── Explicabilidad
+    ¿Puede un actor externo entender el funcionamiento del sistema?
+    Umbral: descripción operativa + limitaciones conocidas</pre></div>
+      </details>
+
+      <details class="layer">
+        <summary><span class="layer-icon">⚖</span> Capa de caso — pendiente de confirmación <span class="layer-toggle">▸</span></summary>
+        <div class="layer-body"><pre>├── Caso primario: PATTERN (Bureau of Prisons / First Step Act)
+│   Sistema de evaluación de riesgo de reincidencia · 25/25 en criterios
+│
+├── Alternativa en consideración: STRmix (FBI Laboratory)
+│   Genotipado probabilístico de ADN · tensión secreto comercial vs. defensa
+│
+└── Casos comparativos: NGI-IPS / FACE Services (FBI)
+    Reconocimiento facial · conexión procesal indirecta</pre></div>
+      </details>
+
+    </div><!-- /modal-body -->
+  </div><!-- /modal -->
+</div><!-- /modal-overlay -->
+
 <script>
-  document.querySelectorAll('details').forEach(d => {
+  // Section collapse chevron
+  document.querySelectorAll('details.section-collapse').forEach(d => {
     d.addEventListener('toggle', function() {
-      const icon = this.querySelector(':scope > summary .toggle-icon');
+      const ch = this.querySelector('.chevron');
+      if (ch) ch.style.transform = this.open ? 'rotate(90deg)' : '';
+    });
+  });
+
+  // Decision toggle icons
+  document.querySelectorAll('details.dec').forEach(d => {
+    d.addEventListener('toggle', function() {
+      const icon = this.querySelector('.dec-toggle');
       if (icon) icon.textContent = this.open ? '▾' : '▸';
     });
   });
+
+  // Layer toggle icons
+  document.querySelectorAll('details.layer').forEach(d => {
+    d.addEventListener('toggle', function() {
+      const icon = this.querySelector('.layer-toggle');
+      if (icon) icon.textContent = this.open ? '▾' : '▸';
+    });
+  });
+
+  // Expand/collapse all decisions
+  function toggleAllDec(open) {
+    document.querySelectorAll('#sec-decisiones details.dec').forEach(d => d.open = open);
+  }
+
+  // Expand/collapse all layers
+  function toggleAllLayers(open) {
+    document.querySelectorAll('.modal details.layer').forEach(d => d.open = open);
+  }
+
+  // Modal
+  function openMap() {
+    document.getElementById('mapModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMap() {
+    document.getElementById('mapModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeMapOutside(e) {
+    if (e.target === document.getElementById('mapModal')) closeMap();
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMap(); });
 </script>
 </body>
 </html>
