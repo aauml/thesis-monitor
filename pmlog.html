@@ -12,20 +12,14 @@
       --text-light: #606060;
       --text-muted: #8a8a8a;
       --accent: #1a3a5c;
+      --accent-soft: #e8eef4;
       --border: #d4d4d4;
       --bg: #fdfdfd;
       --serif: 'Source Serif 4', Georgia, serif;
       --sans: 'DM Sans', system-ui, sans-serif;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: var(--sans);
-      font-size: 15px;
-      line-height: 1.7;
-      color: var(--text);
-      background: var(--bg);
-      -webkit-font-smoothing: antialiased;
-    }
+    body { font-family: var(--sans); font-size: 15px; line-height: 1.7; color: var(--text); background: var(--bg); -webkit-font-smoothing: antialiased; }
     .container { max-width: 780px; margin: 0 auto; padding: 3rem 2rem 5rem; }
     header { margin-bottom: 3rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--accent); }
     header h1 { font-family: var(--serif); font-size: 2rem; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; margin-bottom: 0.25rem; }
@@ -37,128 +31,241 @@
     p { margin-bottom: 0.75rem; color: var(--text); }
     .reading { margin-bottom: 1.1rem; }
     .author { font-weight: 700; }
-    .decision { margin-bottom: 1.25rem; padding-left: 1rem; border-left: 3px solid #e0e0e0; }
-    .date { font-weight: 700; color: var(--accent); font-size: 0.9rem; }
+    .badge { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.1rem 0.5rem; border-radius: 3px; margin-left: 0.5rem; vertical-align: middle; }
+    .badge-progress { background: #e6f4ea; color: #2d7a3f; }
+    .badge-pending { background: #fff3e0; color: #a05c00; }
+
+    /* Pillar map */
+    .pillar-map { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1rem 0; }
+    .pillar { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 0.75rem 1rem; border-radius: 0 4px 4px 0; }
+    .pillar-title { font-weight: 700; font-size: 0.85rem; color: var(--accent); margin-bottom: 0.25rem; display: block; }
+    .pillar p { font-size: 0.82rem; color: var(--text-light); margin-bottom: 0; line-height: 1.5; }
+
+    /* Collapsible decisions */
+    details { margin-bottom: 0.6rem; }
+    details summary { cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 0.75rem; padding: 0.55rem 0.75rem; border-left: 3px solid #d4d4d4; border-radius: 0 4px 4px 0; transition: background 0.15s; }
+    details summary:hover { background: var(--accent-soft); }
+    details[open] summary { border-left-color: var(--accent); background: var(--accent-soft); border-radius: 0 4px 0 0; }
+    details summary::-webkit-details-marker { display: none; }
+    .summary-date { font-weight: 700; color: var(--accent); font-size: 0.88rem; white-space: nowrap; min-width: 6.5rem; }
+    .summary-preview { color: var(--text-light); font-size: 0.85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+    details[open] .summary-preview { display: none; }
+    .toggle-icon { margin-left: auto; font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; }
+    .decision-body { padding: 0.8rem 1rem; border-left: 3px solid var(--accent); background: #fafcff; border-radius: 0 0 4px 0; margin-bottom: 0; }
+    .decision-body p { margin-bottom: 0; font-size: 0.92rem; }
+    .decisions-controls { display: flex; gap: 0.75rem; margin-bottom: 1rem; }
+    .btn-text { font-size: 0.78rem; color: var(--accent); background: none; border: 1px solid var(--border); border-radius: 4px; padding: 0.2rem 0.6rem; cursor: pointer; font-family: var(--sans); }
+    .btn-text:hover { background: var(--accent-soft); }
+
+    /* Tasks */
     .task-group { margin-bottom: 1.25rem; }
     .task-group p { margin-bottom: 0.4rem; padding-left: 0.75rem; position: relative; }
     .task-group p::before { content: "\2013"; position: absolute; left: 0; color: var(--text-muted); }
     .normative p { margin-bottom: 1rem; }
     footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-muted); text-align: center; }
-    @media (max-width: 600px) { .container { padding: 2rem 1.25rem 3rem; } header h1 { font-size: 1.6rem; } h2 { font-size: 1.2rem; } }
+    @media (max-width: 600px) {
+      .container { padding: 2rem 1.25rem 3rem; }
+      header h1 { font-size: 1.6rem; }
+      h2 { font-size: 1.2rem; }
+      .pillar-map { grid-template-columns: 1fr; }
+      .summary-preview { display: none; }
+    }
   </style>
 </head>
 <body>
   <div class="container">
 
     <header>
-      <h1>Log de Gestión de Tesis</h1>
-      <div class="subtitle">Tesis doctoral — Documento vivo, actualizado por sesión.</div>
+      <h1>Log de Tesis Doctoral</h1>
+      <div class="subtitle">Arturo — Universidad de Salamanca · Director: Dr. Federico Bueno de Mata · Documento vivo, actualizado por sesión de trabajo.</div>
     </header>
 
+    <!-- ESTADO ACTUAL -->
     <section id="estado">
-      <h2>Estado Actual</h2>
+      <h2>Dónde estoy ahora</h2>
 
-      <h3>Fase y cronograma</h3>
-      <p>Año 0 (2026), inscripción y preparación. El trabajo formal de investigación comienza en 2027. La prioridad actual es familiarizarse con los pilares teóricos y dejar resueltos los trámites de inscripción.</p>
+      <h3>Fase</h3>
+      <p>Año 0 (2026) — Inscripción y preparación. Estoy en la etapa de orientación teórica: antes de comenzar el trabajo formal de investigación en 2027, dedico este período a leer los textos fundacionales de cada pilar del marco teórico para poder hablar del tema con propiedad cuando llegue el momento. No es lectura de tesis todavía — es entender el campo y familiarizarme con los debates centrales en gobernanza de IA, regulación comparada, derecho procesal y contestabilidad algorítmica.</p>
 
-      <h3>Lecturas</h3>
+      <h3>Lecturas en curso</h3>
       <div class="reading">
-        <p><span class="author">Kaminski, M. E. (2023).</span> «Regulating the Risks of AI». Lectura prioritaria, en progreso. Objetivo: entender la tensión entre regulación vinculante y estándares voluntarios como marco general de la tesis. Producto esperado: ficha de media página en Obsidian con comprensión propia, sin citas ni formato académico.</p>
+        <p><span class="author">Kaminski, M. E. (2023).</span> «Regulating the Risks of AI» <span class="badge badge-progress">en progreso</span><br>
+        Estoy leyendo este texto para entender cómo la literatura académica enmarca la tensión entre regulación vinculante (modelo UE) y estándares técnicos voluntarios (modelo EE.UU.) — el debate de fondo de mi tesis. Producto esperado: ficha breve en Obsidian con mi comprensión propia, sin formato académico todavía.</p>
       </div>
       <div class="reading">
-        <p><span class="author">Bradford, A. (2020).</span> «The Brussels Effect», capítulos 1 a 3. Pendiente. Objetivo: comprender el mecanismo de influencia regulatoria extraterritorial de la UE y su aplicación al RIA. Producto esperado: ficha de media página en Obsidian.</p>
+        <p><span class="author">Bradford, A. (2020).</span> «The Brussels Effect», caps. 1–3 <span class="badge badge-pending">pendiente</span><br>
+        Lo leeré después de Kaminski. Me interesa entender el mecanismo por el que la regulación europea termina aplicándose más allá de sus fronteras — algo directamente relevante para preguntarme si el AI Act podría tener efecto sobre agencias federales de EE.UU. Producto esperado: ficha en Obsidian.</p>
       </div>
       <div class="reading">
-        <p><span class="author">Consulta (sin lectura profunda).</span> Engler (2023), Veale y Borgesius (2021), Veale et al. (2023). Textos de referencia para situar el debate académico sobre el AI Act. Se consultarán puntualmente según avance la orientación teórica.</p>
+        <p><span class="author">Textos de referencia (consulta puntual).</span> Engler (2023), Veale y Borgesius (2021), Veale et al. (2023). No los voy a leer linealmente ahora — los tengo disponibles para consultar puntualmente cuando aparezcan preguntas específicas durante la orientación.</p>
       </div>
 
       <h3>Caso de estudio</h3>
-      <p>Decisión pendiente. La evaluación sistemática de enero 2026 seleccionó a PATTERN (Bureau of Prisons, First Step Act) como candidato primario con 25 de 25 en criterios. Sin embargo, hay inclinación hacia STRmix (FBI Laboratory, genotipado probabilístico de ADN) por su mayor impacto procesal y la tensión directa entre secreto comercial y derecho de defensa. La decisión se confirmará con el director de tesis.</p>
+      <p>Pendiente de confirmación con el Dr. Bueno de Mata. <strong>PATTERN</strong> (Bureau of Prisons, First Step Act) es el candidato primario — obtuvo puntuación máxima en los criterios de selección y tiene documentación pública sustancial. Hay una inclinación alternativa hacia <strong>STRmix</strong> (FBI Laboratory, genotipado probabilístico de ADN) por la tensión más directa entre secreto comercial y derecho de defensa. La decisión la tomaré con el director.</p>
 
-      <h3>Recursos</h3>
-      <p>Biblioteca de 551 fuentes organizadas en 9 carpetas temáticas. Knowledge Base con 977 entradas consultable vía API. Infraestructura de trabajo: Zotero con Better BibTeX, Obsidian para notas, Google Drive para PDFs.</p>
+      <h3>Recursos disponibles</h3>
+      <p>Tengo una biblioteca digital con <strong>551 archivos</strong> organizados en 9 carpetas temáticas. De esas fuentes, 140 están clasificadas como prioridad alta. Para consultas cruzadas utilizo una base de conocimiento con <strong>977 entradas</strong> — artículos académicos, libros, informes gubernamentales, textos normativos y literatura gris — consultable por capa teórica, tema e importancia.</p>
+      <p>Infraestructura de trabajo: Zotero con Better BibTeX (bibliografía), Obsidian (notas y escritura), Google Drive (PDFs). La citation key de Better BibTeX actúa como conector entre los tres sistemas.</p>
 
       <h3>Marco normativo actualizado</h3>
       <div class="normative">
-        <p>La Executive Order 14110, que establecía requisitos federales para el desarrollo seguro de IA, fue revocada en enero de 2025. La sustituyó la Executive Order 14179, que adopta un enfoque menos prescriptivo y elimina varias obligaciones de reporte para agencias federales.</p>
-        <p>El memorándum OMB M-24-10, que exigía a las agencias federales completar inventarios de uso de IA y evaluaciones de impacto, fue rescindido. Lo reemplazó el memorándum M-25-21 en abril de 2025, con requisitos significativamente reducidos.</p>
-        <p>El Convenio Marco del Consejo de Europa sobre Inteligencia Artificial y Derechos Humanos (CETS 225) entró en vigor en noviembre de 2025. Es el primer tratado internacional vinculante en la materia y establece principios de transparencia, supervisión y contestabilidad.</p>
-        <p>El Reglamento de Ejecución 2025/454 de la Comisión Europea reguló la composición y funcionamiento del Panel Científico independiente previsto en el AI Act, que asesora en la clasificación de sistemas de alto riesgo y modelos de propósito general.</p>
+        <p>Hay cambios posteriores al plan de investigación que tengo integrados. La EO 14110 fue revocada en enero de 2025 y sustituida por la EO 14179, con un enfoque menos prescriptivo. El memorándum OMB M-24-10 fue rescindido y reemplazado por M-25-21 (abril 2025) con requisitos significativamente reducidos. El Convenio Marco CETS 225 entró en vigor en noviembre de 2025 — primer tratado internacional vinculante en materia de IA. El Reglamento de Ejecución 2025/454 reguló el Panel Científico del AI Act. Estos cambios afectan el capítulo de contexto normativo, pero no modifican la pregunta de investigación.</p>
+        <p>Hallazgo relevante: ninguno de los sistemas evaluados del Departamento de Justicia tiene publicado un AI Impact Assessment pese a los requisitos OMB. Lo trato como hallazgo empírico dentro del análisis de cumplimiento documentable, no como limitación metodológica.</p>
       </div>
     </section>
 
+    <!-- MAPA DE PILARES -->
+    <section id="pilares">
+      <h2>Mapa de pilares teóricos</h2>
+      <p style="margin-bottom:1rem; color:var(--text-light); font-size:0.9rem;">Marco conceptual de tres capas. Referencia para orientar lecturas y decisiones metodológicas.</p>
+
+      <h3>Capa teórica — cuatro pilares</h3>
+      <div class="pillar-map">
+        <div class="pillar">
+          <span class="pillar-title">1. Gobernanza de IA comparada</span>
+          <p>Modelo vinculante UE (RIA) vs. estándares voluntarios EE.UU. (NIST AI RMF). Efecto Bruselas. Regulación responsiva y equivalencia funcional.</p>
+        </div>
+        <div class="pillar">
+          <span class="pillar-title">2. Teoría regulatoria</span>
+          <p>Regulación responsiva. Equivalencia funcional entre marcos de distinta naturaleza jurídica. Interoperabilidad normativa transatlántica.</p>
+        </div>
+        <div class="pillar">
+          <span class="pillar-title">3. Derecho procesal y prueba electrónica</span>
+          <p>Admisibilidad de evidencia algorítmica. Tensión secreto comercial vs. due process. Garantías de contradicción e impugnación.</p>
+        </div>
+        <div class="pillar">
+          <span class="pillar-title">4. Contestabilidad algorítmica</span>
+          <p>Derecho a impugnar decisiones automatizadas. Acceso epistémico previo. Documentación como precondición de la defensa efectiva.</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:1.5rem;">Capa analítica — instrumento central</h3>
+      <div class="pillar-map">
+        <div class="pillar" style="grid-column: 1 / -1; border-left-color: #4a7aac;">
+          <span class="pillar-title" style="color:#4a7aac;">Matriz de correspondencia</span>
+          <p>Arts. 9–15 y 16–18 del RIA ↔ funciones GOVERN / MAP / MEASURE / MANAGE del NIST AI RMF. Cada nodo clasificado como coincidencia, diferencia o complemento. Evaluado contra cuatro criterios transversales: contestabilidad, accountability, equidad/no discriminación, explicabilidad.</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:1.5rem;">Capa de caso — aplicación empírica</h3>
+      <div class="pillar-map">
+        <div class="pillar" style="border-left-color: #6aaa3a;">
+          <span class="pillar-title" style="color:#4a8a1a;">Caso primario</span>
+          <p>PATTERN (Bureau of Prisons / First Step Act). Sistema de evaluación de riesgo de reincidencia. Clasificado como alto riesgo. Máxima puntuación en criterios de selección.</p>
+        </div>
+        <div class="pillar" style="border-left-color: #aaa;">
+          <span class="pillar-title" style="color:#666;">Casos comparativos</span>
+          <p>NGI-IPS / FACE Services (FBI). STRmix (FBI Laboratory, genotipado probabilístico de ADN).</p>
+        </div>
+      </div>
+
+      <p style="margin-top:1rem; font-size:0.85rem; color:var(--text-muted); font-style:italic;">Supuesto epistemológico central: cumplimiento documentable ≠ cumplimiento real. El análisis mide solo lo verificable con fuentes públicas.</p>
+    </section>
+
+    <!-- REGISTRO DE DECISIONES -->
     <section id="decisiones">
-      <h2>Registro de Decisiones</h2>
+      <h2>Registro de decisiones</h2>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.75rem;">Decisiones significativas tomadas durante el proyecto. Las más recientes aparecen primero.</p>
+      <div class="decisions-controls">
+        <button class="btn-text" onclick="document.querySelectorAll('#decisiones details').forEach(d=>d.open=true)">Expandir todo</button>
+        <button class="btn-text" onclick="document.querySelectorAll('#decisiones details').forEach(d=>d.open=false)">Contraer todo</button>
+      </div>
 
-      <div class="decision">
-        <p><span class="date">2026-01-18.</span> Roles del ecosistema multi-LLM definidos. Perplexity para descubrimiento con citaciones verificables, NotebookLM para análisis estrictamente basado en fuentes, ChatGPT para razonamiento complejo y evaluación con rúbricas, Claude para consolidación final y redacción académica. Gemini clasificado como opcional por alta tasa de alucinación en pruebas.</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-01-20.</span> PATTERN seleccionado como caso de estudio primario con 25 de 25 en criterios de evaluación. NGI-IPS (FBI) descartado como primario por conexión procesal indirecta, conservado como caso comparativo. STRmix descartado por corpus inmanejable y predominancia de secreto comercial.</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-01-21.</span> Estructura de la tesis fijada en siete capítulos: Introducción, Marco teórico, El RIA (artículos 8 a 15), El NIST AI RMF, Análisis comparativo con matriz y protocolo, Caso de estudio DOJ, Conclusiones y anexos.</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-01-23.</span> Guía de estilo académico doctoral consolidada. Principios: voz impersonal, evitar absolutismos, asimetría estructural deliberada, máximo una tríada por sección, primera persona reservada exclusivamente para decisiones metodológicas.</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-01-23.</span> PATTERN confirmado tras verificación documental exhaustiva: atribución institucional clara al Bureau of Prisons, documentación pública sustancial en NIJ, GAO y OIG, conexión directa con el First Step Act, clasificación de alto riesgo verificable.</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-01-24.</span> Brecha de investigación confirmada: no existe ningún estudio que examine si la implementación del NIST AI RMF puede satisfacer los requisitos del AI Act desde una perspectiva de derecho procesal. Bibliografías compiladas para cuatro áreas: metodología, marco teórico, corpus jurídico y estado del arte.</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-02-01.</span> Cambios normativos posteriores al plan de investigación integrados al marco del proyecto. El plan de investigación en PDF se mantiene como documento institucional sin modificar; las actualizaciones se reflejan en las instrucciones del proyecto.</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-02-01.</span> Recetario multi-LLM refinado con datos objetivos de rendimiento de seis plataformas. Tasas de alucinación documentadas: NotebookLM 13 por ciento, Gemini 88 por ciento. Herramientas clasificadas como esenciales (Perplexity, NotebookLM, ChatGPT, Claude) u opcionales (Gemini, Asta/Semantic Scholar).</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-02-02.</span> Hallazgo sustantivo: ninguno de los sistemas evaluados del Departamento de Justicia tiene publicado un AI Impact Assessment pese a los requisitos establecidos por OMB. Decisión: tratar la ausencia como hallazgo empírico dentro del análisis de cumplimiento documentable, no como limitación metodológica.</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-02-05.</span> Cobertura del marco teórico estimada en 70 a 75 por ciento. Fuentes críticas pendientes de adquisición: Kaminski y Urban (2021) «The Right to Contest AI», Selbst y Powles (2017), Citron (2008).</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-02-07.</span> Infraestructura de investigación integrada: Zotero con Better BibTeX para bibliografía, Obsidian para notas y escritura, Google Drive para PDFs. La citation key de Better BibTeX funciona como conector universal entre las tres herramientas.</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-02-10.</span> Inventarios bibliográficos anotados completados para las 9 carpetas del proyecto (551 fuentes). 140 fuentes clasificadas como prioridad ALTA. Identificadas 5 comparaciones directas RIA–NIST como antecedentes de investigación y 28 estudios de validación de STRmix.</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-02-11.</span> Marco conceptual de tres capas formalizado: teórica, analítica y evaluativa. Estrategia de orientación de cinco semanas diseñada para el Año 0, un pilar teórico por semana antes de integración.</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-02-13.</span> Sistema de monitoreo de noticias sobre gobernanza de IA diseñado con arquitectura modular. Cobertura: implementación del RIA, actualizaciones NIST, política federal de EE.UU. y publicaciones de centros de investigación especializados.</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-02-11.</span> Convención de nomenclatura definida para todo el proyecto: AutorAño-Título, sin espacio entre autor y año para alinear con las citation keys de Better BibTeX en Zotero.</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-02-26.</span> Artículos 16 a 18 del RIA incorporados al mapa conceptual y a la matriz de correspondencia, corrigiendo una omisión de versiones anteriores. Supuesto epistemológico central del proyecto: cumplimiento documentable no equivale a cumplimiento real.</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-02-27.</span> Estrategia de lectura para el Año 0: orientación, no anotación académica. Regla de trabajo: leer primero, conversar con un LLM después para probar comprensión, nunca al revés.</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-02-28.</span> Título definitivo: «El Reglamento Europeo de Inteligencia Artificial (RIA) y el NIST AI RMF: Comparación de requisitos para sistemas de alto riesgo en el Departamento de Justicia de Estados Unidos». Terminología estandarizada: RIA en lugar de AI Act en todo el manuscrito.</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-03-01.</span> Solicitud redactada a Anthropic para acceso a programa académico o incremento de límites de tokens. Justificación: los flujos de investigación doctoral requieren continuidad y profundidad que exceden los límites estándar de uso.</p>
-      </div>
-      <div class="decision">
-        <p><span class="date">2026-03-02.</span> PM Log migrado a HTML estático en GitHub Pages. Google Doc y Apps Script retirados por inestabilidad en la API de Docs.</p>
-      </div>
+      <details>
+        <summary><span class="summary-date">2026-03-03</span><span class="summary-preview">PM Log rediseñado: notas personales, decisiones colapsables, mapa de pilares…</span><span class="toggle-icon">▸</span></summary>
+        <div class="decision-body"><p>PM Log rediseñado para compartir con el director. Cambios principales: tono de notas personales, sección de decisiones colapsable con las más recientes primero, mapa de pilares como referencia visual, y eliminación de la sección de tareas semanales. El documento mantiene estructura flexible — las secciones pueden modificarse según las necesidades del proyecto.</p></div>
+      </details>
+
+      <details>
+        <summary><span class="summary-date">2026-03-02</span><span class="summary-preview">PM Log migrado a HTML estático en GitHub Pages. Google Doc retirado…</span><span class="toggle-icon">▸</span></summary>
+        <div class="decision-body"><p>PM Log migrado a HTML estático en GitHub Pages. Google Doc y Apps Script retirados por inestabilidad en la API de Docs. El archivo vive ahora en el repositorio aauml/thesis y se actualiza por sesión de trabajo.</p></div>
+      </details>
+
+      <details>
+        <summary><span class="summary-date">2026-03-01</span><span class="summary-preview">Solicitud enviada a Anthropic para acceso académico o aumento de límites de tokens…</span><span class="toggle-icon">▸</span></summary>
+        <div class="decision-body"><p>Solicitud redactada a Anthropic para acceso a programa académico o incremento de límites de tokens. Justificación: los flujos de investigación doctoral requieren continuidad y profundidad que exceden los límites estándar de uso.</p></div>
+      </details>
+
+      <details>
+        <summary><span class="summary-date">2026-02-28</span><span class="summary-preview">Título definitivo fijado. Terminología estandarizada: RIA en lugar de AI Act…</span><span class="toggle-icon">▸</span></summary>
+        <div class="decision-body"><p>Título definitivo: «El Reglamento Europeo de Inteligencia Artificial (RIA) y el NIST AI RMF: Comparación de requisitos para sistemas de alto riesgo en el Departamento de Justicia de Estados Unidos». Terminología estandarizada: RIA en lugar de AI Act en todo el manuscrito.</p></div>
+      </details>
+
+      <details>
+        <summary><span class="summary-date">2026-02-27</span><span class="summary-preview">Estrategia de lectura del Año 0 fijada: orientación, no anotación académica…</span><span class="toggle-icon">▸</span></summary>
+        <div class="decision-body"><p>Estrategia de lectura para el Año 0 fijada: orientación, no anotación académica. Regla de trabajo: leer primero, conversar con un LLM después para probar comprensión, nunca al revés. El objetivo no es producir fichas de tesis, sino entender el campo.</p></div>
+      </details>
+
+      <details>
+        <summary><span class="summary-date">2026-02-26</span><span class="summary-preview">Arts. 16–18 del RIA incorporados a la matriz. Supuesto epistemológico formalizado…</span><span class="toggle-icon">▸</span></summary>
+        <div class="decision-body"><p>Artículos 16 a 18 del RIA incorporados al mapa conceptual y a la matriz de correspondencia, corrigiendo una omisión de versiones anteriores. Supuesto epistemológico central del proyecto formalizado: cumplimiento documentable no equivale a cumplimiento real.</p></div>
+      </details>
+
+      <details>
+        <summary><span class="summary-date">2026-02-13</span><span class="summary-preview">Sistema de monitoreo de noticias sobre gobernanza de IA diseñado…</span><span class="toggle-icon">▸</span></summary>
+        <div class="decision-body"><p>Sistema de monitoreo de noticias sobre gobernanza de IA diseñado con arquitectura modular. Cobertura: implementación del RIA, actualizaciones NIST, política federal de EE.UU. y publicaciones de centros de investigación especializados.</p></div>
+      </details>
+
+      <details>
+        <summary><span class="summary-date">2026-02-11</span><span class="summary-preview">Marco conceptual de tres capas formalizado. Estrategia de orientación de cinco semanas…</span><span class="toggle-icon">▸</span></summary>
+        <div class="decision-body"><p>Marco conceptual de tres capas formalizado: teórica, analítica y evaluativa. Estrategia de orientación de cinco semanas diseñada para el Año 0, un pilar teórico por semana antes de integración. Convención de nomenclatura definida: AutorAño-Título, sin espacio entre autor y año para alinear con las citation keys de Better BibTeX en Zotero.</p></div>
+      </details>
+
+      <details>
+        <summary><span class="summary-date">2026-02-10</span><span class="summary-preview">Inventarios bibliográficos completados: 551 fuentes, 140 en prioridad alta…</span><span class="toggle-icon">▸</span></summary>
+        <div class="decision-body"><p>Inventarios bibliográficos anotados completados para las 9 carpetas del proyecto (551 fuentes). 140 fuentes clasificadas como prioridad ALTA. Identificadas 5 comparaciones directas RIA–NIST como antecedentes de investigación y 28 estudios de validación de STRmix.</p></div>
+      </details>
+
+      <details>
+        <summary><span class="summary-date">2026-02-07</span><span class="summary-preview">Infraestructura de investigación integrada: Zotero, Obsidian, Google Drive…</span><span class="toggle-icon">▸</span></summary>
+        <div class="decision-body"><p>Infraestructura de investigación integrada: Zotero con Better BibTeX para bibliografía, Obsidian para notas y escritura, Google Drive para PDFs. La citation key de Better BibTeX funciona como conector universal entre las tres herramientas.</p></div>
+      </details>
+
+      <details>
+        <summary><span class="summary-date">2026-02-05</span><span class="summary-preview">Cobertura del marco teórico estimada en 70–75 %. Fuentes críticas pendientes identificadas…</span><span class="toggle-icon">▸</span></summary>
+        <div class="decision-body"><p>Cobertura del marco teórico estimada en 70 a 75 por ciento. Fuentes críticas pendientes de adquisición: Kaminski y Urban (2021) «The Right to Contest AI», Selbst y Powles (2017), Citron (2008).</p></div>
+      </details>
+
+      <details>
+        <summary><span class="summary-date">2026-02-02</span><span class="summary-preview">Hallazgo: ningún sistema DOJ tiene AI Impact Assessment publicado…</span><span class="toggle-icon">▸</span></summary>
+        <div class="decision-body"><p>Hallazgo sustantivo: ninguno de los sistemas evaluados del Departamento de Justicia tiene publicado un AI Impact Assessment pese a los requisitos establecidos por OMB. Decisión: tratar la ausencia como hallazgo empírico dentro del análisis de cumplimiento documentable, no como limitación metodológica.</p></div>
+      </details>
+
+      <details>
+        <summary><span class="summary-date">2026-02-01</span><span class="summary-preview">Cambios normativos post-plan integrados. Recetario multi-LLM refinado…</span><span class="toggle-icon">▸</span></summary>
+        <div class="decision-body"><p>Cambios normativos posteriores al plan de investigación integrados al marco del proyecto. El plan en PDF se mantiene como documento institucional sin modificar; las actualizaciones se reflejan en las instrucciones del proyecto. Recetario multi-LLM refinado con datos objetivos de rendimiento de seis plataformas. Tasas de alucinación documentadas: NotebookLM 13%, Gemini 88%. Herramientas clasificadas como esenciales (Perplexity, NotebookLM, ChatGPT, Claude) u opcionales (Gemini, Asta).</p></div>
+      </details>
+
+      <details>
+        <summary><span class="summary-date">2026-01-24</span><span class="summary-preview">Brecha de investigación confirmada: no existe estudio que examine NIST vs. AI Act desde derecho procesal…</span><span class="toggle-icon">▸</span></summary>
+        <div class="decision-body"><p>Brecha de investigación confirmada: no existe ningún estudio que examine si la implementación del NIST AI RMF puede satisfacer los requisitos del AI Act desde una perspectiva de derecho procesal. Bibliografías compiladas para cuatro áreas: metodología, marco teórico, corpus jurídico y estado del arte.</p></div>
+      </details>
+
+      <details>
+        <summary><span class="summary-date">2026-01-23</span><span class="summary-preview">PATTERN confirmado tras verificación documental. Guía de estilo académico consolidada…</span><span class="toggle-icon">▸</span></summary>
+        <div class="decision-body"><p>PATTERN confirmado tras verificación documental exhaustiva: atribución institucional clara al Bureau of Prisons, documentación pública sustancial en NIJ, GAO y OIG, conexión directa con el First Step Act, clasificación de alto riesgo verificable. Guía de estilo académico doctoral consolidada: voz impersonal, evitar absolutismos, asimetría estructural deliberada, máximo una tríada por sección, primera persona reservada para decisiones metodológicas.</p></div>
+      </details>
+
+      <details>
+        <summary><span class="summary-date">2026-01-21</span><span class="summary-preview">Estructura de la tesis fijada en siete capítulos…</span><span class="toggle-icon">▸</span></summary>
+        <div class="decision-body"><p>Estructura de la tesis fijada en siete capítulos: Introducción, Marco teórico, El RIA (artículos 8 a 15), El NIST AI RMF, Análisis comparativo con matriz y protocolo, Caso de estudio DOJ, Conclusiones y anexos.</p></div>
+      </details>
+
+      <details>
+        <summary><span class="summary-date">2026-01-20</span><span class="summary-preview">PATTERN seleccionado como caso primario con 25/25. NGI-IPS y STRmix como comparativos…</span><span class="toggle-icon">▸</span></summary>
+        <div class="decision-body"><p>PATTERN seleccionado como caso de estudio primario con 25 de 25 en criterios de evaluación. NGI-IPS (FBI) descartado como primario por conexión procesal indirecta, conservado como caso comparativo. STRmix descartado como primario por corpus inmanejable y predominancia de secreto comercial, conservado como caso comparativo.</p></div>
+      </details>
+
+      <details>
+        <summary><span class="summary-date">2026-01-18</span><span class="summary-preview">Roles del ecosistema multi-LLM definidos…</span><span class="toggle-icon">▸</span></summary>
+        <div class="decision-body"><p>Roles del ecosistema multi-LLM definidos. Perplexity para descubrimiento con citaciones verificables, NotebookLM para análisis estrictamente basado en fuentes, ChatGPT para razonamiento complejo y evaluación con rúbricas, Claude para consolidación final y redacción académica. Gemini clasificado como opcional por alta tasa de alucinación en pruebas.</p></div>
+      </details>
+
     </section>
 
+    <!-- TAREAS PENDIENTES -->
     <section id="pendientes">
-      <h2>Tareas Pendientes</h2>
-
-      <h3>Semana del 3 al 9 de marzo</h3>
-      <div class="task-group">
-        <p>Por definir al inicio de la próxima sesión de trabajo.</p>
-      </div>
+      <h2>Tareas pendientes</h2>
 
       <h3>Marzo 2026</h3>
       <div class="task-group">
@@ -177,9 +284,17 @@
     </section>
 
     <footer>
-      Última actualización: 2 de marzo de 2026
+      Última actualización: 3 de marzo de 2026 &nbsp;·&nbsp; Documento vivo — las secciones pueden cambiar según avance el proyecto
     </footer>
 
   </div>
+  <script>
+    document.querySelectorAll('details').forEach(d => {
+      d.addEventListener('toggle', function() {
+        const icon = this.querySelector('.toggle-icon');
+        if (icon) icon.textContent = this.open ? '▾' : '▸';
+      });
+    });
+  </script>
 </body>
 </html>
