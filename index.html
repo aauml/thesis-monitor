@@ -508,19 +508,18 @@ function toggleStarFilter() {
 
 // ── URL builder ───────────────────────────────────────────────────────────────
 function buildUrl() {
-  let url = API_URL + "?action=getPage"
-    + "&page=" + state.page
+  const offset = (state.page - 1) * PAGE_LIMIT;
+  let url = API_URL + "?action=getAll"
     + "&limit=" + PAGE_LIMIT
-    + "&sort=" + encodeURIComponent(state.sort);
+    + "&offset=" + offset;
+  if (state.sort)       url += "&sort="       + encodeURIComponent(state.sort);
   if (state.importance) url += "&importance=" + encodeURIComponent(state.importance);
   if (state.capa)       url += "&capa="       + encodeURIComponent(state.capa);
   const cd = document.getElementById("selCapaDetail").value;
   if (cd) url += "&capa_detail=" + encodeURIComponent(cd);
   const ev = document.getElementById("selEvaluativa").value;
   const tp = document.getElementById("selType").value;
-  // Star filter: pass starred=1 as a search term on the starred column
-  // We handle it client-side after fetch since the API doesn't have a starred param yet.
-  // (See filterStarred below.)
+  // Star filter: handled client-side after fetch since the API doesn't have a starred param.
   const extra = [ev, tp].filter(Boolean).join(" ");
   const combined = [state.search, extra].filter(Boolean).join(" ");
   if (combined) url += "&search=" + encodeURIComponent(combined);
@@ -569,10 +568,16 @@ async function fetchData() {
       rows = rows.filter(r => r.starred === "1" || r.starred === "true" || r.starred === "yes");
     }
 
-    state.total       = state.starFilter ? rows.length : data.total;
-    state.total_pages = state.starFilter ? Math.max(1, Math.ceil(rows.length / PAGE_LIMIT)) : data.total_pages;
-    state.has_next    = state.starFilter ? false : data.has_next;
-    state.has_prev    = state.starFilter ? false : data.has_prev;
+    // Derive pagination from API response, or compute it locally if not provided
+    const apiTotal      = data.total      !== undefined ? data.total      : (data.rows || []).length;
+    const apiTotalPages = data.total_pages !== undefined ? data.total_pages : Math.max(1, Math.ceil(apiTotal / PAGE_LIMIT));
+    const apiHasNext    = data.has_next   !== undefined ? data.has_next   : (state.page < apiTotalPages);
+    const apiHasPrev    = data.has_prev   !== undefined ? data.has_prev   : (state.page > 1);
+
+    state.total       = state.starFilter ? rows.length : apiTotal;
+    state.total_pages = state.starFilter ? Math.max(1, Math.ceil(rows.length / PAGE_LIMIT)) : apiTotalPages;
+    state.has_next    = state.starFilter ? false : apiHasNext;
+    state.has_prev    = state.starFilter ? false : apiHasPrev;
     state.page        = data.page || state.page;
     state.lastFetch   = new Date();
     state.rows        = rows;
