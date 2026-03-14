@@ -253,6 +253,8 @@
     .map-legend-item .lg-label { font-weight: 600; }
     .map-legend-pending { font-size: 0.68rem; color: var(--text-muted); font-style: italic; margin-top: 0.2rem; }
 
+    .map-scroll-hint { display: none; font-size: 0.65rem; color: var(--text-muted); font-weight: 400; font-style: italic; text-transform: none; letter-spacing: 0; }
+
     .map-evaluativa { background: #faece7; border: 2px solid #f0997b; border-radius: 12px; padding: 0.7rem; margin-bottom: 0.3rem; }
     .map-evaluativa h3 { font-size: 0.82rem; font-weight: 700; color: #993c1d; margin: 0 0 0.15rem; text-transform: none; letter-spacing: 0; border: none; padding: 0; }
     .map-evaluativa .me-sub { font-size: 0.72rem; color: var(--text-light); margin-bottom: 0.5rem; }
@@ -274,10 +276,30 @@
     .map-derivation { font-size: 0.68rem; font-style: italic; color: #534ab7; text-align: right; margin-top: -0.1rem; margin-bottom: 0.2rem; }
 
     @media (max-width: 700px) {
+      #mapModal .modal { max-width: 100%; }
+      /* Foundation: stack teórica/metodológica, keep card grids 2-col */
       .map-found-grid { grid-template-columns: 1fr; }
-      .map-ana-layout { grid-template-columns: 1fr; }
-      .map-eva-grid { grid-template-columns: 1fr 1fr; }
+      .map-found-block { padding: 0.55rem; }
+      .map-scroll-hint { display: inline; }
+      /* Analytical: horizontal scroll to preserve RIA|Matrix|NIST layout */
+      .map-analytical { overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0.5rem; }
+      .map-ana-layout { min-width: 620px; grid-template-columns: 170px 1fr 170px; gap: 0.4rem; }
+      .map-art .ma-desc { display: none; } /* hide descriptions on mobile pillars */
+      .map-nist-fn .mf-desc { display: none; }
+      .map-nist-fn { padding: 0.35rem 0.45rem; margin-bottom: 0.25rem; }
+      .map-art { padding: 0.25rem 0.4rem; margin-bottom: 0.2rem; }
+      /* Evaluativa: 2x2 grid */
+      .map-eva-grid { grid-template-columns: 1fr 1fr; gap: 0.35rem; }
+      .map-eva-card { padding: 0.35rem; gap: 0.3rem; }
+      .map-eva-icon { width: 24px; height: 24px; font-size: 0.7rem; }
+      .map-eva-card .me-name { font-size: 0.72rem; }
+      .map-eva-card .me-desc { font-size: 0.62rem; }
+      /* Case header stacks */
+      .map-case-header { flex-direction: column; gap: 0.3rem; }
+    }
+    @media (max-width: 380px) {
       .map-card-grid { grid-template-columns: 1fr; }
+      .map-eva-grid { grid-template-columns: 1fr; }
     }
 
     /* ── KB Report modal specifics ── */
@@ -989,7 +1011,7 @@
 
       <!-- ANALYTICAL LAYER -->
       <div class="map-analytical">
-        <div class="map-section-label">Capa analítica</div>
+        <div class="map-section-label">Capa analítica <span class="map-scroll-hint">← deslizar →</span></div>
         <div class="map-ana-layout">
           <!-- RIA Pillar -->
           <div class="map-pillar map-ria">
