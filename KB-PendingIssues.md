@@ -1,0 +1,72 @@
+# KB Pending Issues & Known Bugs
+_Actualizar al cierre de cada sesión. Este archivo es la memoria técnica del sistema._
+
+---
+
+## Bugs conocidos (sin resolver)
+
+### BUG-001 — 84 items stuck en PerplexityQueue
+- **Estado:** Abierto
+- **Descripción:** 84 rows duplicados en PerplexityQueue con status "pending" que no se actualizan con `updatePerplexityRow url=X`. Son duplicados de runs anteriores (mismo URL, distintos run_ids). El lookup por URL + pending solo procesa el primero; los duplicados restantes quedan atascados.
+- **Impacto:** Bajo — son duplicados de contenido ya procesado. No afectan el NewsLog.
+- **Fix posible:** Correr script Python que llame `updatePerplexityRow` múltiples veces por URL hasta que no queden pending. O purgar manualmente desde el sheet.
+- **Fecha detectado:** 2026-03-13
+
+### BUG-002 — sweep_index architectural bug en AcademicOrchestrator
+- **Estado:** Abierto
+- **Descripción:** El índice `sweep_index` avanza más allá del array de queries elegibles cuando el array se reduce entre runs. Causa que algunas queries se salten en el historical sweep.
+- **Impacto:** Medio — algunas queries académicas no se barren en el historical sweep.
+- **Fix posible:** Resetear sweep_index cuando supere el tamaño del array elegible, o usar un cursor diferente.
+- **Fecha detectado:** Sesión anterior a 2026-03-13
+
+---
+
+## Tareas técnicas pendientes
+
+### TASK-001 — Limpiar 3 entradas TEST en NewsLog
+- **Estado:** Pendiente
+- **Descripción:** Durante debugging el 2026-03-13 se añadieron 3 entradas con `notes: "TEST - DELETE"`. URLs: `techcrunch.com/2026/03/01/nist-ai-framework-test-entry`, `nist.gov` (variante no-www), `diligent.com`.
+- **Acción:** Llamar `updateByUrl` o `updateRow` para cada una con `notes: "DELETE"` y luego borrarlas manualmente del sheet, o añadir un action=deleteRow al WebApp.
+- **Prioridad:** Baja
+
+### TASK-002 — Desplegar WebApp-v32 en GAS
+- **Estado:** ✅ Completado 2026-03-13
+- **Descripción:** WebApp-v32 desplegado. Corrige normalizeUrl (strip www.), updatePerplexityRow/updateAcademicRow pending-first lookup.
+
+### TASK-003 — Reemplazar NewsSearch.gs con GoogleNewsRSS.gs
+- **Estado:** ✅ Completado 2026-03-13
+- **Descripción:** GoogleNewsRSS-v1 desplegado y verificado. quickTestNewsAPI() devuelve 15 resultados relevantes. NewsAPI (426) reemplazado completamente.
+
+### TASK-004 — Reemplazar SKILL-KB en proyecto phd-kb
+- **Estado:** ✅ Completado 2026-03-13
+- **Descripción:** SKILL-KB-v10.md activo en el proyecto phd-kb. Incluye Session Closing Protocol, protocolo de versioning, y correcciones de bugs.
+
+### TASK-005 — Corregir duplicate function warning en GAS
+- **Estado:** ✅ Completado 2026-03-13
+- **Descripción:** `PerplexitySearch.gs` y `AcademicOrchestrator.gs` ambos definían `_advanceNextRunDate`, `_isQueryDue`, `_fmtDate`. GAS lanzaba warning "functions with same name" en todos los triggers. `PerplexitySearch-v3.txt` desplegado — duplicados eliminados de PerplexitySearch, quedan en AcademicOrchestrator.
+
+---
+
+## Decisiones técnicas registradas
+
+| Fecha | Decisión |
+|-------|----------|
+| 2026-03-13 | Dedup en `action=append` es por URL normalizado (no por ID). Para promover desde queues usar `action=promoteToNewsLog`. |
+| 2026-03-13 | `updatePerplexityRow` y `updateAcademicRow` deben usar `url` como lookup key, nunca `id`. |
+| 2026-03-13 | `normalizeUrl` debe quitar `www.` para evitar que `www.domain.com` y `domain.com` sean tratados como URLs distintas. |
+| 2026-03-13 | NewsAPI free tier devuelve 426 desde GAS. Reemplazado por Google News RSS (sin key, sin límite). |
+| 2026-03-13 | Versiones activas: WebApp-v32, GoogleNewsRSS-v1, PerplexitySearch-v3, SKILL-KB-v10. |
+| 2026-03-13 | Google News RSS reemplaza NewsAPI (426 en free tier). Sin API key, sin límite de requests. |
+| 2026-03-13 | Duplicate function names resuelto: `_advanceNextRunDate`, `_isQueryDue`, `_fmtDate` eliminadas de PerplexitySearch-v3. Solo viven en AcademicOrchestrator. |
+
+---
+
+---
+
+## Próxima sesión
+
+- **Prioridad 1:** `update academic` — 249 items pendientes en AcademicQueue (papers arxiv/CORE/OpenAlex)
+- **Prioridad 2:** Resolver BUG-001 (84 stuck en PerplexityQueue) — script Python de limpieza
+- **Prioridad 3:** TASK-001 — limpiar 3 entradas TEST en NewsLog
+
+_Última actualización: 2026-03-13_
