@@ -202,6 +202,146 @@
     .kb-tag { display: inline-block; font-size: 0.68rem; font-weight: 600; background: #f0f4f8; color: var(--accent-mid); border-radius: 3px; padding: 0.05rem 0.35rem; margin-right: 0.3rem; }
     .kb-gap { background: #fff0f0; border: 1px solid #f0c0c0; border-radius: 4px; padding: 0.5rem 0.8rem; font-size: 0.83rem; color: #8a2020; margin-bottom: 0.5rem; }
 
+    /* ── Progress Timeline ── */
+    .timeline {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      margin: 1.2rem 0 1.5rem;
+      padding: 0;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: 24px;
+      right: 24px;
+      height: 2px;
+      background: var(--border);
+      z-index: 0;
+    }
+    .timeline-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      min-width: 0;
+    }
+    .tl-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      transition: all 0.2s;
+    }
+    .tl-dot.done {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+    .tl-dot.current {
+      background: white;
+      border: 3px solid #e8a030;
+      color: #a05c00;
+      box-shadow: 0 0 0 4px rgba(232, 160, 48, 0.18);
+    }
+    .tl-dot.future {
+      background: var(--bg);
+      border-color: var(--border);
+      color: var(--text-muted);
+    }
+    .tl-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+    .tl-label.active { color: #a05c00; }
+    .tl-label.done-label { color: var(--accent); }
+    .tl-phase {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 0.15rem;
+      max-width: 90px;
+      line-height: 1.35;
+    }
+    .tl-phase.active-phase { color: var(--text); font-weight: 500; }
+
+    /* Progress fill on the line */
+    .timeline-fill {
+      position: absolute;
+      top: 14px;
+      left: 24px;
+      height: 2px;
+      background: var(--accent);
+      z-index: 0;
+      transition: width 0.4s ease;
+    }
+
+    /* Next steps box */
+    .next-steps {
+      background: linear-gradient(135deg, #fefaf3 0%, #fff8eb 100%);
+      border: 1px solid #e8d060;
+      border-radius: 6px;
+      padding: 0.9rem 1.1rem;
+      margin-top: 0.5rem;
+    }
+    .next-steps-header {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #5a4500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.55rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .ns-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      padding: 0.35rem 0;
+      font-size: 0.85rem;
+      color: var(--text);
+      line-height: 1.55;
+    }
+    .ns-item + .ns-item { border-top: 1px solid rgba(232, 208, 96, 0.3); }
+    .ns-icon {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      margin-top: 2px;
+    }
+    .ns-icon.ns-read { background: #e6f4ea; color: #2d7a3f; }
+    .ns-icon.ns-decide { background: #fff3e0; color: #a05c00; }
+    .ns-icon.ns-build { background: #e8f0fe; color: #1a56db; }
+    .ns-icon.ns-gap { background: #fff0f0; color: #8a2020; }
+    .ns-criteria {
+      display: block;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+      font-style: italic;
+    }
+
     @media (max-width: 600px) {
       .container { padding: 2rem 1.1rem 3rem; }
       header h1 { font-size: 1.5rem; }
@@ -211,6 +351,10 @@
       .modal-overlay { padding: 0; }
       .modal { border-radius: 0; min-height: 100vh; }
       .modal-header { border-radius: 0; }
+      .timeline { flex-wrap: wrap; gap: 0.3rem; justify-content: center; }
+      .timeline::before { display: none; }
+      .timeline-fill { display: none; }
+      .tl-phase { max-width: 70px; }
     }
   </style>
 </head>
@@ -263,6 +407,100 @@
     <div class="prose">
       <p>El paisaje normativo se movió significativamente desde que redactaste el plan. La EO 14110 de Biden fue revocada y reemplazada por la EO 14179, que reduce el enfoque prescriptivo. La OMB rescindió M-24-10 y emitió M-25-21, con requisitos significativamente menores. El Convenio CETS 225 del Consejo de Europa entró en vigor en noviembre 2025 — es el primer tratado internacional vinculante sobre IA. Y el Reglamento de Ejecución 2025/454 regula el Panel Científico del AI Act. Estos cambios afectan tu capítulo de contexto normativo pero refuerzan tu pregunta de investigación: la divergencia entre marcos se está ampliando, no reduciendo.</p>
       <p>Hallazgo empírico clave: <strong>ningún sistema evaluado del DOJ tiene AI Impact Assessment publicado</strong> pese a los requisitos OMB. Esto no es una limitación de tu investigación — es un dato.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       1b. PROGRESO Y RUTA
+  ═══════════════════════════════════════ -->
+  <section id="progreso">
+    <h2>Progreso</h2>
+
+    <!-- Timeline visual -->
+    <div class="timeline">
+      <!-- Fill bar: ~8% through (early Q1) — adjust width as milestones complete -->
+      <div class="timeline-fill" style="width: calc((100% - 48px) * 0.08)"></div>
+
+      <div class="timeline-node">
+        <div class="tl-dot current">Q1</div>
+        <div class="tl-label active">2026</div>
+        <div class="tl-phase active-phase">Orientación</div>
+      </div>
+
+      <div class="timeline-node">
+        <div class="tl-dot future">Q2</div>
+        <div class="tl-label">2026</div>
+        <div class="tl-phase">Cimientos teóricos</div>
+      </div>
+
+      <div class="timeline-node">
+        <div class="tl-dot future">Q3</div>
+        <div class="tl-label">2026</div>
+        <div class="tl-phase">Construcción analítica</div>
+      </div>
+
+      <div class="timeline-node">
+        <div class="tl-dot future">Q4</div>
+        <div class="tl-label">2026</div>
+        <div class="tl-phase">Primeros borradores</div>
+      </div>
+
+      <div class="timeline-node">
+        <div class="tl-dot future">27</div>
+        <div class="tl-label">2027</div>
+        <div class="tl-phase">Escritura y análisis</div>
+      </div>
+
+      <div class="timeline-node">
+        <div class="tl-dot future">28</div>
+        <div class="tl-label">2028</div>
+        <div class="tl-phase">Cierre y defensa</div>
+      </div>
+    </div>
+
+    <!-- Siguientes pasos — análisis integral -->
+    <div class="next-steps">
+      <div class="next-steps-header">▸ Siguientes pasos</div>
+
+      <div class="ns-item">
+        <div class="ns-icon ns-read">↦</div>
+        <div>
+          <strong>Completar Kaminski (2023)</strong> — lectura prioritaria en curso. Escribir ficha breve en Obsidian.
+          <span class="ns-criteria">Hecho cuando: puedas explicar la tensión regulación vinculante vs. estándares voluntarios sin notas.</span>
+        </div>
+      </div>
+
+      <div class="ns-item">
+        <div class="ns-icon ns-read">↦</div>
+        <div>
+          <strong>Iniciar Bradford (2020)</strong> caps. 1–3 — segunda lectura. Conectar el Efecto Bruselas con la hipótesis de equivalencia funcional.
+          <span class="ns-criteria">Hecho cuando: tengas ficha en Obsidian articulando por qué el AI Act afecta al DOJ.</span>
+        </div>
+      </div>
+
+      <div class="ns-item">
+        <div class="ns-icon ns-decide">◆</div>
+        <div>
+          <strong>Caso de estudio</strong> — pendiente de confirmación con director. PATTERN 25/25 vs. STRmix (mayor tensión procesal).
+          <span class="ns-criteria">Hecho cuando: haya decisión consensuada con el director y documentada en el Registro.</span>
+        </div>
+      </div>
+
+      <div class="ns-item">
+        <div class="ns-icon ns-build">⚙</div>
+        <div>
+          <strong>KB: procesar cola académica</strong> — 249 items pendientes en AcademicQueue. Ejecutar <code>update academic</code>.
+          <span class="ns-criteria">Hecho cuando: AcademicQueue tenga &lt;50 items pendientes.</span>
+        </div>
+      </div>
+
+      <div class="ns-item">
+        <div class="ns-icon ns-gap">!</div>
+        <div>
+          <strong>Fuentes críticas pendientes</strong> — Kaminski &amp; Urban (2021), Selbst &amp; Powles (2017), Citron (2008). Necesarias para el pilar de contestabilidad.
+          <span class="ns-criteria">Hecho cuando: las tres estén en Zotero con PDF y entrada en KB.</span>
+        </div>
+      </div>
     </div>
   </section>
 
