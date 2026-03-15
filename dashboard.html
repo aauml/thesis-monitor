@@ -250,7 +250,9 @@
     .tl-label.active { color: var(--accent); }
     .tl-phase { font-size: 0.7rem; color: var(--text-muted); max-width: 60px; }
     .tl-phase.active-phase { color: var(--accent); }
-    .timeline-node.tl-selected .tl-dot { box-shadow: 0 0 0 3px rgba(26, 58, 92, 0.15); }
+    .timeline-node.tl-selected .tl-dot { background: var(--accent) !important; color: white !important; box-shadow: 0 0 0 4px var(--accent-mid); }
+    .timeline-node.tl-selected .tl-label { font-weight: 700; color: var(--accent); }
+    .timeline-node.tl-selected .tl-phase { color: var(--accent); font-weight: 600; }
 
     /* ── Period details ── */
     .period-detail { margin-bottom: 1.5rem; }
@@ -370,6 +372,9 @@
       font-size: 0.75rem; color: var(--text-muted); margin-left: auto;
     }
     .vm-check { color: #2d7a3f; font-weight: 700; }
+    .vm-item.vm-proposed { color: var(--accent-mid); font-style: italic; border-left: 2px dashed #b8cfe0; padding-left: 0.5rem; }
+    .vm-proposed-tag { font-size: 0.67rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: white; background: var(--accent-mid); border-radius: 3px; padding: 0.05rem 0.35rem; margin-left: 0.35rem; vertical-align: middle; flex-shrink: 0; }
+    .vm-section-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin: 0.6rem 0 0.3rem; border-top: 1px solid #e8ecf3; padding-top: 0.5rem; }
 
     /* ── Map concept ── */
     .map-container {
@@ -633,6 +638,11 @@
           </div>
           <div class="pd-obj">
             <div class="pd-icon pd-write">✎</div>
+            <div><strong>Borrador Cap. 1 (Introducción)</strong> — primer esbozo: planteamiento del problema, pregunta de investigación, justificación, estructura de la tesis. <em>Nota: la introducción se escribe preliminarmente ahora y se reescribe en 2028 cuando el argumento esté maduro.</em>
+              <span class="ns-criteria">Hecho cuando: tienes un esquema con pregunta, hipótesis, justificación y estructura de capítulos (3–4 páginas mínimo).</span></div>
+          </div>
+          <div class="pd-obj">
+            <div class="pd-icon pd-write">✎</div>
             <div><strong>Borrador Cap. 2 (Marco teórico)</strong> — redacción del capítulo completo integrando los cuatro pilares, en español académico.</div>
           </div>
           <div class="pd-obj">
@@ -645,7 +655,7 @@
           </div>
           <div class="pd-obj">
             <div class="pd-icon pd-decide">◆</div>
-            <div><strong>Feedback del director</strong> — entregar los tres borradores para revisión. Integrar correcciones antes de pasar al análisis comparativo.</div>
+            <div><strong>Feedback del director</strong> — entregar los cuatro borradores para revisión. Integrar correcciones antes de pasar al análisis comparativo.</div>
           </div>
         </div>
 
@@ -681,7 +691,7 @@
           </div>
           <div class="pd-obj">
             <div class="pd-icon pd-general">▸</div>
-            <div><strong>Conclusiones y manuscrito final</strong> — redactar Cap. 7, integrar anexos (matriz, protocolo, fichas). Revisión completa de coherencia interna.</div>
+            <div><strong>Conclusiones y manuscrito final (Caps. 1 y 7)</strong> — reescribir la Introducción (Cap. 1) con el argumento maduro, redactar Cap. 7, integrar anexos (matriz, protocolo, fichas). Revisión completa de coherencia interna.</div>
           </div>
           <div class="pd-obj">
             <div class="pd-icon pd-general">▸</div>
@@ -745,13 +755,15 @@
   <details class="section-collapse" id="sec-vault">
     <summary>
       <h2>Vault</h2>
-      <div class="section-toggle"><span style="font-size:0.73rem; color:var(--text-muted); margin-right:0.4rem;">12 notas · 25 clippings</span><span class="chevron">▶</span></div>
+      <div class="section-toggle"><span style="font-size:0.73rem; color:var(--text-muted); margin-right:0.4rem;">12 notas · 25 clippings · 7 propuestas</span><span class="chevron">▶</span></div>
     </summary>
     <div class="section-body">
 
       <div class="vault-map">
         <div class="vm-folder">
-          <div class="vm-folder-name">02_Permanent <span class="vm-hint">12 notas — canónicas + pilares</span></div>
+          <div class="vm-folder-name">02_Permanent <span class="vm-hint">12 notas existentes + 7 propuestas</span></div>
+
+          <div class="vm-section-label">Existentes</div>
           <div class="vm-item">mapa de tesis.md <span class="vm-note">MOC principal · mermaid + matriz</span></div>
           <div class="vm-item">preguntas para defensa.md <span class="vm-note">21 preguntas por categoría</span></div>
           <div class="vm-item">Introduccion.md <span class="vm-note">semilla Cap.1 · Unamuno + contestabilidad</span></div>
@@ -764,6 +776,15 @@
           <div class="vm-item vm-stub">contestabilidad algorítmica.md <span class="vm-note">stub · esperando lecturas</span></div>
           <div class="vm-item vm-stub">metodología de derecho comparado.md <span class="vm-note">stub · esperando lecturas</span></div>
           <div class="vm-item">ai governance study guide.md <span class="vm-note">guía completa · 7 secciones + recursos web</span></div>
+
+          <div class="vm-section-label">Propuestas — crear conforme avance el trabajo</div>
+          <div class="vm-item vm-proposed">ficha-Kaminski2023.md <span class="vm-proposed-tag">por crear</span><span class="vm-note">tras completar lectura Q1 · media página en Obsidian</span></div>
+          <div class="vm-item vm-proposed">ficha-Bradford2020.md <span class="vm-proposed-tag">por crear</span><span class="vm-note">caps. 1–3 · argumento Efecto Bruselas + AI Act</span></div>
+          <div class="vm-item vm-proposed">caso-PATTERN.md <span class="vm-proposed-tag">por crear</span><span class="vm-note">ficha del caso de estudio DOJ/BOP · pendiente decisión con director</span></div>
+          <div class="vm-item vm-proposed">matriz-correspondencia.md <span class="vm-proposed-tag">por crear</span><span class="vm-note">Q3 · Arts. 9–15 RIA ↔ funciones NIST, celda por celda</span></div>
+          <div class="vm-item vm-proposed">protocolo-documentacion.md <span class="vm-proposed-tag">por crear</span><span class="vm-note">Q3 · instrumento de análisis del caso</span></div>
+          <div class="vm-item vm-proposed">cap1-introduccion-borrador.md <span class="vm-proposed-tag">por crear</span><span class="vm-note">Q4 · esbozo preliminar — se reescribirá en 2028</span></div>
+          <div class="vm-item vm-proposed">fichas-fuentes-criticas.md <span class="vm-proposed-tag">por crear</span><span class="vm-note">Kaminski &amp; Urban 2021, Selbst &amp; Powles 2017, Citron 2008</span></div>
         </div>
         <div class="vm-folder">
           <div class="vm-folder-name">01_Bibliografia</div>
@@ -825,6 +846,16 @@
       </div>
 
       <details class="dec">
+        <summary><span class="dec-date">2026-03-15</span><span class="dec-preview">Dashboard v3.3: KB Report ampliado con análisis y noticias; Vault con notas propuestas; Cap.1 en Progreso Q4; selección de timeline visible.</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body">Iteración v3.3: (1) KB Intelligence Report convertido en informe analítico completo — análisis de gaps (capa Caso en 7%, AcademicQueue sin procesar), + sección de novedades feb–mar 2026 agrupadas en 4 clusters temáticos con análisis de relevancia para la tesis; (2) Vault actualizado con sección «Propuestas» — 7 notas por crear marcadas con tag visual y etiqueta de cuando crearlas; (3) Cap. 1 (Introducción) añadido al panel Q4 con nota de que se reescribe en 2028; (4) CSS de selección de nodo en timeline corregido — dot cambia a azul sólido + label en negrita; (5) Protocolo de actualización del dashboard documentado en el Registro. Decisión sobre Mapa Conceptual: el modal existía desde v3.0 (agente anterior) y no fue modificado — contenido no alterado.</div>
+      </details>
+
+      <details class="dec">
+        <summary><span class="dec-date">2026-03-15</span><span class="dec-preview">Protocolo de actualización del dashboard: cuándo y cómo actualizar cada sección.</span><span class="dec-toggle">▸</span></summary>
+        <div class="dec-body"><strong>Frecuencia:</strong> El dashboard se actualiza al cierre de cada sesión de trabajo donde ocurra algo relevante. No hay intervalo fijo — se actualiza cuando hay algo que actualizar.<br><br><strong>Qué actualizar en cada sección:</strong><br>• <em>Estado actual</em>: cada sesión si hay cambio de fase, nuevo dato del KB, o cambio en el foco de trabajo.<br>• <em>Progreso / Timeline</em>: mover nodo de «current» a «done» y siguiente a «current» cuando se complete un trimestre. Añadir o ajustar objetivos si el plan cambia.<br>• <em>Hoja de Ruta</em>: cuando cambie el estado de una lectura (en curso → completada) o entre una nueva lectura prioritaria.<br>• <em>Vault</em>: cuando se creen nuevas notas en Obsidian o se muevan a Permanent. Pasar propuesta a existente cuando se cree la nota real.<br>• <em>Operativo</em>: cuando cambien los counts de colas (AcademicQueue, etc.) o entren nuevas tareas administrativas.<br>• <em>KB Report</em>: cuando corra el pipeline y cambien los números de entradas. La sección de noticias se reemplaza mensualmente con el contenido más reciente del NewsResults.<br>• <em>Registro de decisiones</em>: siempre que se tome una decisión relevante (caso de estudio, metodología, estructura, infraestructura).<br><br><strong>Quién actualiza:</strong> Claude al cerrar la sesión, sin pedir confirmación para cambios menores. Para cambios al Mapa Conceptual o a la estructura de capítulos, confirmar antes.</div>
+      </details>
+
+      <details class="dec">
         <summary><span class="dec-date">2026-03-15</span><span class="dec-preview">Dashboard v3.1: Progreso y Vault como modales, Operativo con checkboxes, KB Report con datos reales del API.</span><span class="dec-toggle">▸</span></summary>
         <div class="dec-body">Iteración del dashboard: (1) Progreso convertido en modal — solo el timeline visible en la página principal, detalle por periodo al hacer click; (2) Vault convertido en modal — resumen en línea, mapa completo en modal; (3) Operativo rediseñado como checklist interactivo con localStorage — items se marcan como completados y se pueden limpiar; (4) KB Report corregido con datos reales del API: 1,255 total, 417 ALTA, 661 MEDIA, 176 BAJA; distribución por capa y tipo de contenido añadida; (5) Infraestructura eliminada como subsección (redundante). Colas pendientes: AcademicQueue 249, PerplexityQueue 84, NewsResults 137.</div>
       </details>
@@ -857,7 +888,7 @@
   </details>
 
   <footer>
-    Última actualización: 15 de marzo de 2026 · Thesis Dashboard v3.2 — documento vivo
+    Última actualización: 15 de marzo de 2026 · Thesis Dashboard v3.3 — documento vivo
   </footer>
 
 </div><!-- /container -->
@@ -875,7 +906,7 @@
 
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
         <div class="callout callout-info" style="margin-bottom: 0; flex: 1;">
-          <strong>Última actualización:</strong> 15 de marzo de 2026
+          <strong>Actualizado:</strong> 15 de marzo de 2026 · 1,255 entradas · Cobertura: feb–mar 2026
         </div>
         <a href="https://aauml.github.io/thesis/index.html" target="_blank" class="hdr-btn" style="margin-left: 0.75rem; white-space: nowrap; text-decoration: none;">
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" style="width:13px;height:13px;"><path d="M6 3H3v10h10v-3" stroke-linecap="round"/><path d="M9 2h5v5M14 2L7 9" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -891,15 +922,29 @@
         </div>
         <div class="kb-card kb-alta">
           <div class="kb-num">417</div>
-          <div class="kb-label">Alta</div>
+          <div class="kb-label">Alta prioridad</div>
         </div>
         <div class="kb-card kb-media">
           <div class="kb-num">661</div>
-          <div class="kb-label">Media</div>
+          <div class="kb-label">Media prioridad</div>
         </div>
         <div class="kb-card kb-baja">
           <div class="kb-num">176</div>
-          <div class="kb-label">Baja</div>
+          <div class="kb-label">Baja prioridad</div>
+        </div>
+      </div>
+
+      <!-- Analysis: gaps and insights -->
+      <div class="kb-section">
+        <h3>Análisis de cobertura y gaps</h3>
+        <div class="callout callout-warn" style="margin-bottom:0.6rem;">
+          <strong>Gap crítico — Capa de caso (7%):</strong> Solo 92 entradas documentan el caso DOJ. Antes de Q3 es necesario incorporar: auditorías GAO/OIG sobre PATTERN o STRmix, PIA del BOP, testimonios en el Congreso, y reportes NIJ sobre validación forense. Sin esto, el Cap. 6 no tiene sustrato empírico suficiente.
+        </div>
+        <div class="callout callout-warn" style="margin-bottom:0.6rem;">
+          <strong>Gap activo — 249 items en AcademicQueue:</strong> No evaluados. Alto riesgo de que haya fuentes ALTA prioridad sin procesar que la tesis necesite. Ejecutar <code>update academic</code> en la próxima sesión técnica.
+        </div>
+        <div class="callout callout-success">
+          <strong>Fortaleza — Capa teórica (65%):</strong> 823 entradas, incluyendo los cuatro pilares bien cubiertos. La lectura de Kaminski 2023 y Bradford 2020 tiene soporte bibliográfico sólido en el KB.
         </div>
       </div>
 
@@ -908,29 +953,29 @@
         <h3>Distribución por capa</h3>
         <div class="kb-layer-grid">
           <div class="kb-layer">
-            <div class="kb-layer-name">Teórica</div>
+            <div class="kb-layer-name">Teórica <span style="font-weight:400; color:var(--success-text); font-size:0.72rem;">● cobertura sólida</span></div>
             <div class="kb-layer-bar"><div class="kb-layer-fill" style="width: 65%"></div></div>
-            <div class="kb-layer-detail">823 entradas</div>
+            <div class="kb-layer-detail">823 entradas · pilares 1–4 bien representados</div>
           </div>
           <div class="kb-layer">
             <div class="kb-layer-name">Analítica</div>
             <div class="kb-layer-bar"><div class="kb-layer-fill" style="width: 42%"></div></div>
-            <div class="kb-layer-detail">525 entradas</div>
+            <div class="kb-layer-detail">525 entradas · crosswalk AI Act / NIST, matriz en construcción</div>
           </div>
           <div class="kb-layer">
             <div class="kb-layer-name">Evaluativa</div>
             <div class="kb-layer-bar"><div class="kb-layer-fill" style="width: 20%"></div></div>
-            <div class="kb-layer-detail">248 entradas</div>
+            <div class="kb-layer-detail">248 entradas · contestabilidad, accountability, explicabilidad</div>
           </div>
           <div class="kb-layer">
-            <div class="kb-layer-name">Caso</div>
-            <div class="kb-layer-bar"><div class="kb-layer-fill" style="width: 7%"></div></div>
-            <div class="kb-layer-detail">92 entradas</div>
+            <div class="kb-layer-name">Caso <span style="font-weight:400; color:var(--warn-text); font-size:0.72rem;">⚠ gap</span></div>
+            <div class="kb-layer-bar"><div class="kb-layer-fill" style="width: 7%; background: #e07040;"></div></div>
+            <div class="kb-layer-detail">92 entradas · necesita documentación pública DOJ antes de Q3</div>
           </div>
           <div class="kb-layer">
             <div class="kb-layer-name">Metodológica</div>
             <div class="kb-layer-bar"><div class="kb-layer-fill" style="width: 7%"></div></div>
-            <div class="kb-layer-detail">84 entradas</div>
+            <div class="kb-layer-detail">84 entradas · crosswalk precedentes, Zweigert &amp; Kötz</div>
           </div>
         </div>
       </div>
@@ -942,44 +987,93 @@
           <div class="kb-layer">
             <div class="kb-layer-name">article</div>
             <div class="kb-layer-bar"><div class="kb-layer-fill" style="width: 28%"></div></div>
-            <div class="kb-layer-detail">353 entradas</div>
+            <div class="kb-layer-detail">353 · artículos académicos y periodismo especializado</div>
           </div>
           <div class="kb-layer">
             <div class="kb-layer-name">report</div>
             <div class="kb-layer-bar"><div class="kb-layer-fill" style="width: 22%"></div></div>
-            <div class="kb-layer-detail">276 entradas</div>
+            <div class="kb-layer-detail">276 · reportes de política (GAO, OMB, NIJ, CE, ENISA)</div>
           </div>
           <div class="kb-layer">
             <div class="kb-layer-name">book</div>
             <div class="kb-layer-bar"><div class="kb-layer-fill" style="width: 21%"></div></div>
-            <div class="kb-layer-detail">262 entradas</div>
+            <div class="kb-layer-detail">262 · libros académicos · Bradford, Zweigert, Faigman entre ellos</div>
           </div>
           <div class="kb-layer">
             <div class="kb-layer-name">paper</div>
             <div class="kb-layer-bar"><div class="kb-layer-fill" style="width: 14%"></div></div>
-            <div class="kb-layer-detail">174 entradas</div>
+            <div class="kb-layer-detail">174 · working papers, preprints, conference papers</div>
           </div>
           <div class="kb-layer">
             <div class="kb-layer-name">guidance + regulation</div>
             <div class="kb-layer-bar"><div class="kb-layer-fill" style="width: 9%"></div></div>
-            <div class="kb-layer-detail">113 entradas</div>
+            <div class="kb-layer-detail">113 · texto normativo (AI Act, NIST RMF, directrices OMB)</div>
           </div>
           <div class="kb-layer">
             <div class="kb-layer-name">court_ruling + transcript + otros</div>
             <div class="kb-layer-bar"><div class="kb-layer-fill" style="width: 6%"></div></div>
-            <div class="kb-layer-detail">77 entradas</div>
+            <div class="kb-layer-detail">77 · jurisprudencia, transcripciones de audiencia</div>
           </div>
         </div>
       </div>
 
-      <!-- Recent highlights -->
+      <!-- RECENT NEWS — feb-mar 2026 -->
       <div class="kb-section">
-        <h3>Incorporaciones recientes</h3>
+        <h3>Novedades relevantes — feb / mar 2026</h3>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.85rem; margin-top:-0.3rem;">Lo que está pasando en el campo y cómo afecta a la tesis:</p>
+
+        <!-- Theme 1 -->
+        <div class="callout callout-warn" style="margin-bottom:0.75rem;">
+          <strong>⚠ Implementación AI Act bajo presión (directamente relevante para el argumento)</strong>
+          <div class="kb-recent" style="margin-top:0.5rem;">
+            <div class="kb-recent-item"><span class="kb-recent-date">26 feb</span><div>Entra en vigor la primera ola de obligaciones AI Act — la mayoría de startups declara no estar listas (Silicon Canals). Refuerza el argumento de la tesis sobre brecha entre cumplimiento documentable y real.</div></div>
+            <div class="kb-recent-item"><span class="kb-recent-date">24 feb</span><div>La Comisión confirma que las directrices para sistemas de alto riesgo llegarán tarde <em>otra vez</em> (Euractiv). Problema directo para el Cap. 3: el régimen de alto riesgo no tiene guías operativas aún.</div></div>
+            <div class="kb-recent-item"><span class="kb-recent-date">13 mar</span><div>El Consejo UE propone simplificar las reglas del AI Act para reducir carga regulatoria (consilium.europa.eu). Señal de presión política sobre el reglamento — monitorear cambios que afecten arts. 8–15.</div></div>
+            <div class="kb-recent-item"><span class="kb-recent-date">13 mar</span><div>"€31bn cost on Europe's Innovators" (The Parliament Magazine): crítica al costo de cumplimiento. Útil como contrapunto para el Cap. 2 (teoría regulatoria responsiva).</div></div>
+          </div>
+        </div>
+
+        <!-- Theme 2 -->
+        <div class="callout callout-info" style="margin-bottom:0.75rem;">
+          <strong>🇺🇸 NIST lanza AI Agent Standards Initiative (novedad clave)</strong>
+          <div class="kb-recent" style="margin-top:0.5rem;">
+            <div class="kb-recent-item"><span class="kb-recent-date">17 feb</span><div>NIST anuncia oficialmente la "AI Agent Standards Initiative" — interoperabilidad y seguridad de agentes IA (NIST.gov). Relevante para el Cap. 4: el NIST AI RMF está evolucionando hacia cobertura de agentes autónomos.</div></div>
+            <div class="kb-recent-item"><span class="kb-recent-date">10 mar</span><div>BABL AI documenta el lanzamiento. El Bank Policy Institute comenta sobre consideraciones de seguridad para sistemas de agentes (BPI, 9 mar). Añadir ambas fuentes al KB en capa analítica.</div></div>
+          </div>
+        </div>
+
+        <!-- Theme 3 -->
+        <div class="callout callout-success" style="margin-bottom:0.75rem;">
+          <strong>📐 Convergencia AI Act / NIST / ISO — fuentes para la matriz</strong>
+          <div class="kb-recent" style="margin-top:0.5rem;">
+            <div class="kb-recent-item"><span class="kb-recent-date">26 feb</span><div>EC-Council publica comparación directa AI Act, NIST RMF e ISO/IEC 42000 en lenguaje accesible. Útil como punto de entrada a la matriz de correspondencia del Cap. 5.</div></div>
+            <div class="kb-recent-item"><span class="kb-recent-date">12 mar</span><div>CDT publica brief sobre Modelos de IA de Propósito General (GPAI) bajo el AI Act — segunda parte de la serie. Relevante para delimitar el alcance de los sistemas de alto riesgo analizados.</div></div>
+            <div class="kb-recent-item"><span class="kb-recent-date">12 mar</span><div>BABL AI: segundo borrador del Code of Practice sobre etiquetado de contenido generado por IA. No es directamente sobre alto riesgo, pero establece precedente de gobernanza del AI Act en práctica.</div></div>
+          </div>
+        </div>
+
+        <!-- Theme 4 -->
+        <div style="background: #f9fbfd; border: 1px solid #d4dce8; border-radius: 5px; padding: 0.75rem; margin-bottom:0.75rem; font-size: 0.84rem;">
+          <strong style="color: var(--accent);">🔎 Análisis académico y legal — lecturas rápidas</strong>
+          <div class="kb-recent" style="margin-top:0.5rem;">
+            <div class="kb-recent-item"><span class="kb-recent-date">09 mar</span><div>"The EU AI Act's Replayability Test" (The Recursive): si no puedes reconstruir una decisión, no puedes impugnarla. Argumento directo para el pilar de contestabilidad y el Cap. 6 (caso DOJ).</div></div>
+            <div class="kb-recent-item"><span class="kb-recent-date">10 mar</span><div>"The Paradoxes of EU AI Regulation" (Regulatory Review): tensiones internas del AI Act. Material valioso para el Cap. 3 y el supuesto epistemológico central.</div></div>
+            <div class="kb-recent-item"><span class="kb-recent-date">10 mar</span><div>"Military AI Entering Civilian Life" (Tech Policy Press): el AI Act no cubre IA militar — pero esa IA puede entrar al sistema de justicia. Ángulo procesal relevante para el marco del caso.</div></div>
+            <div class="kb-recent-item"><span class="kb-recent-date">19 feb</span><div>Alcance extraterritorial del AI Act (National Law Review): análisis de cómo el AI Act aplica a sistemas no-UE que afectan a personas en la UE. Útil para contextualizar el caso DOJ desde el punto de vista europeo.</div></div>
+            <div class="kb-recent-item"><span class="kb-recent-date">13 feb</span><div>Consejo UE explora nuevos poderes para la AI Office (Euractiv). Relevante para la arquitectura de enforcement del Cap. 3 — quién supervisa los sistemas de alto riesgo.</div></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Pipeline status -->
+      <div class="kb-section">
+        <h3>Estado del pipeline</h3>
         <div class="kb-recent">
-          <div class="kb-recent-item"><span class="kb-recent-date">13 mar</span> 76 entradas nuevas al NewsLog (1,176 → 1,255)</div>
-          <div class="kb-recent-item"><span class="kb-recent-date">13 mar</span> Pipeline reparado: bug de deduplicación de URLs www.* corregido</div>
+          <div class="kb-recent-item"><span class="kb-recent-date">13 mar</span> 76 entradas nuevas al NewsLog (1,176 → 1,255) · bug de deduplicación www.* corregido</div>
           <div class="kb-recent-item"><span class="kb-recent-date">13 mar</span> 170 items promovidos de PerplexityQueue al NewsLog</div>
-          <div class="kb-recent-item"><span class="kb-recent-date">pendiente</span> <strong>249 items en AcademicQueue</strong> sin evaluar</div>
+          <div class="kb-recent-item" style="background: #fffbe6;"><span class="kb-recent-date" style="color:#a05c00;">⚠ pendiente</span> <strong>249 items en AcademicQueue</strong> sin evaluar — ejecutar <code>update academic</code></div>
+          <div class="kb-recent-item" style="background: #fffbe6;"><span class="kb-recent-date" style="color:#a05c00;">⚠ pendiente</span> <strong>84 items en PerplexityQueue</strong> con status stuck — baja prioridad</div>
         </div>
       </div>
 
